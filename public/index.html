@@ -1,0 +1,1587 @@
+<!--
+  ============================================================
+  Cybersec-by-Laurel — Premium Cybersecurity Consulting Website
+  ============================================================
+  Filename: index.html
+  Version:  1.0
+  Author:   Lawrence Okonkwo
+
+  CUSTOMIZATION NOTES:
+  - Colors: Edit CSS custom properties in :root (line ~30)
+  - Blog Posts: Search for "BLOG POSTS - EDIT HERE" to update articles
+  - Contact email: Configured in server.js (RESEND_API_KEY env var)
+  - Images: All visuals are CSS-generated or inline SVG — no external images needed
+
+  DEPLOYMENT:
+  - Served by Express (server.js) on Render
+  - CDN deps: Google Fonts (Inter, JetBrains Mono) + Lucide Icons
+  ============================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersec-by-Laurel | Enterprise-Grade Cybersecurity, Delivered with Clarity and Care</title>
+  <meta name="description" content="Cybersec-by-Laurel delivers scalable cybersecurity assessments, compliance audits, penetration testing, AI security consulting, and managed security services for SMBs, healthcare, and enterprises worldwide.">
+  <meta name="keywords" content="cybersecurity consulting, penetration testing, HIPAA compliance, SOC 2 audit, ISO 27001, AI security, vCISO, managed security, healthcare cybersecurity, NIST CSF">
+  <meta name="author" content="Cybersec-by-Laurel">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cybersec-by-laurel.com">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Cybersec-by-Laurel | Enterprise-Grade Cybersecurity">
+  <meta property="og:description" content="Scalable security assessments, compliance, penetration testing, and AI security consulting for organizations of all sizes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cybersec-by-laurel.com">
+  <meta property="og:image" content="https://cybersec-by-laurel.com/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cybersec-by-Laurel | Enterprise-Grade Cybersecurity">
+  <meta name="twitter:description" content="Scalable security assessments, compliance, penetration testing, and AI security consulting.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Cybersec-by-Laurel",
+    "url": "https://cybersec-by-laurel.com",
+    "description": "Enterprise-grade cybersecurity consulting — assessments, compliance, penetration testing, AI security, and managed services.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "contact@cybersec-by-laurel.com",
+      "contactType": "sales"
+    },
+    "areaServed": ["US", "CA", "SA", "Worldwide"],
+    "serviceType": ["Cybersecurity Consulting", "Penetration Testing", "Compliance Auditing", "AI Security"]
+  }
+  </script>
+
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0A1428;
+      --bg-secondary: #111827;
+      --bg-card: #1A2332;
+      --bg-card-hover: #1F2B3E;
+      --accent-mint: #00E6A9;
+      --accent-mint-dim: rgba(0, 230, 169, 0.12);
+      --accent-blue: #00BFFF;
+      --accent-blue-dim: rgba(0, 191, 255, 0.1);
+      --accent-red: #FF4D6A;
+      --accent-orange: #FF9F43;
+      --accent-yellow: #FBBF24;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(0, 230, 169, 0.3);
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --max-width: 1200px;
+      --nav-height: 72px;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-fast: 150ms var(--ease-out);
+      --transition-base: 300ms var(--ease-out);
+      --transition-slow: 500ms var(--ease-out);
+      --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+      --shadow-glow: 0 0 20px rgba(0, 230, 169, 0.15);
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent-mint); text-decoration: none; transition: color var(--transition-fast); }
+    a:hover { color: var(--accent-blue); }
+
+    img { max-width: 100%; display: block; }
+
+    /* Skip to content */
+    .skip-link {
+      position: absolute; top: -100%; left: 16px; z-index: 10000;
+      padding: 12px 24px; background: var(--accent-mint); color: var(--bg-primary);
+      border-radius: 0 0 8px 8px; font-weight: 600; font-size: 14px;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* Container */
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* Section spacing */
+    .section { padding: 100px 0; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px); font-weight: 700; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent-mint));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-subtitle { font-size: 18px; color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.7; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 8px; font-size: 15px;
+      font-weight: 600; cursor: pointer; border: none;
+      transition: all var(--transition-base); text-decoration: none;
+      font-family: var(--font-sans);
+    }
+    .btn-primary {
+      background: var(--accent-mint); color: var(--bg-primary);
+    }
+    .btn-primary:hover {
+      background: #00FFB9; color: var(--bg-primary);
+      box-shadow: 0 0 30px rgba(0, 230, 169, 0.3); transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent; color: var(--accent-mint);
+      border: 2px solid var(--accent-mint);
+    }
+    .btn-outline:hover {
+      background: var(--accent-mint-dim); transform: translateY(-2px);
+      color: var(--accent-mint);
+    }
+    .btn-sm { padding: 10px 24px; font-size: 14px; }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 32px; transition: all var(--transition-base);
+    }
+    .card:hover {
+      transform: translateY(-4px); border-color: var(--border-glow);
+      box-shadow: var(--shadow-glow);
+    }
+    .card-icon {
+      width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+      background: var(--accent-mint-dim); border-radius: 10px; margin-bottom: 20px; color: var(--accent-mint);
+    }
+    .card-title { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+    .card-text { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+
+    /* Badge */
+    .badge {
+      display: inline-block; padding: 4px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-mint { background: var(--accent-mint-dim); color: var(--accent-mint); }
+    .badge-blue { background: var(--accent-blue-dim); color: var(--accent-blue); }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+    .reveal[data-delay="1"] { transition-delay: 100ms; }
+    .reveal[data-delay="2"] { transition-delay: 200ms; }
+    .reveal[data-delay="3"] { transition-delay: 300ms; }
+    .reveal[data-delay="4"] { transition-delay: 400ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-height); display: flex; align-items: center;
+      transition: background var(--transition-base), box-shadow var(--transition-base);
+    }
+    .navbar.scrolled {
+      background: rgba(10, 20, 40, 0.92); backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border-color);
+    }
+    .navbar nav {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: var(--text-primary); }
+    .nav-brand .accent { color: var(--accent-mint); }
+    .nav-brand svg { width: 32px; height: 32px; }
+    .nav-links {
+      display: flex; align-items: center; gap: 8px; list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-secondary); font-size: 14px; font-weight: 500;
+      padding: 8px 14px; border-radius: 6px; transition: all var(--transition-fast);
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; background: var(--accent-mint); color: var(--bg-primary);
+      border-radius: 8px; font-size: 14px; font-weight: 600;
+      transition: all var(--transition-base); white-space: nowrap;
+    }
+    .nav-cta:hover { background: #00FFB9; color: var(--bg-primary); box-shadow: 0 0 20px rgba(0,230,169,0.3); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 8px; z-index: 1001;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--text-primary);
+      border-radius: 2px; transition: all var(--transition-base);
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    @media (max-width: 1024px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+        flex-direction: column; align-items: stretch; gap: 4px;
+        background: var(--bg-secondary); padding: 100px 24px 40px;
+        transition: right var(--transition-base); border-left: 1px solid var(--border-color);
+      }
+      .nav-links.open { right: 0; }
+      .nav-links a { font-size: 16px; padding: 12px 16px; }
+      .nav-cta { margin-left: 0; margin-top: 8px; }
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; position: relative;
+      padding: calc(var(--nav-height) + 40px) 0 60px; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(0, 230, 169, 0.08) 1px, transparent 0);
+      background-size: 40px 40px;
+      animation: heroGrid 20s linear infinite;
+    }
+    @keyframes heroGrid {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+    .hero-gradient {
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse at 30% 20%, rgba(0, 230, 169, 0.08) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(0, 191, 255, 0.06) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border: 1px solid var(--border-glow);
+      border-radius: 20px; font-size: 13px; color: var(--accent-mint);
+      margin-bottom: 32px; background: var(--accent-mint-dim);
+    }
+    .hero-title {
+      font-size: clamp(36px, 5.5vw, 64px); font-weight: 700; line-height: 1.15;
+      margin-bottom: 24px; font-family: var(--font-mono);
+    }
+    .hero-title .typed-text { color: var(--accent-mint); }
+    .typed-cursor {
+      display: inline-block; width: 3px; height: 1em; background: var(--accent-mint);
+      margin-left: 2px; vertical-align: text-bottom;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero-subtitle {
+      font-size: clamp(16px, 2vw, 20px); color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 40px; max-width: 640px; margin-left: auto; margin-right: auto;
+    }
+    .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+    .hero-trust {
+      display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+      padding-top: 40px; border-top: 1px solid var(--border-color);
+    }
+    .trust-item { text-align: center; }
+    .trust-number { font-size: 28px; font-weight: 700; color: var(--accent-mint); font-family: var(--font-mono); }
+    .trust-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ========== TRUST BAR ========== */
+    .trust-bar { background: var(--bg-secondary); padding: 40px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); overflow: hidden; }
+    .trust-bar-label { text-align: center; font-size: 14px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px; }
+    .trust-scroll { display: flex; gap: 48px; animation: scrollLogos 25s linear infinite; width: max-content; }
+    .trust-scroll:hover { animation-play-state: paused; }
+    @keyframes scrollLogos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .trust-logo {
+      display: flex; align-items: center; gap: 8px; white-space: nowrap;
+      font-size: 14px; font-weight: 600; color: var(--text-muted); opacity: 0.6;
+      transition: opacity var(--transition-fast);
+    }
+    .trust-logo:hover { opacity: 1; }
+    .trust-logo i { width: 20px; height: 20px; }
+
+    /* ========== SERVICES ========== */
+    .services-tabs {
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 48px; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; border: 1px solid var(--border-color); background: transparent;
+      color: var(--text-secondary); transition: all var(--transition-fast);
+      font-family: var(--font-sans);
+    }
+    .tab-btn:hover { border-color: var(--accent-mint); color: var(--text-primary); }
+    .tab-btn.active { background: var(--accent-mint); color: var(--bg-primary); border-color: var(--accent-mint); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+
+    /* ========== INDUSTRIES ========== */
+    .industries-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;
+    }
+    .industry-card.featured {
+      border-color: var(--accent-mint); position: relative;
+      background: linear-gradient(135deg, var(--bg-card), rgba(0, 230, 169, 0.05));
+    }
+    .industry-card.featured::before {
+      content: 'Our Specialty'; position: absolute; top: 16px; right: 16px;
+      padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+      background: var(--accent-mint); color: var(--bg-primary); text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .industry-card .card-icon { margin-bottom: 16px; }
+    .industry-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .industry-tag {
+      padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 500;
+      background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border-color);
+    }
+
+    /* ========== SOLUTIONS BY SIZE ========== */
+    .solutions-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
+    }
+    .solution-card { display: flex; flex-direction: column; }
+    .solution-card.highlighted { border-color: var(--accent-mint); }
+    .solution-price { font-size: 13px; color: var(--accent-mint); font-weight: 600; margin-bottom: 16px; font-family: var(--font-mono); }
+    .solution-features { list-style: none; margin-bottom: 24px; flex-grow: 1; }
+    .solution-features li {
+      padding: 6px 0; font-size: 14px; color: var(--text-secondary);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .solution-features li::before {
+      content: ''; display: inline-block; width: 16px; min-width: 16px; height: 16px; margin-top: 3px;
+      border-radius: 50%; background: var(--accent-mint-dim); border: 2px solid var(--accent-mint);
+    }
+
+    /* ========== AI SECURITY ========== */
+    .ai-section { background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary), var(--bg-primary)); }
+    .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .ai-features { display: flex; flex-direction: column; gap: 24px; }
+    .ai-feature { display: flex; gap: 16px; }
+    .ai-feature-icon {
+      width: 40px; min-width: 40px; height: 40px; border-radius: 8px;
+      background: var(--accent-blue-dim); color: var(--accent-blue);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ai-feature-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .ai-feature-text { font-size: 14px; color: var(--text-secondary); }
+    .ai-visual {
+      aspect-ratio: 1; border-radius: 20px; position: relative;
+      background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(0, 230, 169, 0.05));
+      border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .ai-visual-inner {
+      width: 200px; height: 200px; position: relative;
+    }
+    .ai-node {
+      position: absolute; width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent-blue); animation: pulse-node 2s ease-in-out infinite;
+    }
+    .ai-node:nth-child(2) { background: var(--accent-mint); animation-delay: 0.5s; }
+    .ai-node:nth-child(3) { animation-delay: 1s; }
+    .ai-node:nth-child(4) { background: var(--accent-mint); animation-delay: 1.5s; }
+    @keyframes pulse-node { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.5); opacity: 1; } }
+    @media (max-width: 768px) { .ai-grid { grid-template-columns: 1fr; } .ai-visual { max-width: 400px; margin: 0 auto; } }
+
+    /* ========== COMPLIANCE MATRIX ========== */
+    .matrix-wrapper { overflow-x: auto; }
+    .compliance-matrix {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      background: var(--bg-card); border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .compliance-matrix th {
+      padding: 16px 20px; text-align: left; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);
+      background: var(--bg-secondary); border-bottom: 1px solid var(--border-color);
+    }
+    .compliance-matrix td {
+      padding: 14px 20px; font-size: 14px; border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary); transition: background var(--transition-fast);
+    }
+    .compliance-matrix tr:last-child td { border-bottom: none; }
+    .compliance-matrix tbody tr:hover td { background: rgba(0, 230, 169, 0.04); }
+    .compliance-matrix .framework-name { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+    .matrix-check { color: var(--accent-mint); }
+    .matrix-check-dim { color: var(--text-muted); opacity: 0.4; }
+
+    /* ========== WHY US ========== */
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+
+    /* ========== TESTIMONIALS ========== */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .testimonial-card { position: relative; padding-top: 40px; }
+    .testimonial-card::before {
+      content: '\201C'; position: absolute; top: 20px; left: 32px;
+      font-size: 60px; line-height: 1; color: var(--accent-mint); opacity: 0.2; font-family: Georgia, serif;
+    }
+    .testimonial-text { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-mint-dim), var(--accent-blue-dim));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px; color: var(--accent-mint);
+    }
+    .testimonial-name { font-weight: 600; font-size: 14px; }
+    .testimonial-role { font-size: 13px; color: var(--text-muted); }
+    .testimonial-stars { color: var(--accent-yellow); font-size: 14px; margin-bottom: 12px; }
+
+    /* ========== QUIZ ========== */
+    .quiz-container {
+      max-width: 640px; margin: 0 auto; background: var(--bg-card);
+      border: 1px solid var(--border-color); border-radius: 16px; padding: 48px; position: relative;
+    }
+    .quiz-progress { height: 4px; background: var(--bg-secondary); border-radius: 2px; margin-bottom: 32px; overflow: hidden; }
+    .quiz-progress-fill {
+      height: 100%; background: var(--accent-mint); border-radius: 2px;
+      transition: width var(--transition-base); width: 0%;
+    }
+    .quiz-step-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-family: var(--font-mono); }
+    .quiz-question { font-size: 20px; font-weight: 600; margin-bottom: 24px; line-height: 1.4; }
+    .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+    .quiz-option {
+      padding: 16px 20px; border: 1px solid var(--border-color); border-radius: 10px;
+      cursor: pointer; font-size: 15px; color: var(--text-secondary);
+      transition: all var(--transition-fast); background: transparent;
+      text-align: left; font-family: var(--font-sans);
+    }
+    .quiz-option:hover { border-color: var(--accent-mint); color: var(--text-primary); background: var(--accent-mint-dim); }
+    .quiz-option.selected { border-color: var(--accent-mint); background: var(--accent-mint-dim); color: var(--text-primary); }
+    .quiz-result { text-align: center; }
+    .quiz-score-bar { height: 8px; background: var(--bg-secondary); border-radius: 4px; margin: 24px 0; overflow: hidden; }
+    .quiz-score-fill { height: 100%; border-radius: 4px; transition: width 1s var(--ease-out); }
+    .quiz-category { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .quiz-description { font-size: 16px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 32px; }
+    .quiz-retake {
+      background: none; border: none; color: var(--accent-mint); cursor: pointer;
+      font-size: 14px; font-family: var(--font-sans); margin-top: 16px;
+    }
+    .quiz-retake:hover { text-decoration: underline; }
+
+    /* ========== BLOG / RESOURCES ========== */
+    .blog-filters { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+    .blog-filter-btn {
+      padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 600;
+      cursor: pointer; border: 1px solid var(--border-color); background: transparent;
+      color: var(--text-secondary); transition: all var(--transition-fast);
+      font-family: var(--font-sans);
+    }
+    .blog-filter-btn:hover { border-color: var(--accent-mint); color: var(--text-primary); }
+    .blog-filter-btn.active { background: var(--accent-mint); color: var(--bg-primary); border-color: var(--accent-mint); }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .blog-card .card-meta { display: flex; gap: 16px; margin-bottom: 12px; }
+    .blog-card .card-meta span { font-size: 12px; color: var(--text-muted); }
+    .blog-card .card-title { margin-bottom: 8px; }
+    .blog-card .card-title a { color: var(--text-primary); }
+    .blog-card .card-title a:hover { color: var(--accent-mint); }
+    .blog-card .read-more { font-size: 14px; font-weight: 600; color: var(--accent-mint); display: inline-flex; align-items: center; gap: 4px; margin-top: 12px; }
+
+    /* ========== CONTACT / FINAL CTA ========== */
+    .contact-section { background: var(--bg-secondary); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+    .contact-info h2 {
+      font-size: clamp(28px, 4vw, 40px); font-weight: 700; margin-bottom: 20px; line-height: 1.2;
+    }
+    .contact-info p { color: var(--text-secondary); font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+    .contact-detail { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; color: var(--text-secondary); font-size: 15px; }
+    .contact-detail i { color: var(--accent-mint); width: 20px; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 12px 16px; background: var(--bg-primary); border: 1px solid var(--border-color);
+      border-radius: 8px; color: var(--text-primary); font-size: 15px;
+      font-family: var(--font-sans); transition: border-color var(--transition-fast);
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--accent-mint);
+    }
+    .form-group input.error, .form-group select.error, .form-group textarea.error {
+      border-color: var(--accent-red);
+    }
+    .form-error { font-size: 12px; color: var(--accent-red); min-height: 16px; }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: var(--bg-primary); }
+    .form-success {
+      text-align: center; padding: 48px 24px;
+    }
+    .form-success-icon { font-size: 48px; color: var(--accent-mint); margin-bottom: 16px; }
+    .form-success h3 { font-size: 22px; margin-bottom: 8px; }
+    .form-success p { color: var(--text-secondary); }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--bg-secondary); border-top: 1px solid var(--border-color);
+      padding: 60px 0 0;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+      padding-bottom: 40px;
+    }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; margin-top: 12px; }
+    .footer-social { display: flex; gap: 12px; margin-top: 16px; }
+    .footer-social a {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; border: 1px solid var(--border-color); color: var(--text-muted);
+      transition: all var(--transition-fast);
+    }
+    .footer-social a:hover { border-color: var(--accent-mint); color: var(--accent-mint); }
+    .footer-col h4 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; color: var(--text-primary); }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { color: var(--text-muted); font-size: 14px; }
+    .footer-col a:hover { color: var(--accent-mint); }
+    .footer-bottom {
+      border-top: 1px solid var(--border-color); padding: 20px 0;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 13px; color: var(--text-muted); }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a { font-size: 13px; color: var(--text-muted); }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed; bottom: 32px; right: 32px; z-index: 900;
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--accent-mint); color: var(--bg-primary);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none; opacity: 0; pointer-events: none;
+      transition: all var(--transition-base); box-shadow: var(--shadow-card);
+    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+    .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 0 24px rgba(0,230,169,0.3); }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ========== NAVBAR ========== -->
+  <header class="navbar" id="navbar">
+    <nav>
+      <a href="#hero" class="nav-brand" aria-label="Cybersec-by-Laurel Home">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M16 2L4 8v8c0 7.73 5.12 14.96 12 16 6.88-1.04 12-8.27 12-16V8L16 2z" stroke="#00E6A9" stroke-width="2" fill="rgba(0,230,169,0.1)"/>
+          <path d="M12 16l3 3 5-6" stroke="#00E6A9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Cybersec<span class="accent">-by-Laurel</span></span>
+      </a>
+      <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="navigation">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#industries">Industries</a></li>
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#ai-security">AI Security</a></li>
+        <li><a href="#compliance">Compliance</a></li>
+        <li><a href="#why-us">Why Us</a></li>
+        <li><a href="#quiz">Assessment</a></li>
+        <li><a href="#resources">Resources</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Get Protected</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-gradient" aria-hidden="true"></div>
+      <div class="container hero-content">
+        <div class="hero-badge"><i data-lucide="shield-check" style="width:16px;height:16px;"></i> Trusted Cybersecurity Partner</div>
+        <h1 class="hero-title">
+          <span id="typed-output" class="typed-text"></span><span class="typed-cursor" aria-hidden="true"></span>
+        </h1>
+        <p class="hero-subtitle">Enterprise-grade security assessments, compliance, penetration testing, and AI security consulting — delivered with clarity and care to organizations of all sizes.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary"><i data-lucide="calendar" style="width:18px;height:18px;"></i> Schedule Free Consultation</a>
+          <a href="#quiz" class="btn btn-outline"><i data-lucide="scan-line" style="width:18px;height:18px;"></i> Assess Your Security</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item"><div class="trust-number">500+</div><div class="trust-label">Pentests Completed</div></div>
+          <div class="trust-item"><div class="trust-number">99.7%</div><div class="trust-label">Client Retention</div></div>
+          <div class="trust-item"><div class="trust-number">50+</div><div class="trust-label">Healthcare Clients</div></div>
+          <div class="trust-item"><div class="trust-number">24/7</div><div class="trust-label">SOC Monitoring</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TRUST BAR ========== -->
+    <section class="trust-bar" aria-label="Certifications and trust indicators">
+      <div class="trust-bar-label">Certified &amp; Trusted Across Frameworks</div>
+      <div class="trust-scroll" aria-hidden="true">
+        <div class="trust-logo"><i data-lucide="shield" style="width:18px;height:18px;"></i> NIST CSF</div>
+        <div class="trust-logo"><i data-lucide="badge-check" style="width:18px;height:18px;"></i> ISO 27001</div>
+        <div class="trust-logo"><i data-lucide="lock" style="width:18px;height:18px;"></i> SOC 2 Type II</div>
+        <div class="trust-logo"><i data-lucide="heart-pulse" style="width:18px;height:18px;"></i> HIPAA</div>
+        <div class="trust-logo"><i data-lucide="credit-card" style="width:18px;height:18px;"></i> PCI DSS</div>
+        <div class="trust-logo"><i data-lucide="shield-check" style="width:18px;height:18px;"></i> CMMC 2.0</div>
+        <div class="trust-logo"><i data-lucide="globe" style="width:18px;height:18px;"></i> GDPR</div>
+        <div class="trust-logo"><i data-lucide="award" style="width:18px;height:18px;"></i> CREST</div>
+        <div class="trust-logo"><i data-lucide="user-check" style="width:18px;height:18px;"></i> OSCP</div>
+        <div class="trust-logo"><i data-lucide="shield-alert" style="width:18px;height:18px;"></i> CISSP</div>
+        <!-- Duplicated for seamless scroll -->
+        <div class="trust-logo"><i data-lucide="shield" style="width:18px;height:18px;"></i> NIST CSF</div>
+        <div class="trust-logo"><i data-lucide="badge-check" style="width:18px;height:18px;"></i> ISO 27001</div>
+        <div class="trust-logo"><i data-lucide="lock" style="width:18px;height:18px;"></i> SOC 2 Type II</div>
+        <div class="trust-logo"><i data-lucide="heart-pulse" style="width:18px;height:18px;"></i> HIPAA</div>
+        <div class="trust-logo"><i data-lucide="credit-card" style="width:18px;height:18px;"></i> PCI DSS</div>
+        <div class="trust-logo"><i data-lucide="shield-check" style="width:18px;height:18px;"></i> CMMC 2.0</div>
+        <div class="trust-logo"><i data-lucide="globe" style="width:18px;height:18px;"></i> GDPR</div>
+        <div class="trust-logo"><i data-lucide="award" style="width:18px;height:18px;"></i> CREST</div>
+        <div class="trust-logo"><i data-lucide="user-check" style="width:18px;height:18px;"></i> OSCP</div>
+        <div class="trust-logo"><i data-lucide="shield-alert" style="width:18px;height:18px;"></i> CISSP</div>
+      </div>
+    </section>
+
+    <!-- ========== SERVICES ========== -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">Comprehensive Security Services</h2>
+          <p class="section-subtitle">From offensive testing to managed defense — we cover every layer of your security posture.</p>
+        </div>
+        <div class="services-tabs reveal">
+          <button class="tab-btn active" data-tab="offensive">Offensive Security</button>
+          <button class="tab-btn" data-tab="defensive">Managed Defense</button>
+          <button class="tab-btn" data-tab="compliance">Compliance</button>
+          <button class="tab-btn" data-tab="consulting">Consulting</button>
+        </div>
+        <!-- Offensive -->
+        <div class="tab-panel active" id="tab-offensive">
+          <div class="card reveal" data-delay="1"><div class="card-icon"><i data-lucide="crosshair"></i></div><h3 class="card-title">Penetration Testing</h3><p class="card-text">Black-box, gray-box, and white-box testing across web, mobile, API, and network. Red team exercises that simulate real-world adversaries.</p></div>
+          <div class="card reveal" data-delay="2"><div class="card-icon"><i data-lucide="globe"></i></div><h3 class="card-title">Web &amp; Mobile App Testing</h3><p class="card-text">OWASP-based deep-dive assessments for your web apps, SPAs, APIs, and mobile platforms. Find vulnerabilities before attackers do.</p></div>
+          <div class="card reveal" data-delay="3"><div class="card-icon"><i data-lucide="network"></i></div><h3 class="card-title">Network Security Assessment</h3><p class="card-text">Internal and external network penetration testing, wireless security assessments, and segmentation reviews.</p></div>
+          <div class="card reveal" data-delay="4"><div class="card-icon"><i data-lucide="cloud"></i></div><h3 class="card-title">Cloud Security Assessment</h3><p class="card-text">AWS, Azure, and GCP security reviews. Misconfigurations, IAM policies, data exposure, and cloud-native security architecture.</p></div>
+        </div>
+        <!-- Defensive -->
+        <div class="tab-panel" id="tab-defensive">
+          <div class="card"><div class="card-icon"><i data-lucide="eye"></i></div><h3 class="card-title">Managed SOC (24/7)</h3><p class="card-text">Round-the-clock security operations center with threat detection, alerting, and response powered by human analysts and AI.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="siren"></i></div><h3 class="card-title">Incident Response</h3><p class="card-text">Rapid containment, investigation, and recovery when breaches occur. Pre-built response plans and tabletop exercises.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="search"></i></div><h3 class="card-title">Threat Hunting</h3><p class="card-text">Proactive hunting for indicators of compromise using threat intelligence, behavioral analytics, and SIEM correlation.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="bug"></i></div><h3 class="card-title">Vulnerability Management</h3><p class="card-text">Continuous vulnerability scanning, risk-based prioritization, and remediation tracking across your entire attack surface.</p></div>
+        </div>
+        <!-- Compliance -->
+        <div class="tab-panel" id="tab-compliance">
+          <div class="card"><div class="card-icon"><i data-lucide="heart-pulse"></i></div><h3 class="card-title">HIPAA Compliance</h3><p class="card-text">End-to-end HIPAA security assessments, risk analysis, policy development, and breach preparedness for healthcare organizations.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="file-check"></i></div><h3 class="card-title">SOC 2 &amp; ISO 27001</h3><p class="card-text">Readiness assessments, gap analysis, control implementation, and audit support to achieve and maintain certifications.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="credit-card"></i></div><h3 class="card-title">PCI DSS Compliance</h3><p class="card-text">Scoping, SAQ assistance, ASV scanning, and ROC preparation for organizations handling payment card data.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="shield-check"></i></div><h3 class="card-title">NIST &amp; CMMC</h3><p class="card-text">NIST CSF, SP 800-53/171, and CMMC 2.0 assessments. Framework implementation and maturity scoring.</p></div>
+        </div>
+        <!-- Consulting -->
+        <div class="tab-panel" id="tab-consulting">
+          <div class="card"><div class="card-icon"><i data-lucide="user-cog"></i></div><h3 class="card-title">Virtual CISO (vCISO)</h3><p class="card-text">Fractional security leadership. Strategic guidance, board reporting, risk management, and security program development.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="graduation-cap"></i></div><h3 class="card-title">Security Training</h3><p class="card-text">Security awareness programs, phishing simulations, tabletop exercises, and role-based training for developers and executives.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="brain"></i></div><h3 class="card-title">AI Security Consulting</h3><p class="card-text">Secure AI adoption, LLM vulnerability assessments, prompt injection defense, and AI governance frameworks.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="clipboard-check"></i></div><h3 class="card-title">Security Gap Analysis</h3><p class="card-text">Comprehensive assessment of your current security posture against industry frameworks with prioritized remediation roadmaps.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== INDUSTRIES ========== -->
+    <section class="section" id="industries" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">Industries We Protect</h2>
+          <p class="section-subtitle">Tailored security solutions for the unique threats, regulations, and risk profiles of your industry.</p>
+        </div>
+        <div class="industries-grid">
+          <div class="card industry-card featured reveal" data-delay="1">
+            <div class="card-icon"><i data-lucide="heart-pulse"></i></div>
+            <h3 class="card-title">Healthcare</h3>
+            <p class="card-text">Hospitals, clinics, telehealth, health-tech, and medical device companies. We protect patient data, ensure regulatory survival, and prevent breaches that endanger lives and trust.</p>
+            <div class="industry-tags"><span class="industry-tag">HIPAA</span><span class="industry-tag">HITECH</span><span class="industry-tag">FDA</span><span class="industry-tag">NIST CSF</span><span class="industry-tag">SOC 2</span></div>
+          </div>
+          <div class="card industry-card reveal" data-delay="2">
+            <div class="card-icon"><i data-lucide="landmark"></i></div>
+            <h3 class="card-title">Financial Services</h3>
+            <p class="card-text">Banks, fintech, insurance, and payment processors. Protecting transactions, customer data, and meeting stringent regulatory requirements.</p>
+            <div class="industry-tags"><span class="industry-tag">PCI DSS</span><span class="industry-tag">SOC 2</span><span class="industry-tag">GDPR</span><span class="industry-tag">SOX</span></div>
+          </div>
+          <div class="card industry-card reveal" data-delay="3">
+            <div class="card-icon"><i data-lucide="code-2"></i></div>
+            <h3 class="card-title">Technology &amp; SaaS</h3>
+            <p class="card-text">Securing your product, platform, and infrastructure. From startup to scale — building security that grows with your business.</p>
+            <div class="industry-tags"><span class="industry-tag">SOC 2</span><span class="industry-tag">ISO 27001</span><span class="industry-tag">GDPR</span><span class="industry-tag">Pen Testing</span></div>
+          </div>
+          <div class="card industry-card reveal" data-delay="1">
+            <div class="card-icon"><i data-lucide="building-2"></i></div>
+            <h3 class="card-title">Government</h3>
+            <p class="card-text">Federal, state, and municipal agencies. FedRAMP, CMMC, and NIST compliance with cleared personnel and secure methodologies.</p>
+            <div class="industry-tags"><span class="industry-tag">CMMC 2.0</span><span class="industry-tag">NIST 800-53</span><span class="industry-tag">FedRAMP</span></div>
+          </div>
+          <div class="card industry-card reveal" data-delay="2">
+            <div class="card-icon"><i data-lucide="shopping-cart"></i></div>
+            <h3 class="card-title">Retail &amp; E-Commerce</h3>
+            <p class="card-text">Protecting point-of-sale systems, e-commerce platforms, customer data, and supply chain integrations.</p>
+            <div class="industry-tags"><span class="industry-tag">PCI DSS</span><span class="industry-tag">GDPR</span><span class="industry-tag">SOC 2</span></div>
+          </div>
+          <div class="card industry-card reveal" data-delay="3">
+            <div class="card-icon"><i data-lucide="factory"></i></div>
+            <h3 class="card-title">Manufacturing &amp; Critical Infrastructure</h3>
+            <p class="card-text">OT/ICS security, SCADA assessments, and IT/OT convergence. Protecting the systems that power physical operations.</p>
+            <div class="industry-tags"><span class="industry-tag">NIST CSF</span><span class="industry-tag">IEC 62443</span><span class="industry-tag">NERC CIP</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SOLUTIONS BY SIZE ========== -->
+    <section class="section" id="solutions">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">Security for Every Organization Size</h2>
+          <p class="section-subtitle">Whether you're a 10-person startup or a 10,000-employee enterprise, we have a program that fits.</p>
+        </div>
+        <div class="solutions-grid">
+          <div class="card solution-card reveal" data-delay="1">
+            <span class="badge badge-mint">Small Business</span>
+            <h3 class="card-title" style="margin-top:16px;">Essentials</h3>
+            <div class="solution-price">Starting from $5,000</div>
+            <ul class="solution-features">
+              <li>Vulnerability assessment &amp; scan</li>
+              <li>Basic penetration test (web or network)</li>
+              <li>Security policy templates</li>
+              <li>Employee security awareness training</li>
+              <li>Annual compliance health check</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Get Started</a>
+          </div>
+          <div class="card solution-card reveal" data-delay="2">
+            <span class="badge badge-blue">Mid-Market</span>
+            <h3 class="card-title" style="margin-top:16px;">Growth</h3>
+            <div class="solution-price">Starting from $15,000</div>
+            <ul class="solution-features">
+              <li>Comprehensive penetration testing</li>
+              <li>SOC 2 or ISO 27001 readiness</li>
+              <li>Cloud security assessment</li>
+              <li>Quarterly vulnerability scanning</li>
+              <li>vCISO advisory (monthly)</li>
+              <li>Phishing simulations</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Get Started</a>
+          </div>
+          <div class="card solution-card reveal" data-delay="3">
+            <span class="badge badge-mint">Enterprise</span>
+            <h3 class="card-title" style="margin-top:16px;">Comprehensive</h3>
+            <div class="solution-price">Starting from $50,000</div>
+            <ul class="solution-features">
+              <li>Red team &amp; adversary simulation</li>
+              <li>Multi-framework compliance program</li>
+              <li>Managed SOC (24/7 monitoring)</li>
+              <li>Incident response retainer</li>
+              <li>Continuous PTaaS</li>
+              <li>Executive board reporting</li>
+              <li>AI security assessments</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Get Started</a>
+          </div>
+          <div class="card solution-card highlighted reveal" data-delay="4">
+            <span class="badge badge-mint">Healthcare</span>
+            <h3 class="card-title" style="margin-top:16px;">HIPAA Shield</h3>
+            <div class="solution-price">Custom Pricing</div>
+            <ul class="solution-features">
+              <li>Full HIPAA security risk assessment</li>
+              <li>HIPAA + SOC 2 + NIST synergy program</li>
+              <li>Medical device security testing</li>
+              <li>PHI breach prevention &amp; response</li>
+              <li>Telehealth platform security</li>
+              <li>Staff HIPAA training &amp; phishing sims</li>
+              <li>Ongoing compliance monitoring</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">Protect Your Patients</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== AI SECURITY ========== -->
+    <section class="section ai-section" id="ai-security">
+      <div class="container">
+        <div class="ai-grid">
+          <div class="reveal">
+            <span class="badge badge-blue" style="margin-bottom:20px;">Key Differentiator</span>
+            <h2 class="section-title" style="text-align:left;">AI Security: The New Frontier</h2>
+            <p style="color:var(--text-secondary);font-size:16px;line-height:1.7;margin-bottom:32px;">As organizations race to adopt AI, new attack surfaces emerge. We help you harness AI's power without exposing your organization to novel risks.</p>
+            <div class="ai-features">
+              <div class="ai-feature">
+                <div class="ai-feature-icon"><i data-lucide="bot"></i></div>
+                <div><div class="ai-feature-title">LLM Security Testing</div><p class="ai-feature-text">Assess your AI models for prompt injection, data leakage, jailbreaking, and adversarial inputs.</p></div>
+              </div>
+              <div class="ai-feature">
+                <div class="ai-feature-icon"><i data-lucide="shield-alert"></i></div>
+                <div><div class="ai-feature-title">AI Risk Assessments</div><p class="ai-feature-text">Identify and quantify risks in your AI/ML pipeline — from training data poisoning to model theft.</p></div>
+              </div>
+              <div class="ai-feature">
+                <div class="ai-feature-icon"><i data-lucide="scale"></i></div>
+                <div><div class="ai-feature-title">AI Governance Frameworks</div><p class="ai-feature-text">Build policies and controls for responsible AI adoption aligned with NIST AI RMF and emerging regulations.</p></div>
+              </div>
+              <div class="ai-feature">
+                <div class="ai-feature-icon"><i data-lucide="lock"></i></div>
+                <div><div class="ai-feature-title">Secure AI Architecture</div><p class="ai-feature-text">Design AI systems with security built in — secure APIs, data isolation, model access controls, and monitoring.</p></div>
+              </div>
+            </div>
+            <a href="#contact" class="btn btn-primary" style="margin-top:32px;"><i data-lucide="brain" style="width:18px;height:18px;"></i> Talk to Our AI Security Experts</a>
+          </div>
+          <div class="ai-visual reveal" data-delay="2" aria-hidden="true">
+            <div class="ai-visual-inner">
+              <div class="ai-node" style="top:20%;left:30%;"></div>
+              <div class="ai-node" style="top:50%;left:70%;"></div>
+              <div class="ai-node" style="top:75%;left:25%;"></div>
+              <div class="ai-node" style="top:35%;left:55%;"></div>
+              <svg viewBox="0 0 200 200" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.3;">
+                <line x1="60" y1="40" x2="140" y2="100" stroke="#00BFFF" stroke-width="0.5"/>
+                <line x1="140" y1="100" x2="50" y2="150" stroke="#00E6A9" stroke-width="0.5"/>
+                <line x1="50" y1="150" x2="110" y2="70" stroke="#00BFFF" stroke-width="0.5"/>
+                <line x1="60" y1="40" x2="110" y2="70" stroke="#00E6A9" stroke-width="0.5"/>
+                <line x1="110" y1="70" x2="140" y2="100" stroke="#00BFFF" stroke-width="0.5"/>
+                <line x1="60" y1="40" x2="50" y2="150" stroke="#00E6A9" stroke-width="0.5" opacity="0.5"/>
+                <circle cx="100" cy="100" r="60" fill="none" stroke="#00E6A9" stroke-width="0.3" opacity="0.3"/>
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#00BFFF" stroke-width="0.2" opacity="0.2"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== COMPLIANCE MATRIX ========== -->
+    <section class="section" id="compliance" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">Compliance &amp; Frameworks Mastery</h2>
+          <p class="section-subtitle">We help you achieve and maintain multiple frameworks simultaneously — reducing overlap, cost, and audit fatigue.</p>
+        </div>
+        <div class="matrix-wrapper reveal">
+          <table class="compliance-matrix">
+            <thead>
+              <tr>
+                <th>Framework</th>
+                <th>Assessment</th>
+                <th>Gap Analysis</th>
+                <th>Remediation</th>
+                <th>Certification Support</th>
+                <th>Ongoing Monitoring</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="framework-name">PCI DSS</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+              <tr><td class="framework-name">SOC 2 Type II</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+              <tr><td class="framework-name">HIPAA</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+              <tr><td class="framework-name">GDPR</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check-dim">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+              <tr><td class="framework-name">ISO 27001</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+              <tr><td class="framework-name">NIST CSF 2.0</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check-dim">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+              <tr><td class="framework-name">CMMC 2.0</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check-dim">&#10003;</td></tr>
+              <tr><td class="framework-name">NIST SP 800-53</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check-dim">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== WHY US ========== -->
+    <section class="section" id="why-us">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">Why Cybersec-by-Laurel</h2>
+          <p class="section-subtitle">We combine deep technical expertise with an approachable, client-first philosophy.</p>
+        </div>
+        <div class="why-grid">
+          <div class="card reveal" data-delay="1"><div class="card-icon"><i data-lucide="cpu"></i></div><h3 class="card-title">Human + AI Approach</h3><p class="card-text">Our analysts use AI-powered tools to accelerate discovery, but every finding is validated and contextualized by experienced human experts. No false positives, no noise.</p></div>
+          <div class="card reveal" data-delay="2"><div class="card-icon"><i data-lucide="heart-pulse"></i></div><h3 class="card-title">Healthcare Specialization</h3><p class="card-text">Deep HIPAA expertise combined with understanding of clinical workflows, EHR systems, medical devices, and telehealth. Security that protects patients, not just data.</p></div>
+          <div class="card reveal" data-delay="3"><div class="card-icon"><i data-lucide="globe-2"></i></div><h3 class="card-title">Global Reach</h3><p class="card-text">Serving organizations in the USA, Canada, Saudi Arabia, and worldwide. Multi-timezone support with local regulatory expertise.</p></div>
+          <div class="card reveal" data-delay="1"><div class="card-icon"><i data-lucide="file-text"></i></div><h3 class="card-title">Transparent Reporting</h3><p class="card-text">Executive summaries for the board, detailed technical reports for your team, and actionable remediation guidance. No jargon barriers.</p></div>
+          <div class="card reveal" data-delay="2"><div class="card-icon"><i data-lucide="repeat"></i></div><h3 class="card-title">PTaaS Model</h3><p class="card-text">Move beyond point-in-time testing. Continuous Penetration Testing as a Service integrates into your dev cycle with on-demand retesting.</p></div>
+          <div class="card reveal" data-delay="3"><div class="card-icon"><i data-lucide="award"></i></div><h3 class="card-title">Certified Team</h3><p class="card-text">OSCP, CISSP, CEH, CREST, and more. Our team holds industry-leading certifications and brings decades of combined experience.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <section class="section" id="testimonials" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">What Our Clients Say</h2>
+          <p class="section-subtitle">Trusted by security-conscious organizations across industries.</p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="card testimonial-card reveal" data-delay="1">
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-text">"Cybersec-by-Laurel transformed our HIPAA compliance from a constant anxiety into a managed, measurable program. Their healthcare expertise is unmatched — they understand clinical workflows, not just checkboxes."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">DR</div>
+              <div><div class="testimonial-name">Dr. Rachel Simmons</div><div class="testimonial-role">CISO, Meridian Health Systems</div></div>
+            </div>
+          </div>
+          <div class="card testimonial-card reveal" data-delay="2">
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-text">"Their pentest team found critical vulnerabilities our internal scans had missed for months. The reports were clear, actionable, and helped us prioritize fixes by business impact."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MK</div>
+              <div><div class="testimonial-name">Marcus Kovac</div><div class="testimonial-role">CTO, NovaPay Fintech</div></div>
+            </div>
+          </div>
+          <div class="card testimonial-card reveal" data-delay="3">
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-text">"As a fast-growing SaaS company, we needed SOC 2 fast. Cybersec-by-Laurel got us audit-ready in 8 weeks and their vCISO service continues to guide our security strategy."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">JT</div>
+              <div><div class="testimonial-name">Jessica Torres</div><div class="testimonial-role">Founder &amp; CEO, DataVault.io</div></div>
+            </div>
+          </div>
+          <div class="card testimonial-card reveal" data-delay="4">
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-text">"Their CMMC assessment and remediation roadmap was the most thorough we've seen. The team's understanding of federal requirements saved us months of preparation."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AB</div>
+              <div><div class="testimonial-name">Andrew Blake</div><div class="testimonial-role">IT Director, Federal Solutions Group</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== QUIZ ========== -->
+    <section class="section" id="quiz">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">How Secure Is Your Organization?</h2>
+          <p class="section-subtitle">Take our 2-minute Security Maturity Assessment and get a personalized score with recommendations.</p>
+        </div>
+        <div class="quiz-container reveal" id="quiz-container">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== RESOURCES / BLOG ========== -->
+    <section class="section" id="resources" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">The Hacker's Journal</h2>
+          <p class="section-subtitle">Insights, research, and practical guides from our security team.</p>
+        </div>
+        <div class="blog-filters reveal" id="blog-filters">
+          <!-- Rendered by JavaScript -->
+        </div>
+        <div class="blog-grid" id="blog-grid">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT / FINAL CTA ========== -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info reveal">
+            <h2>Ready to Secure Your Organization?</h2>
+            <p>Whether you need a penetration test, compliance audit, AI security assessment, or a full-service security partner — we're here to help. Get in touch for a free consultation.</p>
+            <div class="contact-detail"><i data-lucide="mail" style="width:20px;height:20px;"></i> contact@cybersec-by-laurel.com</div>
+            <div class="contact-detail"><i data-lucide="phone" style="width:20px;height:20px;"></i> +1 (403) 555-0199</div>
+            <div class="contact-detail"><i data-lucide="map-pin" style="width:20px;height:20px;"></i> Calgary, Alberta, Canada</div>
+            <div class="contact-detail"><i data-lucide="globe" style="width:20px;height:20px;"></i> Serving USA, Canada, Saudi Arabia &amp; Worldwide</div>
+          </div>
+          <div class="reveal" data-delay="2">
+            <form class="contact-form" id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contact-name">Full Name *</label>
+                  <input type="text" id="contact-name" name="name" required placeholder="John Smith" autocomplete="name">
+                  <span class="form-error" id="error-name"></span>
+                </div>
+                <div class="form-group">
+                  <label for="contact-email">Email *</label>
+                  <input type="email" id="contact-email" name="email" required placeholder="john@company.com" autocomplete="email">
+                  <span class="form-error" id="error-email"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contact-company">Company</label>
+                  <input type="text" id="contact-company" name="company" placeholder="Company Inc." autocomplete="organization">
+                </div>
+                <div class="form-group">
+                  <label for="contact-phone">Phone</label>
+                  <input type="tel" id="contact-phone" name="phone" placeholder="+1 (403) 555-0000" autocomplete="tel">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contact-service">Service Interest</label>
+                  <select id="contact-service" name="service">
+                    <option value="">Select a service...</option>
+                    <option value="Penetration Testing">Penetration Testing</option>
+                    <option value="Compliance Audit">Compliance Audit (SOC 2, HIPAA, ISO, PCI)</option>
+                    <option value="AI Security">AI Security Consulting</option>
+                    <option value="Cloud Security">Cloud Security Assessment</option>
+                    <option value="vCISO">Virtual CISO Services</option>
+                    <option value="Managed SOC">Managed SOC / MDR</option>
+                    <option value="Training">Security Training</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="contact-urgency">Urgency</label>
+                  <select id="contact-urgency" name="urgency">
+                    <option value="General Inquiry">General Inquiry</option>
+                    <option value="Within 30 Days">Need within 30 Days</option>
+                    <option value="Urgent">Urgent — Active Incident</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="contact-message">Message *</label>
+                <textarea id="contact-message" name="message" required placeholder="Tell us about your security needs, organization size, and any specific requirements..."></textarea>
+                <span class="form-error" id="error-message"></span>
+              </div>
+              <button type="submit" class="btn btn-primary" id="contact-submit" style="width:100%;justify-content:center;">
+                <i data-lucide="send" style="width:18px;height:18px;"></i> Send Inquiry
+              </button>
+            </form>
+            <div class="form-success" id="form-success" style="display:none;">
+              <div class="form-success-icon"><i data-lucide="check-circle" style="width:48px;height:48px;"></i></div>
+              <h3>Message Sent!</h3>
+              <p>Thank you for reaching out. Our team will respond within 24 hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="nav-brand" style="font-size:18px;">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28" aria-hidden="true">
+              <path d="M16 2L4 8v8c0 7.73 5.12 14.96 12 16 6.88-1.04 12-8.27 12-16V8L16 2z" stroke="#00E6A9" stroke-width="2" fill="rgba(0,230,169,0.1)"/>
+              <path d="M12 16l3 3 5-6" stroke="#00E6A9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Cybersec<span class="accent">-by-Laurel</span>
+          </a>
+          <p>Enterprise-grade cybersecurity consulting — delivered with clarity and care. Protecting organizations of all sizes across the USA, Canada, Saudi Arabia, and worldwide.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:18px;height:18px;"></i></a>
+            <a href="#" aria-label="Twitter/X"><i data-lucide="twitter" style="width:18px;height:18px;"></i></a>
+            <a href="#" aria-label="GitHub"><i data-lucide="github" style="width:18px;height:18px;"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Penetration Testing</a></li>
+            <li><a href="#services">Cloud Security</a></li>
+            <li><a href="#compliance">Compliance Audits</a></li>
+            <li><a href="#ai-security">AI Security</a></li>
+            <li><a href="#services">Managed SOC</a></li>
+            <li><a href="#services">vCISO Services</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#resources">Blog</a></li>
+            <li><a href="#quiz">Security Assessment</a></li>
+            <li><a href="#compliance">Compliance Matrix</a></li>
+            <li><a href="#industries">Industry Solutions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:contact@cybersec-by-laurel.com">contact@cybersec-by-laurel.com</a></li>
+            <li><a href="tel:+14035550199">+1 (403) 555-0199</a></li>
+            <li>Calgary, Alberta, Canada</li>
+            <li style="margin-top:12px;"><a href="#contact" style="color:var(--accent-mint);font-weight:600;">Free Consultation &rarr;</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cybersec-by-Laurel. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Responsible Disclosure</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top"><i data-lucide="chevron-up" style="width:22px;height:22px;"></i></button>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <script>
+  (function() {
+    'use strict';
+
+    // ===== Initialize Lucide Icons =====
+    lucide.createIcons();
+
+    // ===== Mobile Menu =====
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ===== Navbar Scroll Effect =====
+    const navbar = document.getElementById('navbar');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          navbar.classList.toggle('scrolled', window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // ===== Active Section Highlighting =====
+    const sections = document.querySelectorAll('section[id]');
+    const navLinksAll = document.querySelectorAll('.nav-links a');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinksAll.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-72px 0px 0px 0px' });
+    sections.forEach(section => sectionObserver.observe(section));
+
+    // ===== Smooth Scroll =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ===== Scroll Reveal =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ===== Terminal Typing Animation =====
+    const typedOutput = document.getElementById('typed-output');
+    const phrases = [
+      '> Protecting Your Digital Future',
+      '> Security That Scales',
+      '> Compliance That Protects',
+      '> AI That Stays Ahead'
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingDelay = 80;
+
+    function typeLoop() {
+      const current = phrases[phraseIndex];
+      if (!isDeleting) {
+        typedOutput.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === current.length) {
+          isDeleting = true;
+          typingDelay = 2000; // pause at end
+        } else {
+          typingDelay = 60 + Math.random() * 40;
+        }
+      } else {
+        typedOutput.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          typingDelay = 400;
+        } else {
+          typingDelay = 30;
+        }
+      }
+      setTimeout(typeLoop, typingDelay);
+    }
+    setTimeout(typeLoop, 800);
+
+    // ===== Services Tabs =====
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ===== Security Maturity Quiz =====
+    const quizData = [
+      {
+        question: "How often does your organization conduct penetration testing?",
+        options: [
+          { text: "Never or unsure", score: 1 },
+          { text: "Annually", score: 2 },
+          { text: "Quarterly", score: 3 },
+          { text: "Continuous (PTaaS)", score: 4 }
+        ]
+      },
+      {
+        question: "Do you have a formal incident response plan?",
+        options: [
+          { text: "No plan exists", score: 1 },
+          { text: "Informal / undocumented", score: 2 },
+          { text: "Documented plan", score: 3 },
+          { text: "Documented, tested, and rehearsed regularly", score: 4 }
+        ]
+      },
+      {
+        question: "How do you manage vulnerabilities across your environment?",
+        options: [
+          { text: "Ad-hoc or not at all", score: 1 },
+          { text: "Occasional scans", score: 2 },
+          { text: "Regular scanning with remediation tracking", score: 3 },
+          { text: "Continuous scanning with risk-based prioritization", score: 4 }
+        ]
+      },
+      {
+        question: "What is your approach to employee security training?",
+        options: [
+          { text: "No training program", score: 1 },
+          { text: "Training at onboarding only", score: 2 },
+          { text: "Annual training sessions", score: 3 },
+          { text: "Continuous training with phishing simulations", score: 4 }
+        ]
+      },
+      {
+        question: "How do you assess third-party and vendor risk?",
+        options: [
+          { text: "Not assessed", score: 1 },
+          { text: "Questionnaires during onboarding", score: 2 },
+          { text: "Regular audits and reviews", score: 3 },
+          { text: "Continuous monitoring with automated risk scoring", score: 4 }
+        ]
+      },
+      {
+        question: "Do you have dedicated security leadership (CISO or vCISO)?",
+        options: [
+          { text: "No security leadership", score: 1 },
+          { text: "IT manager handles security part-time", score: 2 },
+          { text: "Dedicated security person", score: 3 },
+          { text: "Full security team or vCISO with board reporting", score: 4 }
+        ]
+      },
+      {
+        question: "Which compliance frameworks has your organization implemented?",
+        options: [
+          { text: "None currently", score: 1 },
+          { text: "Aware but not yet implementing", score: 2 },
+          { text: "Partially implemented (in progress)", score: 3 },
+          { text: "Fully certified / audited on one or more frameworks", score: 4 }
+        ]
+      }
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+    let currentQ = 0;
+    let scores = [];
+
+    function renderQuiz() {
+      if (currentQ < quizData.length) {
+        const q = quizData[currentQ];
+        const progress = ((currentQ) / quizData.length) * 100;
+        quizContainer.innerHTML = `
+          <div class="quiz-progress"><div class="quiz-progress-fill" style="width:${progress}%"></div></div>
+          <div class="quiz-step-label">Question ${currentQ + 1} of ${quizData.length}</div>
+          <h3 class="quiz-question">${q.question}</h3>
+          <div class="quiz-options">
+            ${q.options.map((opt, i) => `<button class="quiz-option" data-score="${opt.score}" data-index="${i}">${opt.text}</button>`).join('')}
+          </div>
+        `;
+        quizContainer.querySelectorAll('.quiz-option').forEach(btn => {
+          btn.addEventListener('click', () => {
+            scores.push(parseInt(btn.dataset.score));
+            currentQ++;
+            renderQuiz();
+          });
+        });
+        // Animate progress bar
+        requestAnimationFrame(() => {
+          const fill = quizContainer.querySelector('.quiz-progress-fill');
+          if (fill) fill.style.width = ((currentQ + 1) / quizData.length * 100) + '%';
+        });
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const total = scores.reduce((a, b) => a + b, 0);
+      const max = quizData.length * 4;
+      const pct = (total / max) * 100;
+      let category, color, desc, cta, ctaText;
+
+      if (total <= 11) {
+        category = 'Critical'; color = 'var(--accent-red)';
+        desc = 'Your organization faces significant security risks. Critical gaps in testing, compliance, and security leadership need immediate attention to prevent potential breaches.';
+        cta = '#contact'; ctaText = 'Schedule Emergency Consultation';
+      } else if (total <= 17) {
+        category = 'Developing'; color = 'var(--accent-orange)';
+        desc = 'You have some security foundations in place, but critical gaps remain in key areas. A structured gap assessment can help prioritize your next steps.';
+        cta = '#contact'; ctaText = 'Get a Gap Assessment';
+      } else if (total <= 23) {
+        category = 'Maturing'; color = 'var(--accent-mint)';
+        desc = 'Good progress on your security journey. There are opportunities to optimize processes, expand coverage, and move from reactive to proactive security.';
+        cta = '#contact'; ctaText = 'Optimize Your Security';
+      } else {
+        category = 'Advanced'; color = '#22FFBB';
+        desc = 'Strong security posture. You\'re ahead of most organizations. Let us help you stay ahead of emerging threats, especially in AI security and advanced persistent threats.';
+        cta = '#contact'; ctaText = 'Explore Advanced Services';
+      }
+
+      quizContainer.innerHTML = `
+        <div class="quiz-result">
+          <div class="quiz-step-label">Your Security Maturity Score</div>
+          <div class="quiz-category" style="color:${color};">${category}</div>
+          <div style="font-family:var(--font-mono);font-size:24px;font-weight:700;margin-bottom:8px;color:${color};">${total} / ${max}</div>
+          <div class="quiz-score-bar"><div class="quiz-score-fill" style="width:0%;background:${color};"></div></div>
+          <p class="quiz-description">${desc}</p>
+          <a href="${cta}" class="btn btn-primary">${ctaText}</a>
+          <br><button class="quiz-retake" onclick="resetQuiz()">&#8634; Retake Assessment</button>
+        </div>
+      `;
+      // Animate score bar
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const fill = quizContainer.querySelector('.quiz-score-fill');
+          if (fill) fill.style.width = pct + '%';
+        }, 100);
+      });
+    }
+
+    window.resetQuiz = function() {
+      currentQ = 0;
+      scores = [];
+      renderQuiz();
+    };
+    renderQuiz();
+
+    // ===== Blog Posts =====
+    /* === BLOG POSTS - EDIT HERE TO UPDATE === */
+    const blogPosts = [
+      {
+        id: 1,
+        title: "Top 10 Penetration Testing Findings in Healthcare 2026",
+        excerpt: "Our latest analysis of 200+ healthcare pentests reveals the most common vulnerabilities threatening patient data — and what CISOs can do about them.",
+        category: "Healthcare",
+        date: "2026-03-28",
+        readTime: "7 min"
+      },
+      {
+        id: 2,
+        title: "Navigating CMMC 2.0: A Practical Guide for Defense Contractors",
+        excerpt: "CMMC 2.0 is here. We break down the three levels, assessment requirements, and the fastest path to compliance for your organization.",
+        category: "Compliance",
+        date: "2026-03-15",
+        readTime: "10 min"
+      },
+      {
+        id: 3,
+        title: "AI Security Risks Your Organization Is Probably Ignoring",
+        excerpt: "From prompt injection to training data poisoning — the AI security threats that boards aren't talking about yet, but should be.",
+        category: "AI Security",
+        date: "2026-03-01",
+        readTime: "6 min"
+      },
+      {
+        id: 4,
+        title: "SOC 2 in 8 Weeks: How Fast-Growing SaaS Companies Get Audit-Ready",
+        excerpt: "A step-by-step playbook based on our experience helping 50+ SaaS companies achieve SOC 2 Type II certification on accelerated timelines.",
+        category: "Compliance",
+        date: "2026-02-18",
+        readTime: "8 min"
+      }
+    ];
+    /* === END BLOG POSTS === */
+
+    const blogGrid = document.getElementById('blog-grid');
+    const blogFilters = document.getElementById('blog-filters');
+    const categories = ['All', ...new Set(blogPosts.map(p => p.category))];
+
+    function renderBlogFilters() {
+      blogFilters.innerHTML = categories.map((cat, i) =>
+        `<button class="blog-filter-btn${i === 0 ? ' active' : ''}" data-category="${cat}">${cat}</button>`
+      ).join('');
+      blogFilters.querySelectorAll('.blog-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          blogFilters.querySelectorAll('.blog-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderBlogCards(btn.dataset.category);
+        });
+      });
+    }
+
+    function renderBlogCards(filter) {
+      const filtered = filter === 'All' ? blogPosts : blogPosts.filter(p => p.category === filter);
+      blogGrid.innerHTML = filtered.sort((a, b) => new Date(b.date) - new Date(a.date)).map(post => `
+        <article class="card blog-card">
+          <div class="card-meta">
+            <span class="badge badge-mint">${post.category}</span>
+            <span>${post.date}</span>
+            <span>${post.readTime} read</span>
+          </div>
+          <h3 class="card-title"><a href="#resources">${post.title}</a></h3>
+          <p class="card-text">${post.excerpt}</p>
+          <a href="#contact" class="read-more">Read More &rarr;</a>
+        </article>
+      `).join('');
+    }
+
+    renderBlogFilters();
+    renderBlogCards('All');
+
+    // ===== Contact Form =====
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // Clear errors
+      document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+      document.querySelectorAll('.contact-form input, .contact-form textarea').forEach(el => el.classList.remove('error'));
+
+      const formData = {
+        name: document.getElementById('contact-name').value.trim(),
+        email: document.getElementById('contact-email').value.trim(),
+        company: document.getElementById('contact-company').value.trim(),
+        phone: document.getElementById('contact-phone').value.trim(),
+        service: document.getElementById('contact-service').value,
+        urgency: document.getElementById('contact-urgency').value,
+        message: document.getElementById('contact-message').value.trim()
+      };
+
+      // Validate
+      let hasError = false;
+      if (!formData.name) {
+        document.getElementById('error-name').textContent = 'Name is required';
+        document.getElementById('contact-name').classList.add('error');
+        hasError = true;
+      }
+      if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        document.getElementById('error-email').textContent = 'Valid email is required';
+        document.getElementById('contact-email').classList.add('error');
+        hasError = true;
+      }
+      if (!formData.message || formData.message.length < 10) {
+        document.getElementById('error-message').textContent = 'Message must be at least 10 characters';
+        document.getElementById('contact-message').classList.add('error');
+        hasError = true;
+      }
+      if (hasError) return;
+
+      const submitBtn = document.getElementById('contact-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i data-lucide="loader-2" style="width:18px;height:18px;animation:spin 1s linear infinite;"></i> Sending...';
+
+      try {
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        const result = await response.json();
+        if (result.success) {
+          contactForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+          lucide.createIcons({ nodes: [formSuccess] });
+        } else {
+          alert(result.message || 'Something went wrong. Please try again.');
+        }
+      } catch (err) {
+        alert('Network error. Please check your connection and try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" style="width:18px;height:18px;"></i> Send Inquiry';
+        lucide.createIcons({ nodes: [submitBtn] });
+      }
+    });
+
+    // ===== Back to Top =====
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 600);
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== Spin animation for loader =====
+    const styleEl = document.createElement('style');
+    styleEl.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+    document.head.appendChild(styleEl);
+
+  })();
+  </script>
+</body>
+</html>
