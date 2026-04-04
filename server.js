@@ -82,7 +82,7 @@ app.post('/contact', contactLimiter, async (req, res) => {
 
 async function sendContactEmail(clean) {
   const html = `
-    <h2 style="color:#0A1428;">New Website Inquiry — Cybersec-by-Laurel</h2>
+    <h2 style="color:#0A1428;">New Website Inquiry — Laurel Shield</h2>
     <p>Received on <strong>${new Date().toLocaleString('en-CA')}</strong></p>
     <table style="border-collapse:collapse;width:100%;max-width:600px;">
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;width:140px;">Name</td><td style="padding:8px;border:1px solid #ddd;">${clean.name}</td></tr>
@@ -94,7 +94,7 @@ async function sendContactEmail(clean) {
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Message</td><td style="padding:8px;border:1px solid #ddd;">${clean.message}</td></tr>
     </table>
     <hr style="margin:20px 0;border:none;border-top:1px solid #ddd;">
-    <p style="color:#999;font-size:12px;">Cybersec-by-Laurel website contact form</p>
+    <p style="color:#999;font-size:12px;">Laurel Shield website contact form</p>
   `;
 
   if (!resend) {
@@ -103,7 +103,7 @@ async function sendContactEmail(clean) {
   }
   try {
     await resend.emails.send({
-      from: 'Cybersec-by-Laurel <onboarding@resend.dev>',
+      from: 'Laurel Shield <onboarding@resend.dev>',
       to: EMAIL_TO,
       subject: `New Inquiry: ${clean.name} — ${clean.service || 'General'}`,
       html,
@@ -120,7 +120,7 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`=== Cybersec-by-Laurel Website ===`);
+  console.log(`=== Laurel Shield Website ===`);
   console.log(`Server running at http://localhost:${PORT}`);
   console.log(`Started: ${new Date().toISOString()}`);
 });
