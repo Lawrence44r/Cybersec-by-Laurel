@@ -1,5 +1,22 @@
+# Laurel Shield Cybersecurity — robots.txt
+# https://security.laurelshield.com
+
 User-agent: *
 Allow: /
 Disallow: /health
 
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Search engine sitemaps
 Sitemap: https://security.laurelshield.com/sitemap.xml
+
+# Host directive
+Host: https://security.laurelshield.com

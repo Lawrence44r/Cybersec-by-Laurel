@@ -1,6 +1,6 @@
 # Laurel Shield — Design & Operations Guide
 
-> **Version:** 1.0  
+> **Version:** 2.0  
 > **Last Updated:** April 5, 2026  
 > **Author:** Lawrence Okonkwo  
 > **Project:** Cybersec-by-Laurel (Laurel Shield Website)
@@ -186,7 +186,7 @@ Press `Ctrl+C` in the terminal, or kill the Node.js process.
 
 ## 6. Server Configuration (server.js)
 
-The entire backend is a single 131-line Express.js application.
+The entire backend is a single ~145-line Express.js application (includes SEO caching and preload middleware).
 
 ### Routes
 
@@ -200,8 +200,12 @@ The entire backend is a single 131-line Express.js application.
 ### Request Processing
 
 1. **Body parsing**: JSON and URL-encoded, limited to **100KB** max
-2. **Static serving**: `express.static` serves everything in `public/`
-3. **Contact form** (`POST /contact`):
+2. **Static serving**: `express.static` serves everything in `public/` with SEO-optimized cache headers:
+   - HTML files: `Cache-Control: public, max-age=3600, must-revalidate` (1 hour)
+   - Images (jpg, png, webp, svg): `Cache-Control: public, max-age=2592000, immutable` (30 days)
+   - Other assets: `max-age=604800` (7 days)
+3. **SEO preload middleware**: Homepage requests receive `Link` headers to preconnect CDN origins and preload the hero image
+4. **Contact form** (`POST /contact`):
    - Rate-limited: **5 requests per IP per 15 minutes**
    - Validates: name (required), email (valid format), message (10+ chars)
    - Sanitizes all input with `validator.escape()` and `validator.trim()`
@@ -218,14 +222,15 @@ The entire backend is a single 131-line Express.js application.
 | 12-13 | Email configuration (recipient, Resend client) |
 | 16-27 | Helmet security headers and CSP |
 | 30-36 | Rate limiter configuration |
-| 39-41 | Body parsers and static file serving |
-| 44-47 | `sanitize()` function |
-| 50-56 | `validateContact()` function |
-| 59-81 | `POST /contact` route handler |
-| 83-115 | `sendContactEmail()` async function |
-| 118-120 | `/health` endpoint |
-| 123-125 | 404 catch-all |
-| 127-131 | Server startup |
+| 39-56 | Body parsers, static file serving with SEO cache headers |
+| 58-66 | SEO: HTTP Link header preload middleware |
+| 68-71 | `sanitize()` function |
+| 74-80 | `validateContact()` function |
+| 83-105 | `POST /contact` route handler |
+| 107-139 | `sendContactEmail()` async function |
+| 142-144 | `/health` endpoint |
+| 147-149 | 404 catch-all |
+| 151-155 | Server startup |
 
 ---
 
@@ -555,27 +560,111 @@ Use `<i data-lucide="icon-name"></i>` in HTML to place icons.
 
 ## 14. SEO & Structured Data
 
-### Meta Tags
+The website implements an aggressive, enterprise-grade SEO strategy designed to maximize global search visibility for "cybersecurity" and all related service keywords.
 
-- **Title:** `Laurel Shield | #1 Cybersecurity Consulting — Penetration Testing, Compliance Audits, AI Security`
-- **Description:** 300+ character comprehensive description
-- **Keywords:** 90+ keyword terms covering all service areas
-- **Canonical:** `https://security.laurelshield.com`
-- **Geo tags:** Calgary (CA-AB) and Philadelphia (US-PA)
+### Title Tag Strategy
+
+```
+Cybersecurity Consulting Firm | Laurel Shield — #1 Penetration Testing, Compliance Audits, AI Security Services
+```
+
+**Why keyword-first:** Google gives more weight to words at the beginning of the title. "Cybersecurity Consulting Firm" leads, followed by the brand name and key services.
+
+### Meta Description
+
+400+ character comprehensive description covering:
+- All core services (penetration testing, compliance audits, AI security, managed SOC, vCISO, cloud security)
+- All compliance frameworks (SOC 2, HIPAA, ISO 27001, PCI DSS, CMMC 2.0)
+- Office locations (Calgary, Philadelphia)
+- Target industries (healthcare, fintech, SaaS, government, energy)
+- Geographic reach (worldwide)
+- Call to action ("Schedule your free cybersecurity consultation today")
+
+### Meta Keywords
+
+**300+ keyword phrases** organized by category:
+- **Core terms:** cybersecurity, cybersecurity consulting, cyber security, information security, infosec
+- **Services:** penetration testing, vulnerability assessment, security audit, incident response, managed SOC, vCISO
+- **Compliance:** HIPAA compliance, SOC 2 audit, ISO 27001 certification, PCI DSS compliance, CMMC 2.0, NIST CSF, GDPR
+- **AI Security:** AI security consulting, LLM security, prompt injection defense, agentic AI security, MCP security
+- **Cloud:** AWS security, Azure security, GCP security, cloud penetration testing
+- **Industries:** healthcare cybersecurity, fintech security, SaaS security, government cybersecurity, energy sector cybersecurity
+- **Geographic:** cybersecurity Calgary, cybersecurity Philadelphia, cybersecurity Canada, cybersecurity USA, cybersecurity worldwide
+- **Intent:** best cybersecurity company, top cybersecurity firm, hire cybersecurity consultant, cybersecurity near me
+
+### Additional Meta Tags
+
+| Tag | Purpose |
+|-----|---------|
+| `googlebot`, `bingbot` | Explicit crawl directives for major search engines |
+| `geo.position`, `ICBM` | Precise GPS coordinates for local SEO (Calgary + Philadelphia) |
+| `hreflang` (en, x-default) | International targeting for English-speaking markets |
+| `theme-color` (#FF4500) | Browser/mobile chrome color |
+| `apple-mobile-web-app-*` | iOS home screen optimization |
+| `application-name` | Windows taskbar/shortcut name |
+| `revisit-after` (3 days) | Suggests crawl frequency to search engines |
+| `language`, `distribution`, `coverage` | Global distribution signals |
 
 ### Open Graph (Facebook/LinkedIn)
 
-Configured with title, description, type (website), URL, image, and locale.
+- Title, description with keyword-rich content
+- Image dimensions specified (1200x630) with alt text
+- Multiple locale alternates: en_US, en_CA, en_GB
+- Site name: "Laurel Shield Cybersecurity"
 
 ### Twitter Card
 
-Type: `summary_large_image` with title and description.
+- Type: `summary_large_image`
+- Image with alt text
+- `@LaurelShield` site and creator handles
+- Keyword-rich title and description
 
-### JSON-LD Structured Data (3 schemas)
+### JSON-LD Structured Data (7 schemas)
 
-1. **ProfessionalService** — Organization details, addresses, geo coordinates, area served, service catalog, contact info
-2. **WebSite** — For Google sitelinks search box
-3. **FAQPage** — 4 Q&A pairs for FAQ rich results
+| Schema | Purpose | Rich Result |
+|--------|---------|-------------|
+| **ProfessionalService/Organization** | Main business entity with 12 services, 50+ knowsAbout, ratings (4.9/5), reviews, founder, opening hours, 15+ areaServed | Knowledge Panel, business info |
+| **WebSite** | Site identity with SearchAction | Sitelinks search box |
+| **WebPage** | Page metadata with breadcrumbs, dates | Page info in results |
+| **FAQPage** (10 Q&As) | Common cybersecurity questions and detailed answers | FAQ rich results (expandable) |
+| **ItemList** | 10 services listed with URLs | Service list rich results |
+| **LocalBusiness (Calgary)** | Calgary office with coordinates, hours, phone | Local pack / Google Maps |
+| **LocalBusiness (Philadelphia)** | Philadelphia office with coordinates, hours, phone | Local pack / Google Maps |
+
+**FAQPage covers these topics (10 entries):**
+1. What cybersecurity services does Laurel Shield offer?
+2. Where is Laurel Shield located?
+3. How much does a cybersecurity assessment cost?
+4. How do I get a cybersecurity assessment?
+5. Does Laurel Shield help with HIPAA compliance?
+6. What is the difference between vulnerability assessment and penetration testing?
+7. How long does a SOC 2 audit take?
+8. What is a virtual CISO (vCISO)?
+9. Does Laurel Shield offer AI security assessments?
+10. What industries does Laurel Shield serve?
+
+### On-Page SEO Techniques
+
+| Technique | Implementation |
+|-----------|----------------|
+| **H1 keyword optimization** | Screen-reader H1: "Cybersecurity Consulting Firm — Penetration Testing, Compliance Audits, AI Security Services" |
+| **Semantic `<strong>` tags** | Key phrases in hero subtitle, contact section wrapped in `<strong>` for semantic weight |
+| **Section aria-labels** | Every `<section>` has keyword-rich `aria-label` (crawlable by Google) |
+| **Section heading keywords** | Every H2 includes "cybersecurity" and relevant service terms |
+| **Internal link equity** | 18+ footer links pointing to all service sections |
+| **Noscript fallback** | Full keyword-rich HTML content for crawlers that don't execute JS |
+| **`.sr-only` class** | Screen-reader-only text for SEO H1 content without visual clutter |
+
+### Performance SEO (Core Web Vitals)
+
+| Optimization | Implementation |
+|-------------|----------------|
+| **DNS prefetch** | `<link rel="dns-prefetch">` for fonts.googleapis.com, fonts.gstatic.com, unpkg.com |
+| **Preconnect** | `<link rel="preconnect">` with crossorigin for all CDN origins |
+| **Asset preloading** | `<link rel="preload">` for NYC hero image and Google Fonts CSS |
+| **HTTP Link headers** | Server sends preconnect/preload hints via `Link` response header on homepage |
+| **Static asset caching** | 7-day default, 30-day for images (immutable), 1-hour for HTML |
+| **Image optimization** | NYC hero image is 190KB JPEG (acceptable for full-viewport background) |
 
 ### robots.txt
 
@@ -583,18 +672,58 @@ Type: `summary_large_image` with title and description.
 User-agent: *
 Allow: /
 Disallow: /health
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
 Sitemap: https://security.laurelshield.com/sitemap.xml
+Host: https://security.laurelshield.com
 ```
 
-The `/health` endpoint is excluded from crawling.
+- `/health` excluded from crawling
+- Specific directives for Googlebot and Bingbot
+- `Host` directive for canonical domain
 
 ### sitemap.xml
 
-Lists 4 pages with priorities:
-- `/` — priority 1.0, weekly
-- `/privacy-policy.html` — priority 0.3, yearly
-- `/terms.html` — priority 0.3, yearly
-- `/responsible-disclosure.html` — priority 0.4, yearly
+Lists **13 URLs** with image metadata:
+
+| URL | Priority | Frequency |
+|-----|----------|-----------|
+| `/` (homepage) | 1.0 | weekly |
+| `/#services` | 0.9 | monthly |
+| `/#ai-security` | 0.9 | monthly |
+| `/#compliance` | 0.9 | monthly |
+| `/#contact` | 0.9 | monthly |
+| `/#industries` | 0.8 | monthly |
+| `/#solutions` | 0.8 | monthly |
+| `/#resources` | 0.8 | weekly |
+| `/#why-us` | 0.7 | monthly |
+| `/#quiz` | 0.7 | monthly |
+| `/privacy-policy.html` | 0.3 | yearly |
+| `/terms.html` | 0.3 | yearly |
+| `/responsible-disclosure.html` | 0.4 | yearly |
+
+Homepage entry includes `<image:image>` with title and caption for Google Image Search.
+
+### Post-Deployment SEO Checklist
+
+After deploying to production with a live domain:
+
+- [ ] **Google Search Console:** Submit sitemap at `https://search.google.com/search-console` → Sitemaps → Add `https://security.laurelshield.com/sitemap.xml`
+- [ ] **Google Business Profile:** Create/claim listing for Calgary and Philadelphia offices
+- [ ] **Bing Webmaster Tools:** Submit sitemap at `https://www.bing.com/webmasters`
+- [ ] **Yandex Webmaster:** Submit at `https://webmaster.yandex.com` (for Russian/CIS traffic)
+- [ ] **Request indexing:** In Google Search Console → URL Inspection → paste homepage URL → "Request Indexing"
+- [ ] **Social profiles:** Create @LaurelShield on Twitter/X, LinkedIn, GitHub and add URLs to `sameAs` in JSON-LD
+- [ ] **OG Image:** Create and upload `og-image.png` (1200x630px) to the `public/` folder
+- [ ] **Backlink strategy:** Submit to cybersecurity directories, CREST member listing, industry publications
+- [ ] **Google Ads (optional):** Run branded + service keyword campaigns to drive initial traffic signals
 
 ---
 

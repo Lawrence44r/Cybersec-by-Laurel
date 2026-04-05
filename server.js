@@ -38,7 +38,34 @@ const contactLimiter = rateLimit({
 // Body parsers
 app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true, limit: '100kb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+
+// SEO: Cache static assets aggressively, HTML short-cache for freshness
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '7d',
+  setHeaders: (res, filePath) => {
+    // HTML files get short cache for SEO freshness
+    if (filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'public, max-age=3600, must-revalidate');
+    }
+    // Images get long cache
+    if (filePath.match(/\.(jpg|jpeg|png|gif|webp|svg|ico)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=2592000, immutable');
+    }
+  }
+}));
+
+// SEO: Preload critical resources via Link header
+app.use((req, res, next) => {
+  if (req.path === '/' || req.path === '/index.html') {
+    res.setHeader('Link', [
+      '<https://fonts.googleapis.com>; rel=preconnect',
+      '<https://fonts.gstatic.com>; rel=preconnect; crossorigin',
+      '<https://unpkg.com>; rel=preconnect',
+      '</nyc-night.jpg>; rel=preload; as=image'
+    ].join(', '));
+  }
+  next();
+});
 
 // Sanitize string input
 function sanitize(val) {
