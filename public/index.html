@@ -2865,6 +2865,23 @@
     const canvas = document.getElementById('ai-bg-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    // roundRect polyfill for older browsers
+    if (!ctx.roundRect) {
+      CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+        if (typeof r === 'number') r = [r];
+        var rad = r[0] || 0;
+        this.moveTo(x + rad, y);
+        this.lineTo(x + w - rad, y);
+        this.arcTo(x + w, y, x + w, y + rad, rad);
+        this.lineTo(x + w, y + h - rad);
+        this.arcTo(x + w, y + h, x + w - rad, y + h, rad);
+        this.lineTo(x + rad, y + h);
+        this.arcTo(x, y + h, x, y + h - rad, rad);
+        this.lineTo(x, y + rad);
+        this.arcTo(x, y, x + rad, y, rad);
+        this.closePath();
+      };
+    }
     let W, H, dpr;
     const ORANGE = '#FF4500';
     const ORANGE2 = '#FF6A33';
@@ -2910,8 +2927,8 @@
 
     // --- Scan lines ---
     const scanLines = [
-      { y: 0, speed: 0.4, opacity: 0.06 },
-      { y: 0.33, speed: 0.25, opacity: 0.04 },
+      { y: 0, speed: 0.4, opacity: 0.1 },
+      { y: 0.33, speed: 0.25, opacity: 0.07 },
     ];
 
     // --- Central shield parameters ---
@@ -2925,7 +2942,7 @@
       const shift = (t * 0.008) % GRID_SPACING;
       ctx.strokeStyle = ORANGE;
       ctx.lineWidth = 0.5;
-      ctx.globalAlpha = 0.04;
+      ctx.globalAlpha = 0.07;
       for (let x = -GRID_SPACING + shift; x < W + GRID_SPACING; x += GRID_SPACING) {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
       }
@@ -2955,7 +2972,7 @@
           const bx = nodes[j].x * W, by = nodes[j].y * H;
           const dist = Math.hypot(ax - bx, ay - by);
           if (dist < maxDist) {
-            const alpha = (1 - dist / maxDist) * 0.12;
+            const alpha = (1 - dist / maxDist) * 0.2;
             ctx.strokeStyle = ORANGE;
             ctx.globalAlpha = alpha;
             ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
@@ -2965,7 +2982,7 @@
       // Draw node dots
       for (const n of nodes) {
         const px = n.x * W, py = n.y * H;
-        const glow = 0.3 + 0.4 * Math.sin(n.pulse);
+        const glow = 0.4 + 0.5 * Math.sin(n.pulse);
         ctx.globalAlpha = glow;
         ctx.fillStyle = ORANGE;
         ctx.beginPath(); ctx.arc(px, py, n.r, 0, Math.PI * 2); ctx.fill();
@@ -2987,7 +3004,7 @@
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(t * 0.0003);
-      ctx.globalAlpha = 0.08;
+      ctx.globalAlpha = 0.15;
       ctx.strokeStyle = ORANGE;
       ctx.lineWidth = 1.5;
       ctx.setLineDash([8, 16]);
@@ -2999,7 +3016,7 @@
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(-t * 0.0005);
-      ctx.globalAlpha = 0.06;
+      ctx.globalAlpha = 0.12;
       ctx.strokeStyle = ORANGE2;
       ctx.lineWidth = 1;
       ctx.setLineDash([4, 8]);
@@ -3010,9 +3027,9 @@
       // Shield shape
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.globalAlpha = 0.07;
+      ctx.globalAlpha = 0.14;
       const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
-      grad.addColorStop(0, 'rgba(255,69,0,0.15)');
+      grad.addColorStop(0, 'rgba(255,69,0,0.25)');
       grad.addColorStop(1, 'rgba(255,69,0,0)');
       ctx.fillStyle = grad;
       ctx.beginPath();
@@ -3024,7 +3041,7 @@
       ctx.fill();
 
       // Shield outline
-      ctx.globalAlpha = 0.15 + 0.05 * Math.sin(t * 0.002);
+      ctx.globalAlpha = 0.25 + 0.1 * Math.sin(t * 0.002);
       ctx.strokeStyle = ORANGE;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -3036,7 +3053,7 @@
       ctx.stroke();
 
       // AI text in center
-      ctx.globalAlpha = 0.12 + 0.06 * Math.sin(t * 0.0015);
+      ctx.globalAlpha = 0.22 + 0.1 * Math.sin(t * 0.0015);
       ctx.fillStyle = ORANGE;
       ctx.font = '700 ' + Math.round(r * 0.35) + 'px Arial, sans-serif';
       ctx.textAlign = 'center';
@@ -3045,7 +3062,7 @@
 
       // Lock icon below AI text
       const lockW = r * 0.18, lockH = r * 0.2, lockY = r * 0.25;
-      ctx.globalAlpha = 0.1 + 0.04 * Math.sin(t * 0.0018);
+      ctx.globalAlpha = 0.2 + 0.08 * Math.sin(t * 0.0018);
       ctx.strokeStyle = ORANGE;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -3060,7 +3077,7 @@
       // Radial circuit lines from shield center
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.globalAlpha = 0.04;
+      ctx.globalAlpha = 0.1;
       ctx.strokeStyle = ORANGE;
       ctx.lineWidth = 0.8;
       for (let a = 0; a < 12; a++) {
@@ -3071,12 +3088,12 @@
         ctx.lineTo(Math.cos(angle) * len, Math.sin(angle) * len);
         ctx.stroke();
         // Endpoint dot
-        ctx.globalAlpha = 0.08 + 0.04 * Math.sin(t * 0.002 + a);
+        ctx.globalAlpha = 0.15 + 0.08 * Math.sin(t * 0.002 + a);
         ctx.fillStyle = ORANGE;
         ctx.beginPath();
         ctx.arc(Math.cos(angle) * len, Math.sin(angle) * len, 2, 0, Math.PI * 2);
         ctx.fill();
-        ctx.globalAlpha = 0.04;
+        ctx.globalAlpha = 0.1;
       }
       ctx.restore();
     }
@@ -3105,8 +3122,8 @@
         if (h.delay > 0) continue;
         h.y += h.vy * dt * 0.001;
         if (h.fadeIn) {
-          h.opacity = Math.min(h.opacity + dt * 0.001, 0.15);
-          if (h.opacity >= 0.15) h.fadeIn = false;
+          h.opacity = Math.min(h.opacity + dt * 0.001, 0.25);
+          if (h.opacity >= 0.25) h.fadeIn = false;
         }
         if (h.y < -0.05) {
           h.y = 1.05; h.x = Math.random(); h.fadeIn = true; h.opacity = 0;
@@ -3133,7 +3150,7 @@
         const r = base * p.dist;
         const px = cx + Math.cos(a) * r;
         const py = cy + Math.sin(a) * r * 0.6;
-        ctx.globalAlpha = 0.2 + 0.1 * Math.sin(t * 0.003 + p.angle);
+        ctx.globalAlpha = 0.35 + 0.15 * Math.sin(t * 0.003 + p.angle);
         ctx.fillStyle = ORANGE;
         ctx.beginPath();
         ctx.roundRect(px - 5, py - 3, 10, 6, 2);
