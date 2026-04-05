@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsible Disclosure Policy | Laurel Shield</title>
+  <meta name="description" content="Laurel Shield's responsible disclosure policy for reporting security vulnerabilities.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://security.laurelshield.com/responsible-disclosure.html">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2L4 8v8c0 7.73 5.12 14.96 12 16 6.88-1.04 12-8.27 12-16V8L16 2z' fill='%23111' stroke='%23FF6600' stroke-width='2'/%3E%3Cpath d='M16 6L8 10v5c0 5.15 3.41 9.97 8 10.67 4.59-.7 8-5.52 8-10.67v-5L16 6z' fill='%23FF6600' opacity='0.15'/%3E%3Cpath d='M12 16l3 3 5-6' stroke='%23FF6600' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-primary: #000000; --bg-secondary: #0A0A0A; --accent-orange: #FF6600;
+      --accent-purple: #A855F7; --text-primary: #FFFFFF; --text-secondary: #B0B0B0;
+      --text-muted: #707070; --border-color: rgba(255, 255, 255, 0.06);
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --max-width: 800px; --nav-height: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent-orange); text-decoration: none; }
+    a:hover { color: var(--accent-purple); }
+    .page-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height);
+      display: flex; align-items: center; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .page-nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: var(--text-primary); }
+    .nav-brand:hover { color: var(--text-primary); }
+    .nav-brand .accent { color: var(--accent-orange); }
+    .back-link { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+    .page-content { max-width: var(--max-width); margin: 0 auto; padding: calc(var(--nav-height) + 60px) 24px 80px; }
+    .page-content h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; margin-bottom: 8px; background: linear-gradient(135deg, var(--text-primary), var(--accent-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .page-content .effective-date { font-size: 14px; color: var(--text-muted); margin-bottom: 48px; }
+    .page-content h2 { font-size: 22px; font-weight: 600; margin-top: 48px; margin-bottom: 16px; color: var(--text-primary); }
+    .page-content h3 { font-size: 17px; font-weight: 600; margin-top: 24px; margin-bottom: 8px; color: var(--text-primary); }
+    .page-content p { color: var(--text-secondary); font-size: 15px; line-height: 1.8; margin-bottom: 16px; }
+    .page-content ul, .page-content ol { color: var(--text-secondary); font-size: 15px; line-height: 1.8; margin-bottom: 16px; padding-left: 24px; }
+    .page-content li { margin-bottom: 6px; }
+    .page-content strong { color: var(--text-primary); }
+    .page-content code {
+      font-family: var(--font-mono); font-size: 14px; background: rgba(255, 255, 255, 0.06);
+      padding: 2px 8px; border-radius: 4px; color: var(--accent-orange);
+    }
+    .highlight-box {
+      background: rgba(255, 102, 0, 0.06); border: 1px solid rgba(255, 102, 0, 0.2);
+      border-radius: 12px; padding: 24px 28px; margin: 32px 0;
+    }
+    .highlight-box p { margin-bottom: 8px; }
+    .highlight-box p:last-child { margin-bottom: 0; }
+    .page-footer { border-top: 1px solid var(--border-color); padding: 24px; text-align: center; font-size: 13px; color: var(--text-muted); }
+    .page-footer a { color: var(--text-muted); margin: 0 12px; }
+  </style>
+</head>
+<body>
+  <header class="page-nav">
+    <div class="page-nav-inner">
+      <a href="/" class="nav-brand">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28" aria-hidden="true">
+          <path d="M16 2L4 8v8c0 7.73 5.12 14.96 12 16 6.88-1.04 12-8.27 12-16V8L16 2z" stroke="#FF6600" stroke-width="2" fill="rgba(255,102,0,0.08)"/>
+          <path d="M12 16l3 3 5-6" stroke="#FF6600" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Laurel<span class="accent"> Shield</span>
+      </a>
+      <a href="/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <h1>Responsible Disclosure Policy</h1>
+    <p class="effective-date">Effective Date: April 1, 2026</p>
+
+    <p>At Laurel Shield, we take security seriously — both for our clients and for our own systems. We welcome and appreciate security researchers who help us keep our platform safe. If you believe you have found a security vulnerability in our website or services, we encourage you to report it responsibly.</p>
+
+    <div class="highlight-box">
+      <p><strong>Report vulnerabilities to:</strong></p>
+      <p><a href="mailto:security@laurelshield.com">security@laurelshield.com</a></p>
+      <p>Please include <code>[VULN REPORT]</code> in the subject line.</p>
+    </div>
+
+    <h2>Scope</h2>
+    <p>The following assets are in scope for responsible disclosure:</p>
+    <ul>
+      <li><strong>security.laurelshield.com</strong> — our primary website.</li>
+      <li>Any subdomains of <strong>laurelshield.com</strong> that we operate.</li>
+      <li>APIs and services exposed by our web properties.</li>
+    </ul>
+
+    <h3>Out of Scope</h3>
+    <ul>
+      <li>Third-party services, integrations, or platforms we do not control.</li>
+      <li>Findings from automated scanners without validated proof of concept.</li>
+      <li>Social engineering or phishing attacks against our employees.</li>
+      <li>Physical security attacks against our offices or infrastructure.</li>
+      <li>Denial of service (DoS/DDoS) attacks.</li>
+      <li>Spam or content injection without demonstrated security impact.</li>
+    </ul>
+
+    <h2>What to Include in Your Report</h2>
+    <p>To help us investigate and respond efficiently, please provide:</p>
+    <ul>
+      <li>A clear description of the vulnerability and its potential impact.</li>
+      <li>Detailed steps to reproduce the issue.</li>
+      <li>Proof of concept (screenshots, video, HTTP requests/responses, etc.).</li>
+      <li>The affected URL, endpoint, or component.</li>
+      <li>Your assessment of severity (e.g., CVSS score if applicable).</li>
+      <li>Any suggestions for remediation.</li>
+    </ul>
+
+    <h2>Our Commitment</h2>
+    <p>When you report a vulnerability in good faith following this policy, we commit to:</p>
+    <ul>
+      <li><strong>Acknowledge</strong> your report within 2 business days.</li>
+      <li><strong>Investigate</strong> and validate the reported issue promptly.</li>
+      <li><strong>Provide updates</strong> on our progress at least every 7 days until resolution.</li>
+      <li><strong>Remediate</strong> confirmed vulnerabilities in a timely manner based on severity.</li>
+      <li><strong>Credit</strong> you publicly (with your permission) once the issue is resolved.</li>
+      <li><strong>Not pursue</strong> legal action against researchers who act in good faith and comply with this policy.</li>
+    </ul>
+
+    <h2>Researcher Guidelines</h2>
+    <p>To qualify for safe harbor under this policy, researchers must:</p>
+    <ul>
+      <li>Act in good faith and avoid privacy violations, data destruction, or service disruption.</li>
+      <li>Only interact with accounts you own or have explicit permission to test.</li>
+      <li>Not access, modify, or delete data belonging to other users.</li>
+      <li>Not publicly disclose the vulnerability before we have had a reasonable opportunity to address it (minimum 90 days from report date).</li>
+      <li>Not exploit the vulnerability beyond what is necessary to demonstrate proof of concept.</li>
+      <li>Comply with all applicable laws.</li>
+    </ul>
+
+    <h2>Recognition</h2>
+    <p>We believe in recognizing the contributions of the security community. For valid, in-scope reports, we offer:</p>
+    <ul>
+      <li>Public acknowledgment on our website (with your consent).</li>
+      <li>A letter of appreciation that may be referenced professionally.</li>
+      <li>Direct communication with our security team for findings of exceptional quality.</li>
+    </ul>
+    <p>We do not currently offer monetary bounties, but we reserve the right to reward exceptional findings at our discretion.</p>
+
+    <h2>Response Timeline</h2>
+    <ul>
+      <li><strong>Acknowledgment:</strong> within 2 business days.</li>
+      <li><strong>Triage and severity assessment:</strong> within 5 business days.</li>
+      <li><strong>Critical/High severity:</strong> remediation target of 14 days.</li>
+      <li><strong>Medium severity:</strong> remediation target of 30 days.</li>
+      <li><strong>Low/Informational:</strong> remediation target of 90 days.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>
+      <strong>Security Reports:</strong> <a href="mailto:security@laurelshield.com">security@laurelshield.com</a><br>
+      <strong>General Inquiries:</strong> <a href="mailto:contact@laurelshield.com">contact@laurelshield.com</a>
+    </p>
+    <p>Thank you for helping us keep Laurel Shield and our clients safe.</p>
+  </main>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 Laurel Shield. All rights reserved.</p>
+    <div style="margin-top:8px;">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/responsible-disclosure.html">Responsible Disclosure</a>
+    </div>
+  </footer>
+</body>
+</html>

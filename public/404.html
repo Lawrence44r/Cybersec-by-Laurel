@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | Laurel Shield</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2L4 8v8c0 7.73 5.12 14.96 12 16 6.88-1.04 12-8.27 12-16V8L16 2z' fill='%23111' stroke='%23FF6600' stroke-width='2'/%3E%3Cpath d='M16 6L8 10v5c0 5.15 3.41 9.97 8 10.67 4.59-.7 8-5.52 8-10.67v-5L16 6z' fill='%23FF6600' opacity='0.15'/%3E%3Cpath d='M12 16l3 3 5-6' stroke='%23FF6600' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #000; color: #fff; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: #FF6600; text-decoration: none; }
+    a:hover { color: #A855F7; }
+    .error-code {
+      font-family: 'JetBrains Mono', monospace; font-size: clamp(80px, 15vw, 160px);
+      font-weight: 700; line-height: 1;
+      background: linear-gradient(135deg, #FF6600, #A855F7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 16px;
+    }
+    h1 { font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+    p { color: #B0B0B0; font-size: 16px; line-height: 1.6; max-width: 480px; margin-bottom: 32px; }
+    .actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 8px; font-size: 15px;
+      font-weight: 600; cursor: pointer; border: none;
+      font-family: 'Inter', system-ui, sans-serif; text-decoration: none;
+      transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-primary { background: #FF6600; color: #000; }
+    .btn-primary:hover { background: #FF8533; color: #000; box-shadow: 0 0 30px rgba(255, 102, 0, 0.3); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: #FF6600; border: 2px solid #FF6600; }
+    .btn-outline:hover { background: rgba(168, 85, 247, 0.1); color: #A855F7; border-color: #A855F7; transform: translateY(-2px); }
+    .shield {
+      margin-bottom: 32px; opacity: 0.15;
+    }
+  </style>
+</head>
+<body>
+  <svg class="shield" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="80" aria-hidden="true">
+    <path d="M16 2L4 8v8c0 7.73 5.12 14.96 12 16 6.88-1.04 12-8.27 12-16V8L16 2z" stroke="#FF6600" stroke-width="1.5" fill="rgba(255,102,0,0.08)"/>
+    <path d="M12 16l3 3 5-6" stroke="#FF6600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="error-code">404</div>
+  <h1>Page Not Found</h1>
+  <p>The page you're looking for doesn't exist or has been moved. If you believe this is an error, please contact us.</p>
+  <div class="actions">
+    <a href="/" class="btn btn-primary">Back to Home</a>
+    <a href="/#contact" class="btn btn-outline">Contact Us</a>
+  </div>
+</body>
+</html>
