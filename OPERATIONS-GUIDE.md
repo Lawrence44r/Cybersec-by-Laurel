@@ -117,16 +117,19 @@ Cybersec-by-Laurel/
 ├── node_modules/                # npm dependencies (not in git)
 └── public/                      # Static files served by Express
     ├── index.html               # Main website (~140KB, single-page)
-    ├── nyc-night.jpg            # NYC skyline photo for hero animation (~190KB)
+    ├── hipaa-compliance.html     # Dedicated HIPAA landing page (SEO, FAQ schema, penalty table)
     ├── ai-security-assessment.html # AI security assessment landing page
+    ├── nyc-night.jpg            # NYC skyline photo for hero animation (~190KB)
     ├── 404.html                 # Custom 404 error page
     ├── privacy-policy.html      # Privacy policy page
     ├── terms.html               # Terms of service page
     ├── responsible-disclosure.html # Security vulnerability disclosure policy
     ├── robots.txt               # Search engine crawling rules
-    ├── sitemap.xml              # XML sitemap for SEO
-    └── blog/                    # SEO blog posts
-        ├── index.html           # Blog listing page
+    ├── sitemap.xml              # XML sitemap for SEO (18 URLs)
+    └── blog/                    # SEO blog posts (6 articles)
+        ├── index.html           # Blog listing page with category filters
+        ├── hipaa-risk-assessment-checklist-2026.html    # HIPAA SRA checklist guide
+        ├── what-happens-during-ocr-hipaa-audit.html     # OCR audit process guide
         ├── top-10-penetration-testing-findings-healthcare-2026.html
         ├── navigating-cmmc-2-guide-defense-contractors.html
         ├── ai-security-risks-your-organization-is-ignoring.html
@@ -213,7 +216,7 @@ The entire backend is a single ~284-line Express.js application (includes SEO ca
 | GET | `/*` (static) | Serves files from `public/` directory |
 | POST | `/contact` | Contact form submission (rate-limited: 5/15min) |
 | POST | `/quiz-report` | Quiz result email — sends report to lead + notifies consultant (rate-limited: 10/15min) |
-| POST | `/subscribe` | Exit-intent email capture — sends compliance checklist + notifies consultant (rate-limited: 5/15min) |
+| POST | `/subscribe` | Exit-intent email capture — sends HIPAA compliance checklist + notifies consultant (rate-limited: 5/15min) |
 | GET | `/health` | Health check endpoint (returns `{ status: 'ok', uptime: N }`) |
 | GET | `*` (404) | Catch-all serves `public/404.html` |
 
@@ -712,7 +715,7 @@ Host: https://security.laurelshield.com
 
 ### sitemap.xml
 
-Lists **13 URLs** with image metadata:
+Lists **18 URLs** with image metadata:
 
 | URL | Priority | Frequency |
 |-----|----------|-----------|
@@ -726,6 +729,14 @@ Lists **13 URLs** with image metadata:
 | `/#resources` | 0.8 | weekly |
 | `/#why-us` | 0.7 | monthly |
 | `/#quiz` | 0.7 | monthly |
+| `/hipaa-compliance.html` | 0.9 | monthly |
+| `/blog/` | 0.8 | weekly |
+| `/blog/hipaa-risk-assessment-checklist-2026.html` | 0.7 | monthly |
+| `/blog/what-happens-during-ocr-hipaa-audit.html` | 0.7 | monthly |
+| `/blog/top-10-penetration-testing-findings-healthcare-2026.html` | 0.7 | monthly |
+| `/blog/navigating-cmmc-2-guide-defense-contractors.html` | 0.7 | monthly |
+| `/blog/ai-security-risks-your-organization-is-ignoring.html` | 0.7 | monthly |
+| `/blog/soc-2-in-8-weeks-saas-companies.html` | 0.7 | monthly |
 | `/privacy-policy.html` | 0.3 | yearly |
 | `/terms.html` | 0.3 | yearly |
 | `/responsible-disclosure.html` | 0.4 | yearly |

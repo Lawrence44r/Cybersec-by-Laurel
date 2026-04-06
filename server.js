@@ -223,26 +223,31 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
       await resend.emails.send({
         from: 'Laurel Shield <onboarding@resend.dev>',
         to: safeEmail,
-        subject: 'Your Free 2026 Cybersecurity Compliance Checklist',
+        subject: 'Your Free HIPAA Compliance Checklist — Laurel Shield',
         html: `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#fff;padding:32px;border-radius:12px;">
             <h1 style="color:#FF4500;margin-bottom:4px;">Laurel Shield</h1>
-            <p style="color:#707070;margin-bottom:24px;">Your compliance checklist is ready.</p>
+            <p style="color:#707070;margin-bottom:24px;">Your HIPAA compliance checklist is ready.</p>
             <div style="background:#111;padding:20px;border-radius:8px;margin-bottom:20px;">
-              <h2 style="color:#fff;margin:0 0 12px 0;">2026 Cybersecurity Compliance Quick-Check</h2>
-              <p style="color:#B0B0B0;">Here's a quick overview of the key requirements across major frameworks:</p>
+              <h2 style="color:#fff;margin:0 0 12px 0;">HIPAA Compliance Quick-Check 2026</h2>
+              <p style="color:#B0B0B0;">Use this checklist to assess your organization's HIPAA readiness. These are the items OCR investigators check first:</p>
               <table style="width:100%;border-collapse:collapse;margin-top:12px;">
-                <tr style="border-bottom:1px solid #222;"><td style="padding:8px;color:#FF4500;font-weight:700;">SOC 2</td><td style="padding:8px;color:#B0B0B0;">Access controls, encryption, monitoring, incident response, vendor management</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:8px;color:#FF4500;font-weight:700;">HIPAA</td><td style="padding:8px;color:#B0B0B0;">PHI encryption, access audit trails, BAAs, workforce training, breach notification</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:8px;color:#FF4500;font-weight:700;">ISO 27001</td><td style="padding:8px;color:#B0B0B0;">Risk assessment, asset management, access control, cryptography, operations security</td></tr>
-                <tr><td style="padding:8px;color:#FF4500;font-weight:700;">PCI DSS</td><td style="padding:8px;color:#B0B0B0;">Network segmentation, cardholder data protection, vulnerability management, monitoring</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;width:40%;">Security Risk Assessment</td><td style="padding:10px 8px;color:#B0B0B0;">Documented SRA covering all ePHI systems, threat analysis, vulnerability assessment, and risk determination. Updated annually or when environment changes.</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Policies & Procedures</td><td style="padding:10px 8px;color:#B0B0B0;">Written policies for access controls, encryption, incident response, workstation security, sanctions, and all 54 Security Rule implementation specifications.</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Workforce Training</td><td style="padding:10px 8px;color:#B0B0B0;">HIPAA security awareness training at hire and annually. Documented sign-off sheets, phishing simulations, and social engineering tests.</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Business Associate Agreements</td><td style="padding:10px 8px;color:#B0B0B0;">Signed, current BAAs with every vendor who accesses PHI — cloud providers, billing, IT support, shredding, answering services.</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Access Controls & Audit Logs</td><td style="padding:10px 8px;color:#B0B0B0;">Unique user IDs, role-based access, MFA on remote access, auto-logoff. System access logs enabled and reviewed quarterly.</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Encryption</td><td style="padding:10px 8px;color:#B0B0B0;">ePHI encrypted at rest and in transit (TLS/SSL). If not feasible, documented alternative safeguards and risk acceptance.</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Incident Response Plan</td><td style="padding:10px 8px;color:#B0B0B0;">Documented breach response plan with notification procedures, four-factor risk assessment template, and annual tabletop exercise.</td></tr>
+                <tr><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Physical Safeguards</td><td style="padding:10px 8px;color:#B0B0B0;">Locked server rooms, workstation positioning, visitor logs, device disposal procedures, clean desk policy.</td></tr>
               </table>
             </div>
-            <p style="color:#B0B0B0;">Need help getting compliant? We get organizations audit-ready in weeks, not months.</p>
+            <p style="color:#B0B0B0;">Missing items on this list? Don't panic — most organizations have gaps. The important thing is to identify and fix them before OCR does.</p>
+            <p style="color:#B0B0B0;margin-top:12px;">Read our full guide: <a href="https://security.laurelshield.com/blog/hipaa-risk-assessment-checklist-2026.html" style="color:#FF4500;">HIPAA Risk Assessment Checklist 2026</a></p>
             <div style="text-align:center;margin-top:20px;">
-              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free HIPAA Gap Check</a>
+              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free 15-Min HIPAA Gap Check</a>
             </div>
-            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA</p>
+            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA | security.laurelshield.com</p>
           </div>
         `
       });
@@ -254,7 +259,7 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
         from: 'Laurel Shield <onboarding@resend.dev>',
         to: EMAIL_TO,
         subject: `[New Subscriber] ${safeEmail}`,
-        html: `<p>New email subscriber from exit-intent popup:</p><ul><li>Email: ${safeEmail}</li><li>Time: ${new Date().toISOString()}</li><li>Lead magnet: Compliance Checklist</li></ul>`
+        html: `<p>New email subscriber from exit-intent popup:</p><ul><li>Email: ${safeEmail}</li><li>Time: ${new Date().toISOString()}</li><li>Lead magnet: HIPAA Compliance Checklist</li></ul>`
       });
     }
 
