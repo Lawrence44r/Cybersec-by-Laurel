@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Security Assessment Tool | Laurel Shield — Comprehensive AI Risk Evaluation</title>
+  <meta name="description" content="Free AI Security Assessment Tool by Laurel Shield. Evaluate your organization's AI security posture across 10 domains: governance, model security, agentic AI, prompt injection defense, supply chain, data protection, compliance, red teaming, incident response, and future readiness. Aligned with NIST AI RMF, OWASP Top 10 for LLM, MITRE ATLAS, ISO 42001, EU AI Act, and MAESTRO.">
+  <meta name="keywords" content="AI security assessment, AI risk assessment tool, LLM security, AI governance, NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, ISO 42001, EU AI Act compliance, agentic AI security, MCP security, prompt injection defense, AI red teaming, AI supply chain security, AI-SPM, AI bill of materials">
+  <link rel="canonical" href="https://security.laurelshield.com/ai-security-assessment.html">
+  <meta property="og:title" content="AI Security Assessment Tool | Laurel Shield">
+  <meta property="og:description" content="Comprehensive AI security posture evaluation across 10 domains. Free tool aligned with NIST AI RMF, OWASP, MITRE ATLAS, ISO 42001, and EU AI Act.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://security.laurelshield.com/ai-security-assessment.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Security Assessment Tool | Laurel Shield">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF4500'/%3E%3Cstop offset='100%25' stop-color='%23FF3D00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 1L3 7.5v9c0 8.5 5.5 15.5 13 16.5 7.5-1 13-8 13-16.5v-9L16 1z' fill='%230A0A0A' stroke='url(%23fg)' stroke-width='2'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='11' fill='%23FF4500'%3ELS%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0A0A0A;
+      --bg-card: #111111;
+      --bg-card-hover: #1A1A1A;
+      --accent-orange: #FF4500;
+      --accent-orange-dim: rgba(255, 69, 0, 0.15);
+      --accent-blue: #3B82F6;
+      --accent-blue-dim: rgba(59, 130, 246, 0.1);
+      --accent-purple: #A855F7;
+      --accent-purple-dim: rgba(168, 85, 247, 0.15);
+      --accent-red: #FF4D6A;
+      --accent-yellow: #FBBF24;
+      --accent-green: #22C55E;
+      --accent-green-dim: rgba(34, 197, 94, 0.1);
+      --accent-cyan: #06B6D4;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --text-muted: #707070;
+      --border-color: rgba(255, 255, 255, 0.06);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ========== TOP NAV BAR ========== */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text-primary);
+      font-weight: 700; font-size: 18px;
+    }
+    .topbar-brand .accent { color: var(--accent-orange); }
+    .topbar-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text-secondary); text-decoration: none; font-size: 14px;
+      transition: color 0.2s;
+    }
+    .topbar-back:hover { color: var(--accent-orange); }
+
+    /* ========== LAYOUT ========== */
+    .page-wrapper {
+      max-width: 1100px; margin: 0 auto; padding: 100px 24px 60px;
+    }
+
+    /* ========== HERO HEADER ========== */
+    .assessment-hero {
+      text-align: center; padding: 60px 0 48px;
+      background: radial-gradient(ellipse at center top, rgba(255,69,0,0.06) 0%, transparent 60%);
+    }
+    .assessment-hero h1 {
+      font-size: clamp(28px, 5vw, 44px); font-weight: 800;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .assessment-hero h1 .gradient-text {
+      background: linear-gradient(135deg, #FF4500, #FF6A33, #FF8C00);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .assessment-hero p {
+      font-size: 17px; color: var(--text-secondary); max-width: 700px;
+      margin: 0 auto 24px; line-height: 1.7;
+    }
+    .framework-badges {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+      margin-top: 20px;
+    }
+    .fw-badge {
+      font-size: 11px; font-family: var(--font-mono); font-weight: 500;
+      padding: 5px 12px; border-radius: 20px;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted); background: rgba(255,255,255,0.02);
+      cursor: default; transition: all 0.2s;
+    }
+    .fw-badge:hover { color: var(--accent-orange); border-color: rgba(255,69,0,0.3); }
+
+    /* ========== DOMAIN SELECTOR ========== */
+    .domain-nav {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px; margin: 40px 0;
+    }
+    .domain-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 18px 16px; cursor: pointer;
+      transition: all 0.25s var(--ease-out); position: relative; overflow: hidden;
+    }
+    .domain-card:hover { border-color: rgba(255,69,0,0.3); transform: translateY(-2px); }
+    .domain-card.active { border-color: var(--accent-orange); background: rgba(255,69,0,0.05); }
+    .domain-card.completed { border-color: var(--accent-green); }
+    .domain-card.completed::after {
+      content: ''; position: absolute; top: 10px; right: 10px;
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green);
+    }
+    .domain-card-icon { font-size: 20px; margin-bottom: 8px; color: var(--accent-orange); }
+    .domain-card-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .domain-card-count { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-section {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 32px;
+    }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .progress-label { font-size: 14px; font-weight: 600; }
+    .progress-stats { font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
+    .progress-bar { height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 3px; background: var(--accent-orange); transition: width 0.5s var(--ease-out); }
+
+    /* ========== QUESTION PANEL ========== */
+    .question-panel {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 40px; margin-bottom: 24px;
+      animation: fadeIn 0.3s var(--ease-out);
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .question-domain-label {
+      font-size: 12px; font-family: var(--font-mono); color: var(--accent-orange);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .question-counter {
+      font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); margin-bottom: 16px;
+    }
+    .question-text {
+      font-size: 20px; font-weight: 600; line-height: 1.4; margin-bottom: 24px;
+    }
+
+    /* Info tooltip / learn more */
+    .question-info {
+      background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 10px; padding: 16px 18px; margin-bottom: 24px;
+      font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+    }
+    .question-info summary {
+      cursor: pointer; font-weight: 600; color: var(--accent-blue);
+      font-size: 13px; display: flex; align-items: center; gap: 6px;
+      list-style: none;
+    }
+    .question-info summary::-webkit-details-marker { display: none; }
+    .question-info summary::before { content: '\25B6'; font-size: 10px; transition: transform 0.2s; }
+    .question-info[open] summary::before { transform: rotate(90deg); }
+    .question-info .info-body { margin-top: 12px; }
+    .question-info .info-body p { margin-bottom: 10px; }
+    .question-info a { color: var(--accent-blue); text-decoration: underline; text-underline-offset: 2px; }
+    .question-info a:hover { color: #60A5FA; }
+    .question-info .ref-tag {
+      display: inline-block; font-size: 11px; font-family: var(--font-mono);
+      background: rgba(59,130,246,0.1); color: var(--accent-blue);
+      padding: 2px 8px; border-radius: 4px; margin: 2px 3px 2px 0;
+    }
+
+    /* Answer options */
+    .options-grid { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 10px; padding: 16px 18px; cursor: pointer;
+      transition: all 0.2s; text-align: left; color: var(--text-secondary);
+      font-size: 15px; line-height: 1.5; font-family: var(--font-sans);
+      width: 100%;
+    }
+    .option-btn:hover { border-color: rgba(255,69,0,0.4); color: var(--text-primary); background: rgba(255,69,0,0.05); }
+    .option-btn.selected { border-color: var(--accent-orange); background: var(--accent-orange-dim); color: var(--text-primary); }
+    .option-level {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; font-family: var(--font-mono);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border-color);
+    }
+    .option-btn.selected .option-level { background: var(--accent-orange); color: #000; border-color: var(--accent-orange); }
+
+    /* Navigation buttons */
+    .question-nav {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 28px;
+      padding-top: 20px; border-top: 1px solid var(--border-color);
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; border: none; font-family: var(--font-sans);
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--accent-orange); color: #000; }
+    .btn-primary:hover { background: #FF5722; transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-secondary { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); }
+    .btn-secondary:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.15); }
+    .btn-outline {
+      background: transparent; color: var(--accent-orange);
+      border: 1px solid var(--accent-orange); border-radius: 8px;
+    }
+    .btn-outline:hover { background: var(--accent-orange-dim); }
+
+    /* ========== RESULTS ========== */
+    .results-container { animation: fadeIn 0.5s var(--ease-out); }
+    .results-header {
+      text-align: center; padding: 48px 0 32px;
+    }
+    .results-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+    .overall-score-ring {
+      width: 180px; height: 180px; margin: 24px auto;
+      position: relative;
+    }
+    .overall-score-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .overall-score-ring .score-text {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .overall-score-ring .score-number { font-size: 42px; font-weight: 800; font-family: var(--font-mono); }
+    .overall-score-ring .score-label { font-size: 13px; color: var(--text-muted); }
+
+    .maturity-level {
+      text-align: center; margin-bottom: 32px;
+    }
+    .maturity-badge {
+      display: inline-block; font-size: 18px; font-weight: 700;
+      padding: 8px 24px; border-radius: 8px; margin-bottom: 8px;
+    }
+    .maturity-desc { font-size: 15px; color: var(--text-secondary); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+    /* Domain results grid */
+    .domain-results-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px; margin: 32px 0;
+    }
+    .domain-result-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 24px; transition: border-color 0.2s;
+    }
+    .domain-result-card:hover { border-color: rgba(255,255,255,0.1); }
+    .domain-result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .domain-result-name { font-size: 15px; font-weight: 600; }
+    .domain-result-score { font-size: 14px; font-weight: 700; font-family: var(--font-mono); }
+    .domain-result-bar { height: 4px; background: var(--bg-secondary); border-radius: 2px; margin-bottom: 12px; overflow: hidden; }
+    .domain-result-fill { height: 100%; border-radius: 2px; transition: width 1s var(--ease-out); }
+    .domain-result-level { font-size: 12px; font-family: var(--font-mono); margin-bottom: 8px; }
+    .domain-result-findings { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .domain-result-findings li { margin-bottom: 4px; list-style: none; padding-left: 16px; position: relative; }
+    .domain-result-findings li::before { content: '\25B8'; position: absolute; left: 0; color: var(--accent-orange); }
+
+    /* Recommendations section */
+    .recommendations {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 32px; margin: 32px 0;
+    }
+    .recommendations h3 { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+    .rec-item {
+      display: flex; gap: 16px; padding: 16px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .rec-item:last-child { border-bottom: none; }
+    .rec-priority {
+      flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; font-family: var(--font-mono);
+    }
+    .rec-priority.critical { background: rgba(255,77,106,0.15); color: var(--accent-red); }
+    .rec-priority.high { background: var(--accent-orange-dim); color: var(--accent-orange); }
+    .rec-priority.medium { background: rgba(251,191,36,0.15); color: var(--accent-yellow); }
+    .rec-priority.low { background: var(--accent-green-dim); color: var(--accent-green); }
+    .rec-content { flex: 1; }
+    .rec-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .rec-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .rec-refs { margin-top: 6px; }
+    .rec-refs a {
+      font-size: 11px; font-family: var(--font-mono); color: var(--accent-blue);
+      text-decoration: none; margin-right: 8px;
+    }
+    .rec-refs a:hover { text-decoration: underline; }
+
+    /* CTA */
+    .results-cta {
+      text-align: center; padding: 40px 0;
+      background: radial-gradient(ellipse at center, rgba(255,69,0,0.06) 0%, transparent 70%);
+      border-radius: 16px; margin: 32px 0;
+    }
+    .results-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    .results-cta p { color: var(--text-secondary); margin-bottom: 24px; font-size: 15px; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .page-wrapper { padding: 80px 16px 40px; }
+      .domain-nav { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .domain-card { padding: 14px 12px; }
+      .domain-card-title { font-size: 13px; }
+      .question-panel { padding: 24px 20px; }
+      .question-text { font-size: 17px; }
+      .domain-results-grid { grid-template-columns: 1fr; }
+      .framework-badges { gap: 6px; }
+    }
+    @media (max-width: 480px) {
+      .domain-nav { grid-template-columns: 1fr; }
+    }
+
+    /* Utility */
+    .hidden { display: none !important; }
+    .text-center { text-align: center; }
+    .mt-16 { margin-top: 16px; }
+    .mb-24 { margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+
+  <!-- ========== TOP BAR ========== -->
+  <nav class="topbar">
+    <a href="/" class="topbar-brand">
+      <span>Laurel<span class="accent"> Shield</span></span>
+    </a>
+    <a href="/" class="topbar-back">
+      <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Main Site
+    </a>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <!-- ========== HERO ========== -->
+    <header class="assessment-hero" id="hero">
+      <h1><span class="gradient-text">AI Security Assessment Tool</span></h1>
+      <p>Evaluate your organization's AI security posture across 11 critical domains. This assessment is aligned with the latest frameworks and standards to help you identify gaps, prioritize remediation, and build a resilient AI security program through 2035.</p>
+      <div class="framework-badges">
+        <span class="fw-badge">NIST AI RMF 1.0</span>
+        <span class="fw-badge">NIST AI 600-1</span>
+        <span class="fw-badge">OWASP Top 10 LLM 2025</span>
+        <span class="fw-badge">OWASP Agentic AI 2026</span>
+        <span class="fw-badge">MITRE ATLAS</span>
+        <span class="fw-badge">ISO/IEC 42001</span>
+        <span class="fw-badge">EU AI Act</span>
+        <span class="fw-badge">MAESTRO</span>
+        <span class="fw-badge">Google SAIF</span>
+        <span class="fw-badge">CoSAI</span>
+      </div>
+    </header>
+
+    <!-- ========== DOMAIN SELECTOR ========== -->
+    <div id="domain-nav" class="domain-nav"></div>
+
+    <!-- ========== PROGRESS ========== -->
+    <div class="progress-section" id="progress-section">
+      <div class="progress-header">
+        <span class="progress-label">Assessment Progress</span>
+        <span class="progress-stats" id="progress-stats">0 / 55 questions</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+
+    <!-- ========== QUESTION PANEL ========== -->
+    <div id="question-panel"></div>
+
+    <!-- ========== RESULTS (hidden initially) ========== -->
+    <div id="results-container" class="results-container hidden"></div>
+
+  </div>
+
+  <script>
+  // =============================================================================
+  // AI SECURITY ASSESSMENT TOOL — DATA & ENGINE
+  // =============================================================================
+
+  const DOMAINS = [
+    {
+      id: 'governance',
+      title: 'AI Governance & Strategy',
+      icon: 'landmark',
+      questions: [
+        {
+          text: 'Does your organization have a formal AI governance framework with defined roles, policies, and oversight structure?',
+          info: `<p><strong>Why this matters:</strong> AI governance is the foundation of responsible AI deployment. Without clear ownership and policies, AI risks are managed ad-hoc, leading to compliance gaps and uncontrolled risk.</p>
+<p>The <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI RMF 1.0</a> GOVERN function requires organizations to establish policies, processes, and personnel for AI risk management. <a href="https://www.iso.org/standard/42001" target="_blank" rel="noopener">ISO/IEC 42001:2023</a> is the world's first certifiable AI management system standard, requiring a documented AIMS (AI Management System) covering the full AI lifecycle.</p>
+<p><span class="ref-tag">NIST AI RMF</span> <span class="ref-tag">ISO/IEC 42001</span> <span class="ref-tag">EU AI Act Art. 9</span></p>`,
+          options: [
+            { text: 'No AI governance structure exists', score: 1 },
+            { text: 'Informal — AI is managed within existing IT governance', score: 2 },
+            { text: 'Defined AI governance policies exist but are not consistently enforced', score: 3 },
+            { text: 'Formal AI governance with dedicated roles (AI Ethics Board, AI Risk Owner), documented policies, and regular review cycles', score: 4 },
+            { text: 'Mature AIMS aligned with ISO 42001, integrated with enterprise risk management, with continuous improvement processes', score: 5 }
+          ]
+        },
+        {
+          text: 'How does your organization maintain an inventory of all AI systems, including third-party AI services and shadow AI?',
+          info: `<p><strong>Why this matters:</strong> You cannot secure what you do not know exists. Shadow AI (unauthorized AI tools used by employees) is a rapidly growing risk. By 2026, enterprises recognize AI usage inventories as a foundational security and governance control.</p>
+<p>An <a href="https://www.wiz.io/academy/ai-security/ai-bom-ai-bill-of-materials" target="_blank" rel="noopener">AI Bill of Materials (AI-BOM)</a> documents every dataset, model, and component in your AI systems. The <a href="https://cyclonedx.org/capabilities/mlbom/" target="_blank" rel="noopener">CycloneDX ML-BOM</a> and SPDX 3.0 standards provide machine-readable formats for this inventory.</p>
+<p><a href="https://www.vectra.ai/topics/ai-security-posture-management" target="_blank" rel="noopener">AI Security Posture Management (AI-SPM)</a> tools provide continuous discovery and monitoring of AI assets across the environment.</p>
+<p><span class="ref-tag">AI-SPM</span> <span class="ref-tag">AI-BOM</span> <span class="ref-tag">CycloneDX ML-BOM</span> <span class="ref-tag">EU AI Act Art. 60</span></p>`,
+          options: [
+            { text: 'No inventory — we do not track AI systems in use', score: 1 },
+            { text: 'Partial awareness — we know about major AI deployments but not all', score: 2 },
+            { text: 'Maintained inventory of sanctioned AI systems, but shadow AI is not tracked', score: 3 },
+            { text: 'Comprehensive inventory with AI-BOM documentation, including third-party AI services', score: 4 },
+            { text: 'Continuous AI-SPM with automated discovery, shadow AI detection, and AI-BOM maintenance', score: 5 }
+          ]
+        },
+        {
+          text: 'How does your organization classify AI systems by risk level and apply proportionate controls?',
+          info: `<p><strong>Why this matters:</strong> Not all AI systems carry equal risk. A chatbot answering FAQ questions has fundamentally different risk characteristics than an AI system making credit decisions or medical diagnoses.</p>
+<p>The <a href="https://artificialintelligenceact.eu/article/6/" target="_blank" rel="noopener">EU AI Act</a> mandates a four-tier risk classification: unacceptable (banned), high-risk (strict regulation), limited risk (transparency), and minimal risk (no obligations). High-risk requirements take effect August 2026 and include conformity assessments, CE marking, human oversight, and EU database registration. Fines range from 7.5M to 35M EUR or 1-7% of global turnover.</p>
+<p><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI RMF</a> emphasizes risk-tiering through its MAP function. <a href="https://www.microsoft.com/en-us/ai/principles-and-approach" target="_blank" rel="noopener">Microsoft's Responsible AI Standard</a> defines restricted and sensitive use categories.</p>
+<p><span class="ref-tag">EU AI Act</span> <span class="ref-tag">NIST AI RMF MAP</span> <span class="ref-tag">Microsoft RAI</span></p>`,
+          options: [
+            { text: 'No risk classification for AI systems', score: 1 },
+            { text: 'Basic awareness of AI risk levels but no formal classification', score: 2 },
+            { text: 'Risk classification framework exists but is applied inconsistently', score: 3 },
+            { text: 'Systematic risk classification aligned with EU AI Act tiers, with proportionate controls', score: 4 },
+            { text: 'Dynamic risk assessment integrated into the AI lifecycle, with automated classification triggers and control mapping', score: 5 }
+          ]
+        },
+        {
+          text: 'Does your organization have an AI-specific incident response plan?',
+          info: `<p><strong>Why this matters:</strong> AI incidents differ fundamentally from traditional cybersecurity incidents. Model poisoning, adversarial manipulation, and hallucination-driven errors require specialized response procedures.</p>
+<p>The <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener">NIST AI 600-1 GenAI Profile</a> identifies incident disclosure as one of four primary considerations. 88% of organizations reported AI agent security incidents in the past year according to 2025-2026 industry research.</p>
+<p><span class="ref-tag">NIST AI 600-1</span> <span class="ref-tag">ISO/IEC 42001 A.6.2.6</span></p>`,
+          options: [
+            { text: 'No AI-specific incident response plan exists', score: 1 },
+            { text: 'AI incidents are handled under general cybersecurity IR', score: 2 },
+            { text: 'AI-specific runbooks exist for known scenarios (e.g., data leakage, model manipulation)', score: 3 },
+            { text: 'Comprehensive AI IR plan with defined escalation paths, tested through tabletop exercises', score: 4 },
+            { text: 'Automated AI incident detection with playbooks, regular drills, and cross-functional response teams', score: 5 }
+          ]
+        },
+        {
+          text: 'How mature is your AI security training and awareness program for developers, operators, and executives?',
+          info: `<p><strong>Why this matters:</strong> AI security requires specialized knowledge that traditional security training does not cover. Developers building AI systems need to understand prompt injection, model security, and responsible AI practices. Executives need AI risk literacy to make informed governance decisions.</p>
+<p>The <a href="https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Microsoft-Responsible-AI-Standard-General-Requirements.pdf" target="_blank" rel="noopener">Microsoft Responsible AI Standard v2</a> requires impact assessment training for all AI project teams. The EU AI Act Article 4 mandates AI literacy for all personnel involved in AI system operation.</p>
+<p><span class="ref-tag">Microsoft RAI Standard</span> <span class="ref-tag">EU AI Act Art. 4</span> <span class="ref-tag">NIST AI RMF GOVERN</span></p>`,
+          options: [
+            { text: 'No AI-specific security training', score: 1 },
+            { text: 'Ad-hoc awareness (conference talks, articles)', score: 2 },
+            { text: 'Annual AI security training for technical staff', score: 3 },
+            { text: 'Role-based AI security training for developers, operators, and leadership', score: 4 },
+            { text: 'Continuous AI security education program with hands-on labs, certifications, and executive AI risk briefings', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'model-security',
+      title: 'Model Security & Integrity',
+      icon: 'brain',
+      questions: [
+        {
+          text: 'How do you protect AI models against adversarial attacks such as evasion, poisoning, and model extraction?',
+          info: `<p><strong>Why this matters:</strong> Adversarial attacks exploit fundamental properties of machine learning. Evasion attacks manipulate inputs to cause misclassification. Poisoning attacks corrupt training data to embed backdoors. Model extraction attacks steal proprietary models through API queries.</p>
+<p><a href="https://atlas.mitre.org/" target="_blank" rel="noopener">MITRE ATLAS</a> now catalogs 84 techniques across 16 tactics for adversarial AI attacks. The framework expanded significantly in 2025-2026 with agentic AI techniques. NIST's March 2025 update introduced broader threat categories including poisoning, evasion, data extraction, and model manipulation.</p>
+<p><span class="ref-tag">MITRE ATLAS</span> <span class="ref-tag">NIST AI 600-1</span> <span class="ref-tag">OWASP LLM Top 10</span></p>`,
+          options: [
+            { text: 'No specific protections against adversarial AI attacks', score: 1 },
+            { text: 'Basic awareness but no systematic defenses implemented', score: 2 },
+            { text: 'Some defenses in place (input validation, output filtering) but not comprehensive', score: 3 },
+            { text: 'Systematic adversarial robustness testing with defenses mapped to MITRE ATLAS techniques', score: 4 },
+            { text: 'Defense-in-depth with adversarial training, runtime detection, continuous red teaming, and ATLAS-aligned threat modeling', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you secure your AI model supply chain (pre-trained models, open-source libraries, third-party APIs)?',
+          info: `<p><strong>Why this matters:</strong> The AI supply chain is a rapidly growing attack vector. Researchers documented "SockPuppet" attacks using AI-generated developer profiles to inject backdoors. 5% of open-source MCP servers already contain tool poisoning attacks. Attackers register package names hallucinated by LLMs.</p>
+<p><a href="https://genai.owasp.org/llmrisk/llm03-training-data-poisoning/" target="_blank" rel="noopener">OWASP LLM03:2025 Supply Chain</a> covers vulnerabilities from pre-trained models, data sources, and plugins. Supply chain breaches increased ~40% since 2023.</p>
+<p><span class="ref-tag">OWASP LLM03:2025</span> <span class="ref-tag">NIST AI RMF MAP</span> <span class="ref-tag">SPDX 3.0</span> <span class="ref-tag">CycloneDX ML-BOM</span></p>`,
+          options: [
+            { text: 'No supply chain security practices for AI components', score: 1 },
+            { text: 'Basic due diligence on major AI vendors only', score: 2 },
+            { text: 'Vulnerability scanning for AI dependencies, model provenance checks', score: 3 },
+            { text: 'Comprehensive AI supply chain security with ML-BOM, model signing, and dependency auditing', score: 4 },
+            { text: 'Automated AI supply chain assurance with ML-BOM integration, provenance verification, reproducible builds, and continuous scanning', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you validate model integrity and detect model drift or tampering in production?',
+          info: `<p><strong>Why this matters:</strong> Models can degrade over time (drift) or be silently tampered with. Dynamic poisoning in CI/CD pipelines has become a sophisticated attack vector where open-source dependencies or container images are modified with malicious payloads.</p>
+<p>Model cards and datasheets are documentation standards that capture model performance, intended use, and limitations. NIST's March 2025 update emphasizes model provenance, data integrity, and third-party model assessment.</p>
+<p><span class="ref-tag">NIST AI RMF MEASURE</span> <span class="ref-tag">Model Cards</span> <span class="ref-tag">ISO/IEC 42001</span></p>`,
+          options: [
+            { text: 'No model integrity monitoring', score: 1 },
+            { text: 'Manual periodic checks on model performance', score: 2 },
+            { text: 'Automated model performance monitoring with drift detection', score: 3 },
+            { text: 'Comprehensive integrity validation with cryptographic signing, drift detection, and tamper alerts', score: 4 },
+            { text: 'Continuous model integrity assurance with automated validation pipelines, model cards, and chain-of-custody tracking', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you manage access controls and authentication for AI models and inference endpoints?',
+          info: `<p><strong>Why this matters:</strong> AI models and their APIs are high-value targets. Unauthorized access can lead to model extraction (stealing the model through queries), data exfiltration, or manipulation of AI outputs that influence business decisions.</p>
+<p><a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener">OWASP LLM06:2025 Excessive Agency</a> warns about AI systems with overly broad permissions. Defense-in-depth for model access includes authentication, rate limiting, query analysis, and output monitoring.</p>
+<p><span class="ref-tag">OWASP LLM06:2025</span> <span class="ref-tag">NIST AI RMF MANAGE</span></p>`,
+          options: [
+            { text: 'No specific access controls for AI systems', score: 1 },
+            { text: 'Basic API key authentication for model endpoints', score: 2 },
+            { text: 'Role-based access control with authentication and rate limiting', score: 3 },
+            { text: 'Fine-grained access controls with mTLS, token scoping, and query auditing', score: 4 },
+            { text: 'Zero-trust model access with per-request authorization, anomaly detection on query patterns, and comprehensive audit trails', score: 5 }
+          ]
+        },
+        {
+          text: 'Do you maintain documentation for your AI models (model cards, datasheets for datasets, risk assessments)?',
+          info: `<p><strong>Why this matters:</strong> Documentation is the bridge between technical AI systems and governance. Model cards describe model performance, intended use, and limitations. Datasheets for datasets document data collection, composition, and bias characteristics. The EU AI Act requires technical documentation for high-risk systems starting August 2026.</p>
+<p>The <a href="https://arxiv.org/html/2511.12668" target="_blank" rel="noopener">AI Risk Scanning (AIRS) Framework</a> systematizes security assurance through AI-BOM and beyond. The EU AI Office published a template for training data summaries in July 2025.</p>
+<p><span class="ref-tag">EU AI Act Art. 11</span> <span class="ref-tag">Model Cards</span> <span class="ref-tag">Datasheets for Datasets</span> <span class="ref-tag">AIRS Framework</span></p>`,
+          options: [
+            { text: 'No AI-specific documentation practices', score: 1 },
+            { text: 'Informal documentation (README files, wiki pages)', score: 2 },
+            { text: 'Standardized model cards for major models; basic dataset documentation', score: 3 },
+            { text: 'Comprehensive model cards, datasheets, and risk assessments for all production AI systems', score: 4 },
+            { text: 'Automated documentation generation with model cards, datasheets, AI-BOMs, and integration with governance workflows', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'prompt-security',
+      title: 'Prompt Injection & LLM Security',
+      icon: 'message-square-warning',
+      questions: [
+        {
+          text: 'What defenses do you have against prompt injection attacks (direct, indirect, multi-turn, cross-context)?',
+          info: `<p><strong>Why this matters:</strong> Prompt injection is the #1 threat in the <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener">OWASP Top 10 for LLM Applications 2025</a>. Research shows jailbreak success rates climb from 4.3% to 78.5% in multi-turn scenarios.</p>
+<p>The injection taxonomy has evolved to include 12 injection methods across four branches: direct (attacker-submitted), indirect via user-prompt delivery, indirect via external context-data, and indirect via internal context-data. Contemporary attacks are classified across delivery vector, attack modality, and propagation behavior.</p>
+<p><span class="ref-tag">OWASP LLM01:2025</span> <span class="ref-tag">MITRE ATLAS</span> <span class="ref-tag">NIST AI 600-1</span></p>`,
+          options: [
+            { text: 'No prompt injection defenses in place', score: 1 },
+            { text: 'Basic input filtering and system prompt design', score: 2 },
+            { text: 'Layered defenses: input validation, output filtering, prompt hardening, and canary tokens', score: 3 },
+            { text: 'Comprehensive defenses including semantic analysis, context isolation, and multi-turn attack detection', score: 4 },
+            { text: 'Advanced prompt security with automated detection, real-time monitoring, regular red teaming, and defense-in-depth across all injection vectors', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you prevent sensitive information disclosure through AI system outputs?',
+          info: `<p><strong>Why this matters:</strong> <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener">Sensitive Information Disclosure jumped from 6th to 2nd place</a> in the OWASP LLM Top 10 for 2025. LLMs can memorize and reproduce training data including PII, credentials, and proprietary information. RAG systems compound this risk by connecting models to live data stores.</p>
+<p>System Prompt Leakage is a new 2025 entry focusing on exposure of internal system prompts containing sensitive instructions, credentials, or operational logic.</p>
+<p><span class="ref-tag">OWASP LLM02:2025</span> <span class="ref-tag">OWASP LLM07:2025</span> <span class="ref-tag">NIST AI 600-1</span></p>`,
+          options: [
+            { text: 'No output controls or data leakage prevention for AI systems', score: 1 },
+            { text: 'Basic output filtering for known sensitive patterns (e.g., SSN, credit card)', score: 2 },
+            { text: 'DLP integration with AI outputs, system prompt protection, and PII detection', score: 3 },
+            { text: 'Comprehensive output security with contextual DLP, grounding verification, and citation enforcement', score: 4 },
+            { text: 'Real-time output monitoring with semantic analysis, data provenance tracking, and automated PII/secret redaction', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you secure your RAG (Retrieval-Augmented Generation) pipeline and vector databases?',
+          info: `<p><strong>Why this matters:</strong> <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener">Vector and Embedding Weaknesses (OWASP LLM08:2025)</a> is a new 2025 category targeting vulnerabilities in RAG systems and vector databases. This includes embedding poisoning, similarity attacks, and unauthorized vector database access.</p>
+<p>Indirect prompt injection via poisoned data sources is particularly dangerous in RAG systems, as the model treats retrieved documents as trusted context.</p>
+<p><span class="ref-tag">OWASP LLM08:2025</span> <span class="ref-tag">MITRE ATLAS</span></p>`,
+          options: [
+            { text: 'No RAG-specific security measures (or not using RAG)', score: 1 },
+            { text: 'Basic access controls on vector databases', score: 2 },
+            { text: 'Input sanitization for ingested documents, access controls on vector stores, and source attribution', score: 3 },
+            { text: 'Comprehensive RAG security: document provenance, embedding integrity checks, access-controlled retrieval, and injection detection', score: 4 },
+            { text: 'Advanced RAG security with real-time poisoning detection, embedding anomaly monitoring, multi-layer content filtering, and formal verification', score: 5 }
+          ]
+        },
+        {
+          text: 'Do you conduct regular LLM-specific security testing (red teaming, adversarial testing, jailbreak testing)?',
+          info: `<p><strong>Why this matters:</strong> The UK AI Security Institute found that every system tested remains vulnerable to some form of bypass, though jailbreak discovery time increased from minutes to hours between model generations. Microsoft has red-teamed over 100 GenAI products and open-sourced <a href="https://github.com/Azure/PyRIT" target="_blank" rel="noopener">PyRIT</a> for automated red teaming.</p>
+<p>Automated AI-on-AI red teaming is advancing rapidly. By 2026, AI "red team agents" are becoming more robust at finding exploits. NIST is developing formal guidelines for AI red teaming, and the EU AI Act will mandate it for high-risk systems.</p>
+<p><span class="ref-tag">NIST AI Red Teaming</span> <span class="ref-tag">Microsoft PyRIT</span> <span class="ref-tag">Anthropic Red Teaming</span> <span class="ref-tag">UK AISI</span></p>`,
+          options: [
+            { text: 'No LLM-specific security testing', score: 1 },
+            { text: 'Ad-hoc manual testing before deployment', score: 2 },
+            { text: 'Regular manual red teaming with documented test cases', score: 3 },
+            { text: 'Systematic red teaming using frameworks (PyRIT, DeepTeam) with automated and manual testing', score: 4 },
+            { text: 'Continuous automated red teaming integrated into CI/CD, combined with periodic expert-led engagements and AI-on-AI adversarial testing', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you manage and limit the consumption and resource usage of your LLM-powered systems?',
+          info: `<p><strong>Why this matters:</strong> <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener">OWASP LLM10:2025 Unbounded Consumption</a> covers denial-of-service through resource exhaustion, financial abuse through excessive API calls, and model degradation through overwhelming input volumes.</p>
+<p><span class="ref-tag">OWASP LLM10:2025</span></p>`,
+          options: [
+            { text: 'No rate limiting or resource controls on AI systems', score: 1 },
+            { text: 'Basic API rate limiting', score: 2 },
+            { text: 'Rate limiting, cost monitoring, and usage quotas per user/tenant', score: 3 },
+            { text: 'Comprehensive resource governance with per-user limits, cost alerts, anomaly detection, and circuit breakers', score: 4 },
+            { text: 'Adaptive resource management with dynamic rate limiting, cost attribution, abuse detection, and automated throttling', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'agentic',
+      title: 'Agentic AI Security',
+      icon: 'bot',
+      questions: [
+        {
+          text: 'How do you manage security for autonomous AI agents, including identity, authorization, and containment?',
+          info: `<p><strong>Why this matters:</strong> Agentic AI represents the next frontier of AI security. The <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" target="_blank" rel="noopener">OWASP Top 10 for Agentic Applications (2026)</a> is the first formal taxonomy of risks specific to autonomous AI agents. By 2026, over 40% of enterprise workflows involve autonomous agents.</p>
+<p><a href="https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure" target="_blank" rel="noopener">NIST's AI Agent Standards Initiative</a> (February 2026) focuses on interoperability, security, and trust for AI agents. The principle of "least agency" means only granting agents the minimum autonomy required for safe, bounded tasks.</p>
+<p><span class="ref-tag">OWASP Agentic Top 10</span> <span class="ref-tag">NIST AISI</span> <span class="ref-tag">MAESTRO</span></p>`,
+          options: [
+            { text: 'Not deploying AI agents, or no security measures in place', score: 1 },
+            { text: 'Basic API key authentication for agents with manual oversight', score: 2 },
+            { text: 'Agent identity management, scoped permissions, and human-in-the-loop for high-risk actions', score: 3 },
+            { text: 'Formal agent authorization framework with least-privilege, sandboxing, and behavioral monitoring', score: 4 },
+            { text: 'Comprehensive agentic security: verified agent identity (DIDs/VCs), runtime containment, behavioral anomaly detection, and automated circuit breakers', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you secure Model Context Protocol (MCP) servers and tool integrations used by AI agents?',
+          info: `<p><strong>Why this matters:</strong> MCP has become the dominant standard for connecting AI models to external tools, but security research reveals alarming vulnerabilities: 43% of MCP servers contain command injection flaws, 43% have OAuth authentication vulnerabilities, 33% allow unrestricted network access, and 5% of open-source MCP servers already contain tool poisoning attacks.</p>
+<p>In mid-2025, a catastrophic data breach occurred when Supabase's Cursor agent (running with privileged access) processed support tickets containing embedded SQL injection via MCP. The <a href="https://www.coalitionforsecureai.org/coalition-for-secure-ai-releases-extensive-taxonomy-for-model-context-protocol-security/" target="_blank" rel="noopener">CoSAI MCP Security taxonomy</a> (January 2026) provides comprehensive threat classification.</p>
+<p>Key vulnerabilities include: credential theft, prompt injection through tool descriptions, tool poisoning, excessive privileges, and rogue/shadow MCP servers.</p>
+<p><span class="ref-tag">CoSAI MCP Security</span> <span class="ref-tag">MCP Specification</span> <span class="ref-tag">OWASP ASI04</span></p>`,
+          options: [
+            { text: 'Not using MCP, or no MCP-specific security measures', score: 1 },
+            { text: 'Basic MCP server configuration with default settings', score: 2 },
+            { text: 'MCP servers run in sandboxed environments with input validation and authentication', score: 3 },
+            { text: 'Comprehensive MCP security: sandboxing, TLS, input sanitization, tool approval workflows, and vulnerability scanning', score: 4 },
+            { text: 'Hardened MCP deployment with runtime monitoring, automated tool poisoning detection, least-privilege enforcement, third-party code review, and continuous scanning', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you secure agent-to-agent communication and multi-agent systems?',
+          info: `<p><strong>Why this matters:</strong> Research found that a single compromised agent can poison 87% of downstream decision-making within 4 hours through cascading failures. <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" target="_blank" rel="noopener">OWASP ASI07 (Insecure Inter-Agent Communication)</a> documents how spoofed messages can misdirect entire agent clusters.</p>
+<p>Google's <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener">Agent2Agent (A2A) Protocol</a>, launched April 2025 and now hosted by the Linux Foundation with 150+ supporting companies, provides standardized secure agent communication with OAuth 2.0, API keys, and mTLS support.</p>
+<p><span class="ref-tag">A2A Protocol</span> <span class="ref-tag">OWASP ASI07</span> <span class="ref-tag">OWASP ASI08</span> <span class="ref-tag">MAESTRO</span></p>`,
+          options: [
+            { text: 'Not using multi-agent systems, or no security measures', score: 1 },
+            { text: 'Basic message passing between agents without formal security', score: 2 },
+            { text: 'Authenticated agent communication with message signing and basic validation', score: 3 },
+            { text: 'Secure multi-agent architecture with mTLS, message integrity, agent identity verification, and cascading failure protections', score: 4 },
+            { text: 'Enterprise-grade multi-agent security with A2A protocol adoption, verified agent identities (DIDs), cascading failure circuit breakers, and real-time behavioral monitoring', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you protect agent memory and persistent state from poisoning and manipulation?',
+          info: `<p><strong>Why this matters:</strong> Memory poisoning is an emerging threat where attackers inject false information into an agent's long-term memory through indirect prompt injection. Research demonstrated that poisoned data sources could corrupt an agent's persistent beliefs about security policies and vendor relationships.</p>
+<p>MITRE ATLAS v5.4.0 (February 2026) added memory manipulation as a specific attack technique. The <a href="https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro" target="_blank" rel="noopener">MAESTRO framework</a> identifies memory poisoning as a key threat in its seven-layer architecture.</p>
+<p><span class="ref-tag">MITRE ATLAS v5.4</span> <span class="ref-tag">MAESTRO</span> <span class="ref-tag">OWASP Agentic AI</span></p>`,
+          options: [
+            { text: 'Agents do not use persistent memory, or memory is not secured', score: 1 },
+            { text: 'Basic memory storage with access controls', score: 2 },
+            { text: 'Memory integrity validation, access controls, and periodic review of stored agent state', score: 3 },
+            { text: 'Comprehensive memory security: integrity checksums, source attribution, anomaly detection on memory updates, and regular memory audits', score: 4 },
+            { text: 'Advanced memory protection with cryptographic integrity, provenance tracking, automated poisoning detection, and sandboxed memory partitions per context', score: 5 }
+          ]
+        },
+        {
+          text: 'Do you apply the MAESTRO framework or equivalent threat modeling specifically for agentic AI systems?',
+          info: `<p><strong>Why this matters:</strong> Traditional threat modeling frameworks are insufficient for agentic AI. <a href="https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro" target="_blank" rel="noopener">MAESTRO (Multi-Agent Environment, Security, Threat, Risk, & Outcome)</a>, introduced by the Cloud Security Alliance in February 2025, is a seven-layer threat modeling framework purpose-built for agentic systems.</p>
+<p>The seven layers cover: Foundation Models, Data Operations, Agent Frameworks, Deployment and Infrastructure, Evaluation and Observability, Security and Compliance, and Agent Ecosystem. MAESTRO has been applied to OpenAI's Responses API, Google's A2A protocol, and is being integrated into CI/CD pipelines for continuous threat model enforcement.</p>
+<p><span class="ref-tag">MAESTRO</span> <span class="ref-tag">CSA</span> <span class="ref-tag">MITRE ATLAS</span></p>`,
+          options: [
+            { text: 'No threat modeling for agentic AI systems', score: 1 },
+            { text: 'General threat modeling (e.g., STRIDE) applied to AI systems', score: 2 },
+            { text: 'AI-specific threat modeling using MITRE ATLAS techniques', score: 3 },
+            { text: 'MAESTRO or equivalent agentic-specific threat modeling applied to agent deployments', score: 4 },
+            { text: 'Continuous MAESTRO-based threat modeling integrated into CI/CD, with automated threat detection and blocking of critical agentic AI threats on every deployment', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'data-privacy',
+      title: 'AI Data Protection & Privacy',
+      icon: 'database',
+      questions: [
+        {
+          text: 'How do you govern training data quality, provenance, and bias for your AI systems?',
+          info: `<p><strong>Why this matters:</strong> Training data is the foundation of AI system behavior. Poorly governed training data leads to biased outputs, hallucinations, and legal liability. In January 2025, researchers demonstrated how data poisoning can compromise medical LLMs.</p>
+<p>NIST AI 600-1 identifies content provenance as one of four primary GenAI considerations. China's national standards (effective November 2025) specifically address data annotation security, and pre-training and fine-tuning data security.</p>
+<p><span class="ref-tag">NIST AI 600-1</span> <span class="ref-tag">ISO/IEC 42001 A.7</span> <span class="ref-tag">EU AI Act Art. 10</span></p>`,
+          options: [
+            { text: 'No formal data governance for AI training data', score: 1 },
+            { text: 'Basic data quality checks before training', score: 2 },
+            { text: 'Documented data lineage, quality metrics, and bias testing for training datasets', score: 3 },
+            { text: 'Comprehensive data governance with provenance tracking, bias auditing, and datasheets for all training datasets', score: 4 },
+            { text: 'Automated data governance pipeline with continuous quality monitoring, bias detection, provenance verification, and regulatory-compliant documentation', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you protect personal data and prevent privacy violations in AI systems?',
+          info: `<p><strong>Why this matters:</strong> AI data privacy risks surged 56% according to Stanford's 2025 AI Index Report. Model inversion attacks can reconstruct training data from model outputs. Gradient inversion attacks in federated learning can recover original input data.</p>
+<p>Differential privacy mechanisms add mathematically calibrated noise during training. The EU AI Act requires high-risk systems to implement data governance measures that prevent discrimination and ensure privacy. GDPR's right to erasure creates unique challenges for AI systems that have memorized personal data.</p>
+<p><span class="ref-tag">GDPR</span> <span class="ref-tag">EU AI Act</span> <span class="ref-tag">NIST Privacy Framework</span></p>`,
+          options: [
+            { text: 'No AI-specific privacy protections', score: 1 },
+            { text: 'General data protection policies apply to AI systems', score: 2 },
+            { text: 'AI-specific privacy measures: data anonymization, access controls, and consent management', score: 3 },
+            { text: 'Comprehensive AI privacy: differential privacy, federated learning where applicable, PII detection in training data, and privacy impact assessments', score: 4 },
+            { text: 'Advanced privacy engineering: automated PII scanning, differential privacy integration, machine unlearning capabilities, and privacy-preserving computation', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you govern synthetic data used for AI training and testing?',
+          info: `<p><strong>Why this matters:</strong> Synthetic data governance is emerging as a strategic priority. Poorly managed synthetic data can introduce biased, incorrect, or low-quality samples at scale. Without clear tagging of real vs. synthetic data and regular validation, damage may go unnoticed until production.</p>
+<p>2024-2026 guidance from EDPB, NIST, and the UK FCA shifts the conversation into action, with regulators now expecting documented metrics, proven lineage, and risk-based oversight. A 2025 consensus panel rejected similarity metrics as a privacy proxy, preferring membership and attribute disclosure rates.</p>
+<p><span class="ref-tag">EDPB Guidance</span> <span class="ref-tag">NIST</span> <span class="ref-tag">UK FCA</span></p>`,
+          options: [
+            { text: 'Not using synthetic data, or no governance in place', score: 1 },
+            { text: 'Basic awareness of synthetic data risks', score: 2 },
+            { text: 'Labeled synthetic vs. real data with quality validation before use', score: 3 },
+            { text: 'Formal synthetic data governance: generation controls, quality metrics, lineage tracking, and privacy validation', score: 4 },
+            { text: 'Comprehensive synthetic data program with automated quality assurance, human-anchored validation, privacy disclosure testing, and regulatory-compliant documentation', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you handle AI-generated content labeling and provenance (to prevent deepfake and synthetic media risks)?',
+          info: `<p><strong>Why this matters:</strong> AI-powered deepfakes were involved in over 30% of high-impact corporate impersonation attacks in 2025. The deepfake detection market is growing 42% annually to $15.7B by 2026. Humans are barely better than random guessing at identifying high-quality deepfakes.</p>
+<p>The EU AI Act (effective August 2026) requires AI-generated content to be "marked in a machine-readable format and detectable as artificially generated." China's labeling rules (September 2025) mandate explicit and implicit labels for all AI-generated content. The US TAKE IT DOWN Act (May 2025) criminalizes non-consensual deepfakes.</p>
+<p><span class="ref-tag">EU AI Act Art. 50</span> <span class="ref-tag">C2PA</span> <span class="ref-tag">TAKE IT DOWN Act</span></p>`,
+          options: [
+            { text: 'No content labeling or provenance tracking for AI outputs', score: 1 },
+            { text: 'Manual labeling of AI-generated content on an ad-hoc basis', score: 2 },
+            { text: 'Systematic labeling of AI-generated content with metadata markers', score: 3 },
+            { text: 'Comprehensive content provenance: C2PA watermarking, machine-readable labels, and deepfake detection for incoming content', score: 4 },
+            { text: 'Full content authenticity pipeline: automated provenance embedding, multi-layer deepfake detection, cryptographic media verification, and regulatory-compliant labeling', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you secure data flowing through your AI pipeline (at rest, in transit, and during processing)?',
+          info: `<p><strong>Why this matters:</strong> <a href="https://media.defense.gov/2025/May/22/2003720601/-1/-1/0/CSI_AI_DATA_SECURITY.PDF" target="_blank" rel="noopener">CISA's May 2025 AI data security guidance</a> emphasizes that data integrity must be maintained throughout the entire AI system lifecycle, free from tampering, malicious content, and unintentional duplicates.</p>
+<p>Quantum computing threats are accelerating the urgency of cryptographic migration. "Harvest now, decrypt later" attacks are immediate concerns. NIST-approved post-quantum cryptography (PQC) algorithms are being piloted, with full DoD implementation targeted by 2030.</p>
+<p><span class="ref-tag">CISA AI Data Security</span> <span class="ref-tag">NIST PQC</span> <span class="ref-tag">ISO/IEC 42001</span></p>`,
+          options: [
+            { text: 'No specific data security measures for AI pipelines', score: 1 },
+            { text: 'Standard encryption at rest and in transit', score: 2 },
+            { text: 'AI-specific data security: encrypted model weights, secure inference environments, and data isolation', score: 3 },
+            { text: 'Comprehensive AI data security: hardware enclaves for sensitive operations, encrypted inference, and data lineage tracking', score: 4 },
+            { text: 'Advanced AI data protection: confidential computing, crypto-agility for post-quantum readiness, end-to-end pipeline encryption, and formal data flow analysis', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'compliance',
+      title: 'AI Regulatory Compliance',
+      icon: 'scale',
+      questions: [
+        {
+          text: 'How prepared is your organization for EU AI Act compliance, particularly for high-risk AI systems?',
+          info: `<p><strong>Why this matters:</strong> The <a href="https://artificialintelligenceact.eu/" target="_blank" rel="noopener">EU AI Act</a> is the world's most comprehensive AI regulation. Key deadlines: prohibited practices enforced February 2025, GPAI obligations August 2025, high-risk requirements August 2026, full enforcement August 2027. Fines range from 7.5M to 35M EUR or 1-7% of global turnover.</p>
+<p>High-risk AI systems (Annex III) include AI used in employment, credit, education, and law enforcement. Requirements include conformity assessments, CE marking, quality management, human oversight, and EU database registration.</p>
+<p><span class="ref-tag">EU AI Act</span> <span class="ref-tag">August 2026 Deadline</span></p>`,
+          options: [
+            { text: 'Not aware of or not preparing for EU AI Act requirements', score: 1 },
+            { text: 'Aware of the regulation but no preparation started', score: 2 },
+            { text: 'Gap assessment completed, preparation underway for applicable requirements', score: 3 },
+            { text: 'Active compliance program: AI systems classified, conformity assessments planned, documentation in progress', score: 4 },
+            { text: 'Compliance-ready: all applicable AI systems documented, conformity assessments complete, quality management operational, monitoring in place', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you address AI-specific requirements across multiple regulatory frameworks (NIST AI RMF, ISO 42001, sector regulations)?',
+          info: `<p><strong>Why this matters:</strong> Organizations face a growing patchwork of AI regulations. The <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI RMF</a> provides a voluntary framework with four functions (GOVERN, MAP, MEASURE, MANAGE). <a href="https://www.iso.org/standard/42001" target="_blank" rel="noopener">ISO/IEC 42001</a> is certifiable and increasingly expected by enterprise customers.</p>
+<p>State-level US regulations are emerging: the <a href="https://leg.colorado.gov/bills/sb24-205" target="_blank" rel="noopener">Colorado AI Act</a> takes effect June 2026 covering algorithmic discrimination. <a href="https://ised-isde.canada.ca/site/ised/en/voluntary-code-conduct-responsible-development-and-management-advanced-generative-ai-systems" target="_blank" rel="noopener">Canada's Voluntary Code of Conduct</a> has 55+ signatories. Singapore launched the world's first <a href="https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2026/new-model-ai-governance-framework-for-agentic-ai" target="_blank" rel="noopener">Agentic AI Governance Framework</a> in January 2026.</p>
+<p><span class="ref-tag">NIST AI RMF</span> <span class="ref-tag">ISO 42001</span> <span class="ref-tag">Colorado AI Act</span> <span class="ref-tag">Singapore MGAF</span></p>`,
+          options: [
+            { text: 'No multi-framework compliance approach for AI', score: 1 },
+            { text: 'Focused on a single framework only', score: 2 },
+            { text: 'Mapped controls across 2-3 AI frameworks/regulations', score: 3 },
+            { text: 'Integrated compliance program covering major AI frameworks with cross-mapped controls', score: 4 },
+            { text: 'Unified AI GRC platform with automated compliance mapping, continuous monitoring, and evidence collection across all applicable frameworks', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you handle AI transparency and explainability requirements?',
+          info: `<p><strong>Why this matters:</strong> Transparency is a cross-cutting requirement across virtually all AI regulations. The EU AI Act requires transparency for all AI systems that interact with humans (Art. 50). High-risk systems must provide sufficient transparency for users to interpret and use outputs appropriately.</p>
+<p><a href="https://www.anthropic.com/responsible-scaling-policy" target="_blank" rel="noopener">Anthropic's Responsible Scaling Policy</a> requires Risk Reports providing detailed safety profiles. <a href="https://saif.google/" target="_blank" rel="noopener">Google SAIF</a> emphasizes transparency across its six security domains.</p>
+<p><span class="ref-tag">EU AI Act Art. 13, 50</span> <span class="ref-tag">NIST AI RMF</span> <span class="ref-tag">ISO 42001 A.8</span></p>`,
+          options: [
+            { text: 'No AI transparency or explainability measures', score: 1 },
+            { text: 'Basic user disclosure that AI is in use', score: 2 },
+            { text: 'Systematic disclosure with basic explainability (feature importance, confidence scores)', score: 3 },
+            { text: 'Comprehensive transparency: model explanations, decision audit trails, and user-facing documentation', score: 4 },
+            { text: 'Advanced explainability with interpretable models, counterfactual explanations, decision provenance, and accessibility-compliant disclosures', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you address human oversight requirements for AI decision-making?',
+          info: `<p><strong>Why this matters:</strong> Human oversight is mandated by the EU AI Act (Art. 14) for high-risk systems and is a core principle across NIST AI RMF, ISO 42001, and sector regulations. The concept of "meaningful human control" requires that humans can understand, intervene in, and override AI decisions.</p>
+<p>For agentic AI, the <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" target="_blank" rel="noopener">OWASP Agentic Top 10</a> includes Human-Agent Trust Exploitation (ASI09), where polished agent explanations mislead operators into approving harmful actions. Human-in-the-loop authorization frameworks require cryptographically verified human approval for high-stakes actions.</p>
+<p><span class="ref-tag">EU AI Act Art. 14</span> <span class="ref-tag">OWASP ASI09</span> <span class="ref-tag">NIST AI RMF MANAGE</span></p>`,
+          options: [
+            { text: 'No human oversight mechanisms for AI systems', score: 1 },
+            { text: 'Human review available but not systematically applied', score: 2 },
+            { text: 'Defined human oversight for high-risk AI decisions with escalation paths', score: 3 },
+            { text: 'Systematic human oversight: approval workflows for high-impact decisions, override capabilities, and audit logging', score: 4 },
+            { text: 'Adaptive human oversight: risk-based automation levels, cryptographic approval for critical actions, calibrated trust frameworks, and continuous oversight effectiveness monitoring', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you prepare for emerging and international AI regulations (China, UK, Singapore, Canada, US state laws)?',
+          info: `<p><strong>Why this matters:</strong> AI regulation is proliferating globally. Key developments:</p>
+<ul style="margin:8px 0 8px 16px;font-size:13px;line-height:1.7;">
+<li><strong>China:</strong> Three new national AI security standards (Nov 2025), Cybersecurity Law amendments bringing AI under national law (Jan 2026), labeling rules (Sep 2025)</li>
+<li><strong>UK:</strong> The <a href="https://www.aisi.gov.uk/" target="_blank" rel="noopener">AI Security Institute (AISI)</a> publishes frontier AI capability evaluations and safety guidance</li>
+<li><strong>Singapore:</strong> World's first <a href="https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2026/new-model-ai-governance-framework-for-agentic-ai" target="_blank" rel="noopener">Agentic AI Governance Framework</a> (Jan 2026)</li>
+<li><strong>Canada:</strong> Voluntary Code of Conduct (55+ signatories), AIDA legislation died with parliament prorogation</li>
+<li><strong>US States:</strong> Colorado AI Act (Jun 2026), plus bills in Texas, California, and others</li>
+</ul>
+<p><span class="ref-tag">China AI Standards</span> <span class="ref-tag">UK AISI</span> <span class="ref-tag">Singapore MGAF</span> <span class="ref-tag">Colorado AI Act</span></p>`,
+          options: [
+            { text: 'No awareness of international AI regulations beyond primary jurisdiction', score: 1 },
+            { text: 'Basic awareness of major regulations but no preparation', score: 2 },
+            { text: 'Monitoring regulatory developments with impact assessments for key jurisdictions', score: 3 },
+            { text: 'Proactive compliance program covering all jurisdictions where AI systems operate', score: 4 },
+            { text: 'Global AI regulatory intelligence program with automated monitoring, proactive compliance mapping, and regulatory-ready documentation for all applicable jurisdictions', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'runtime',
+      title: 'Runtime Security & Monitoring',
+      icon: 'activity',
+      questions: [
+        {
+          text: 'How do you monitor AI system behavior in production for security anomalies and drift?',
+          info: `<p><strong>Why this matters:</strong> Runtime monitoring is where AI security becomes operational. Semantic firewalls monitor how agents think, not just what they output, detecting manipulation through reasoning patterns. Microsoft's Agent Governance Toolkit (April 2026) provides sub-millisecond deterministic policy enforcement.</p>
+<p><a href="https://www.vectra.ai/topics/ai-security-posture-management" target="_blank" rel="noopener">AI-SPM</a> is expected to follow CSPM's maturation path from best practice to compliance requirement within 24 months. RSA Conference 2026 saw unprecedented AI-SPM vendor announcements.</p>
+<p><span class="ref-tag">AI-SPM</span> <span class="ref-tag">Microsoft AGT</span> <span class="ref-tag">Google SAIF</span></p>`,
+          options: [
+            { text: 'No runtime monitoring specific to AI systems', score: 1 },
+            { text: 'Basic logging of AI system inputs and outputs', score: 2 },
+            { text: 'Structured monitoring with alerting for anomalous behavior and performance degradation', score: 3 },
+            { text: 'Comprehensive AI observability: behavioral baselines, semantic analysis, drift detection, and security event correlation', score: 4 },
+            { text: 'Advanced AI-SPM with continuous posture assessment, semantic firewalls, real-time threat detection, and automated response playbooks', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you handle AI output validation and guardrails to prevent harmful or incorrect outputs?',
+          info: `<p><strong>Why this matters:</strong> <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" rel="noopener">OWASP LLM05:2025 Improper Output Handling</a> covers risks from AI outputs that are consumed by downstream systems or presented to users without validation. AI hallucinations, toxic content, and manipulated outputs require systematic guardrails.</p>
+<p>NIST AI 600-1 identifies pre-deployment testing as one of four primary GenAI considerations. Google SAIF maps controls across its six domains (Data, Infrastructure, Model, Application, Assurance, Governance) to actionable implementation steps.</p>
+<p><span class="ref-tag">OWASP LLM05:2025</span> <span class="ref-tag">NIST AI 600-1</span> <span class="ref-tag">Google SAIF</span></p>`,
+          options: [
+            { text: 'No output validation or guardrails', score: 1 },
+            { text: 'Basic content filtering for known harmful patterns', score: 2 },
+            { text: 'Structured output validation with content classifiers and factuality checks', score: 3 },
+            { text: 'Comprehensive guardrails: multi-layer content safety, grounding verification, structured output schemas, and human review triggers', score: 4 },
+            { text: 'Adaptive guardrails with real-time calibration, domain-specific validators, cascading safety checks, and automated escalation for edge cases', score: 5 }
+          ]
+        },
+        {
+          text: 'Do you have tool-call and function-calling security controls for AI systems that invoke external services?',
+          info: `<p><strong>Why this matters:</strong> Function calling enables LLMs to execute code, query databases, and interact with external systems, but introduces critical risks: hallucinated parameters, unauthorized access, and unintended consequences. Malicious input can manipulate which APIs the agent calls and how it uses credentials.</p>
+<p>Key defense patterns include: transparent credential middleware (credentials never visible to the LLM), per-call authorization validation against user intent, and MCP-Scan for detecting tool poisoning in MCP environments.</p>
+<p><span class="ref-tag">OWASP ASI02 Tool Misuse</span> <span class="ref-tag">OWASP LLM06 Excessive Agency</span> <span class="ref-tag">MAESTRO</span></p>`,
+          options: [
+            { text: 'No security controls on AI tool/function calls', score: 1 },
+            { text: 'Basic API authentication for external service calls', score: 2 },
+            { text: 'Tool call validation: parameter checking, allowlists, and rate limiting per tool', score: 3 },
+            { text: 'Comprehensive tool security: per-call authorization, parameter validation against user intent, credential isolation, and audit logging', score: 4 },
+            { text: 'Advanced tool governance: deterministic policy enforcement, semantic intent matching, automated tool approval workflows, and real-time anomaly detection on tool usage patterns', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you ensure audit trails and forensic capabilities for AI system actions and decisions?',
+          info: `<p><strong>Why this matters:</strong> AI audit trails serve both security and compliance purposes. The EU AI Act requires logs for high-risk systems (Art. 12). ISO 42001 requires records of AI system decisions. For agentic AI, every agent action must be attributable to a specific identity and policy decision.</p>
+<p>Only 21% of executives report complete visibility into agent permissions, tool usage, or data access patterns. Comprehensive audit trails are essential for incident investigation, regulatory compliance, and continuous improvement.</p>
+<p><span class="ref-tag">EU AI Act Art. 12</span> <span class="ref-tag">ISO 42001</span> <span class="ref-tag">NIST AI RMF MANAGE</span></p>`,
+          options: [
+            { text: 'No AI-specific audit trails', score: 1 },
+            { text: 'Basic logging of AI API calls', score: 2 },
+            { text: 'Structured audit logging: inputs, outputs, model versions, and decision rationale', score: 3 },
+            { text: 'Comprehensive audit trails with tamper-evident logs, decision provenance, and retention policies', score: 4 },
+            { text: 'Enterprise-grade AI forensics: immutable audit trails, full decision reconstruction, automated compliance reporting, and integration with SIEM/SOAR', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you implement circuit breakers and kill switches for AI systems that behave anomalously?',
+          info: `<p><strong>Why this matters:</strong> Google SAIF 2.0 recommends systemic circuit breakers for agentic deployments. The <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" target="_blank" rel="noopener">OWASP Agentic Top 10 (ASI10 Rogue Agents)</a> describes compromised agents that self-replicate, persist across sessions, or impersonate other agents. Without kill switches, a rogue agent can cause escalating damage.</p>
+<p>The <a href="https://www.anthropic.com/responsible-scaling-policy" target="_blank" rel="noopener">Anthropic RSP</a> uses AI Safety Levels (ASLs) that become more stringent as capabilities increase, embodying the principle that more powerful systems need stronger containment.</p>
+<p><span class="ref-tag">Google SAIF 2.0</span> <span class="ref-tag">OWASP ASI10</span> <span class="ref-tag">Anthropic RSP</span></p>`,
+          options: [
+            { text: 'No circuit breakers or kill switches for AI systems', score: 1 },
+            { text: 'Manual shutdown procedures exist', score: 2 },
+            { text: 'Automated circuit breakers triggered by error rate or anomaly thresholds', score: 3 },
+            { text: 'Comprehensive containment: per-agent kill switches, automated degradation modes, and blast-radius limiting', score: 4 },
+            { text: 'Adaptive containment with real-time behavioral triggers, graceful degradation cascades, automated isolation of compromised agents, and post-incident automated recovery', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'supply-chain',
+      title: 'AI Supply Chain & Third-Party Risk',
+      icon: 'link',
+      questions: [
+        {
+          text: 'How do you assess and manage risks from third-party AI providers and APIs?',
+          info: `<p><strong>Why this matters:</strong> Most organizations rely on external AI providers (OpenAI, Anthropic, Google, etc.) as foundational components. NIST's March 2025 update emphasizes third-party model assessment, recognizing that most organizations use external AI components. A compromised provider can affect your entire AI stack.</p>
+<p><span class="ref-tag">NIST AI RMF MAP</span> <span class="ref-tag">OWASP LLM03:2025</span> <span class="ref-tag">ISO 42001</span></p>`,
+          options: [
+            { text: 'No assessment of third-party AI provider risks', score: 1 },
+            { text: 'Basic vendor questionnaires during onboarding', score: 2 },
+            { text: 'Regular AI-specific risk assessments of providers, including security and privacy practices', score: 3 },
+            { text: 'Comprehensive third-party AI risk program: security assessments, SLA monitoring, fallback providers, and contractual protections', score: 4 },
+            { text: 'Continuous third-party monitoring with automated risk scoring, API security testing, dependency analysis, and provider diversification strategy', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you manage open-source AI model and library dependencies?',
+          info: `<p><strong>Why this matters:</strong> Open-source AI ecosystems (Hugging Face, PyPI, etc.) are attack vectors. By 2026, ecosystem-level poisoning where a single compromised dependency affects thousands of downstream applications is expected. Trojanized PyPI packages with backdoors are increasingly common.</p>
+<p>Software Composition Analysis (SCA) must extend to AI-specific components. ML-BOM standards (CycloneDX, SPDX 3.0) provide machine-readable inventories.</p>
+<p><span class="ref-tag">CycloneDX ML-BOM</span> <span class="ref-tag">SPDX 3.0</span> <span class="ref-tag">OWASP LLM03:2025</span></p>`,
+          options: [
+            { text: 'No management of open-source AI dependencies', score: 1 },
+            { text: 'Manual tracking of major dependencies', score: 2 },
+            { text: 'Automated dependency scanning with vulnerability alerts', score: 3 },
+            { text: 'Comprehensive dependency management: ML-BOM, vulnerability scanning, license compliance, and model provenance verification', score: 4 },
+            { text: 'Advanced supply chain assurance: reproducible builds, signed model artifacts, automated vulnerability patching, and model integrity verification on every deployment', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you secure AI development and deployment pipelines (MLOps/LLMOps)?',
+          info: `<p><strong>Why this matters:</strong> Dynamic poisoning through CI/CD pipelines has become a sophisticated attack vector. Attackers can modify open-source dependencies or container images by adding malicious payloads based on AI-generated signatures.</p>
+<p>Secure MLOps practices include: SAST/DAST for AI code, secrets management, environment isolation, artifact signing, and deployment approval workflows.</p>
+<p><span class="ref-tag">OWASP LLM03:2025</span> <span class="ref-tag">MAESTRO L4</span> <span class="ref-tag">Google SAIF</span></p>`,
+          options: [
+            { text: 'No specific security measures for AI pipelines', score: 1 },
+            { text: 'Basic CI/CD security (access controls, code review)', score: 2 },
+            { text: 'AI-specific pipeline security: environment isolation, artifact signing, and deployment gates', score: 3 },
+            { text: 'Comprehensive MLOps security: pipeline integrity verification, automated security scanning, secrets management, and approval workflows', score: 4 },
+            { text: 'Hardened MLOps: immutable build artifacts, cryptographic pipeline attestation, automated threat detection at every stage, and zero-trust deployment architecture', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you manage AI plugin and extension security (MCP servers, tool integrations, marketplace plugins)?',
+          info: `<p><strong>Why this matters:</strong> AI plugin ecosystems create extended attack surfaces. The <a href="https://vulnerablemcp.info/" target="_blank" rel="noopener">Vulnerable MCP Project</a> documents known MCP security vulnerabilities. CVEs have been found in production MCP servers, including Anthropic's own mcp-server-git (CVE-2025-68143, CVE-2025-68144, CVE-2025-68145).</p>
+<p><a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" target="_blank" rel="noopener">OWASP ASI04 (Agentic Supply Chain Vulnerabilities)</a> covers risks from compromised tools, plugins, prompt templates, and external servers that agents unknowingly leverage.</p>
+<p><span class="ref-tag">OWASP ASI04</span> <span class="ref-tag">CoSAI MCP Security</span> <span class="ref-tag">Vulnerable MCP Project</span></p>`,
+          options: [
+            { text: 'No security review process for AI plugins or extensions', score: 1 },
+            { text: 'Ad-hoc review of plugins before installation', score: 2 },
+            { text: 'Formal plugin approval process with security review and sandboxed execution', score: 3 },
+            { text: 'Comprehensive plugin security: code review, sandboxing, runtime monitoring, and vulnerability scanning', score: 4 },
+            { text: 'Advanced plugin governance: automated security scanning, behavioral monitoring, continuous vulnerability management, and plugin isolation with least-privilege enforcement', score: 5 }
+          ]
+        },
+        {
+          text: 'Do you have a strategy for AI vendor diversification and avoiding single points of failure?',
+          info: `<p><strong>Why this matters:</strong> Concentration risk in AI providers can have catastrophic consequences. A single provider outage, policy change, or security incident can halt critical business processes. The AI liability insurance market (emerging 2025-2026) now factors provider diversification into underwriting decisions.</p>
+<p><span class="ref-tag">Risk Management</span> <span class="ref-tag">Business Continuity</span></p>`,
+          options: [
+            { text: 'Entirely dependent on a single AI provider', score: 1 },
+            { text: 'Aware of concentration risk but no diversification plan', score: 2 },
+            { text: 'Backup providers identified but not tested', score: 3 },
+            { text: 'Active diversification with tested failover to alternative providers', score: 4 },
+            { text: 'Comprehensive multi-provider strategy with automated failover, abstraction layers, and regular continuity testing', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'red-team',
+      title: 'AI Red Teaming & Testing',
+      icon: 'swords',
+      questions: [
+        {
+          text: 'How mature is your AI red teaming program for systematically testing AI system security?',
+          info: `<p><strong>Why this matters:</strong> AI red teaming is the practice of simulating adversarial attacks against AI systems to find vulnerabilities before attackers do. Microsoft has red-teamed over 100 GenAI products. The UK AISI found that cyber task success rose from 9% to 50% in just two years of testing frontier models.</p>
+<p>Key tools: <a href="https://github.com/Azure/PyRIT" target="_blank" rel="noopener">Microsoft PyRIT</a> (open-source), DeepTeam, Giskard, and promptfoo for automated LLM testing.</p>
+<p><span class="ref-tag">Microsoft PyRIT</span> <span class="ref-tag">NIST Red Teaming</span> <span class="ref-tag">UK AISI</span></p>`,
+          options: [
+            { text: 'No AI red teaming program', score: 1 },
+            { text: 'Ad-hoc testing by developers before release', score: 2 },
+            { text: 'Periodic red team exercises with documented test plans', score: 3 },
+            { text: 'Structured red team program with automated and manual testing, mapped to MITRE ATLAS and OWASP', score: 4 },
+            { text: 'Continuous AI red teaming: automated CI/CD integration, expert engagements, AI-on-AI adversarial testing, and vulnerability disclosure program', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you test for bias, fairness, and discrimination in your AI systems?',
+          info: `<p><strong>Why this matters:</strong> Algorithmic discrimination is a major legal and ethical risk. The <a href="https://leg.colorado.gov/bills/sb24-205" target="_blank" rel="noopener">Colorado AI Act</a> (effective June 2026) specifically requires reasonable care to protect consumers from algorithmic discrimination in high-risk AI systems. The EU AI Act mandates bias testing for high-risk systems.</p>
+<p><span class="ref-tag">Colorado AI Act</span> <span class="ref-tag">EU AI Act Art. 10</span> <span class="ref-tag">NIST AI RMF MEASURE</span></p>`,
+          options: [
+            { text: 'No bias or fairness testing for AI systems', score: 1 },
+            { text: 'Ad-hoc bias checks during development', score: 2 },
+            { text: 'Systematic bias testing across protected attributes before deployment', score: 3 },
+            { text: 'Comprehensive fairness program: pre-deployment and post-deployment testing, disparity metrics, and remediation processes', score: 4 },
+            { text: 'Continuous fairness monitoring: automated bias detection in production, intersectional analysis, fairness constraints in training, and stakeholder feedback loops', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you assess AI systems against known adversarial attack techniques (MITRE ATLAS)?',
+          info: `<p><strong>Why this matters:</strong> <a href="https://atlas.mitre.org/" target="_blank" rel="noopener">MITRE ATLAS</a> now contains 84 techniques across 16 tactics, with 42 case studies. The February 2026 update added agentic-specific techniques including "Publish Poisoned AI Agent Tool" and "Escape to Host." AI-enabled adversary attacks surged 89% compared to prior years.</p>
+<p>ATLAS provides a structured approach to testing: identify relevant techniques, develop test cases, execute attacks, and validate defenses. The January 2026 update includes case studies on MCP server compromises and malicious agent deployment.</p>
+<p><span class="ref-tag">MITRE ATLAS v5.4</span> <span class="ref-tag">NIST AI RMF</span></p>`,
+          options: [
+            { text: 'Not familiar with MITRE ATLAS or AI adversarial techniques', score: 1 },
+            { text: 'Aware of ATLAS but not using it for testing', score: 2 },
+            { text: 'Using ATLAS as a reference for test case development', score: 3 },
+            { text: 'Systematic testing against relevant ATLAS techniques with documented results and remediation tracking', score: 4 },
+            { text: 'Comprehensive ATLAS-aligned testing program: automated technique coverage tracking, continuous updates as new techniques emerge, and integration with threat intelligence', score: 5 }
+          ]
+        },
+        {
+          text: 'Do you conduct model robustness testing (adversarial examples, evasion attacks, boundary testing)?',
+          info: `<p><strong>Why this matters:</strong> Model robustness determines how well AI systems handle unexpected, adversarial, or out-of-distribution inputs. Model inversion attacks can reconstruct training data from outputs. Model extraction attacks can steal proprietary models through systematic querying. Gradient inversion attacks compromise federated learning.</p>
+<p>The <a href="https://www.aisi.gov.uk/frontier-ai-trends-report" target="_blank" rel="noopener">UK AISI Frontier AI Trends Report</a> found that while safeguard bypass time increased between model generations, every system tested remains vulnerable to some form of attack.</p>
+<p><span class="ref-tag">UK AISI</span> <span class="ref-tag">MITRE ATLAS</span> <span class="ref-tag">NIST AI 600-1</span></p>`,
+          options: [
+            { text: 'No model robustness testing', score: 1 },
+            { text: 'Basic functional testing only', score: 2 },
+            { text: 'Adversarial testing for known attack types (evasion, perturbation)', score: 3 },
+            { text: 'Comprehensive robustness testing: adversarial examples, boundary conditions, distribution shift analysis, and extraction resistance', score: 4 },
+            { text: 'Advanced robustness assurance: automated adversarial testing pipelines, formal verification where applicable, continuous robustness monitoring, and proactive defense research', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you manage and track findings from AI security assessments and red team exercises?',
+          info: `<p><strong>Why this matters:</strong> Findings management ensures that identified vulnerabilities are tracked, remediated, and validated. The <a href="https://cloudsecurityalliance.org/artifacts/ai-security-maturity-model" target="_blank" rel="noopener">CSA AI Security Maturity Model</a> emphasizes structured remediation as a key maturity indicator. Without proper tracking, the same vulnerabilities recur across assessments.</p>
+<p><span class="ref-tag">CSA AISMM</span> <span class="ref-tag">ISO 42001</span> <span class="ref-tag">NIST AI RMF MANAGE</span></p>`,
+          options: [
+            { text: 'No formal tracking of AI security findings', score: 1 },
+            { text: 'Findings captured in ad-hoc documents or emails', score: 2 },
+            { text: 'Findings tracked in a ticketing system with assigned owners and due dates', score: 3 },
+            { text: 'Structured findings management with risk ratings, remediation plans, verification testing, and executive reporting', score: 4 },
+            { text: 'Integrated AI security findings management: automated prioritization, SLA-based tracking, trend analysis, and continuous regression testing', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'future',
+      title: 'Future Readiness (2026-2035)',
+      icon: 'rocket',
+      questions: [
+        {
+          text: 'How prepared is your organization for post-quantum cryptographic migration in AI systems?',
+          info: `<p><strong>Why this matters:</strong> Quantum computers threaten current encryption protecting AI models, training data, and inference pipelines. "Harvest now, decrypt later" attacks mean adversaries are already collecting encrypted AI data. NIST-approved PQC algorithms exist, with DoD targeting full implementation by 2030. Cryptographic deprecation is expected by 2030 and disallowance by 2035.</p>
+<p>Single-trace power analysis attacks against CRYSTALS-Kyber (a new PQC standard) were published in 2025, demonstrating that even new standards need careful implementation.</p>
+<p><span class="ref-tag">NIST PQC</span> <span class="ref-tag">CRYSTALS-Kyber</span> <span class="ref-tag">Crypto-Agility</span></p>`,
+          options: [
+            { text: 'Not aware of quantum threats to AI systems', score: 1 },
+            { text: 'Aware of quantum risks but no action taken', score: 2 },
+            { text: 'Cryptographic inventory completed, migration planning started', score: 3 },
+            { text: 'Active PQC migration program with crypto-agility built into new AI systems', score: 4 },
+            { text: 'Advanced quantum readiness: PQC deployed for sensitive AI data, crypto-agile architecture, and continuous algorithm evaluation', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you prepare for AI-to-AI interaction security in increasingly autonomous systems?',
+          info: `<p><strong>Why this matters:</strong> The future involves AI systems interacting with other AI systems at machine speed, beyond direct human oversight. Google's <a href="https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/" target="_blank" rel="noopener">A2A protocol</a> and MCP are early standards, but securing AI-to-AI interactions at scale (swarm intelligence, collective AI) requires new paradigms.</p>
+<p>Digital identity for AI agents is emerging. Researchers propose <a href="https://arxiv.org/abs/2511.02841" target="_blank" rel="noopener">Decentralized Identifiers (DIDs) and Verifiable Credentials (VCs)</a> for AI agents. Mastercard launched an agentic token framework for AI commerce. NIST's AI Agent Standards Initiative addresses interoperability and security.</p>
+<p><span class="ref-tag">A2A Protocol</span> <span class="ref-tag">DIDs for AI</span> <span class="ref-tag">NIST Agent Standards</span></p>`,
+          options: [
+            { text: 'Not considering AI-to-AI interaction security', score: 1 },
+            { text: 'Aware of the trend but treating it as future concern', score: 2 },
+            { text: 'Evaluating A2A protocol and agent identity standards', score: 3 },
+            { text: 'Implementing agent identity frameworks and secure multi-agent communication patterns', score: 4 },
+            { text: 'Forward-looking architecture with agent identity infrastructure, verifiable credentials, protocol-level security, and adaptive trust frameworks', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you address AI liability and insurance considerations for your AI deployments?',
+          info: `<p><strong>Why this matters:</strong> Generative AI lawsuits in the US grew 978% from 2021-2025. The insurance market is bifurcating: firms with documented AI governance secure affirmative coverage, while firms without face absolute exclusions. ISO Form CG 40 47 01 26 (January 2026) allows carriers to exclude AI-related claims from standard liability policies.</p>
+<p>Courts treat AI as a tool, placing liability on deploying organizations. Carriers require AI disclosure questionnaires, model inventories, and governance protocols. <a href="https://www.munichre.com/hsb/en/press-and-publications/press-releases/2026/2026-03-18-introducing-ai-liability-insurance-for-small-businesses.html" target="_blank" rel="noopener">HSB (Munich Re)</a> launched dedicated AI liability insurance in March 2026.</p>
+<p><span class="ref-tag">AI Liability</span> <span class="ref-tag">ISO CG 40 47</span> <span class="ref-tag">Insurance</span></p>`,
+          options: [
+            { text: 'Not considered AI liability or insurance', score: 1 },
+            { text: 'Aware of liability risks but no specific measures', score: 2 },
+            { text: 'AI liability reviewed with legal counsel; standard insurance checked for AI coverage', score: 3 },
+            { text: 'Active AI liability management: dedicated coverage, governance documentation for underwriting, and contractual liability allocation', score: 4 },
+            { text: 'Comprehensive AI liability program: affirmative AI coverage, continuous governance evidence for insurers, liability simulation exercises, and proactive legal strategy', score: 5 }
+          ]
+        },
+        {
+          text: 'How prepared is your organization for AI in critical infrastructure scenarios (energy, healthcare, finance)?',
+          info: `<p><strong>Why this matters:</strong> AI deployment in critical infrastructure carries heightened risk due to safety-critical nature. CISA and allied agencies published guidance for AI in operational technology (February 2026) with four principles: understand AI systems, assess use cases, embed safety and security, and maintain oversight.</p>
+<p>The DHS "Roles and Responsibilities Framework for AI in Critical Infrastructure" (November 2024) provides a voluntary cross-sector framework. By 2030, 25% of new domestic energy demand will come from data centers.</p>
+<p><span class="ref-tag">CISA OT Guidance</span> <span class="ref-tag">DHS Framework</span> <span class="ref-tag">EU AI Act Annex III</span></p>`,
+          options: [
+            { text: 'Not deploying AI in critical infrastructure, or no special measures', score: 1 },
+            { text: 'Basic risk awareness for AI in sensitive contexts', score: 2 },
+            { text: 'Sector-specific risk assessments for AI in critical domains', score: 3 },
+            { text: 'Comprehensive safety program: sector-specific controls, fail-safe defaults, redundancy, and regulatory alignment', score: 4 },
+            { text: 'Advanced critical infrastructure AI security: formal safety analysis, defense-in-depth, resilience testing, sector-specific certifications, and cross-sector collaboration', score: 5 }
+          ]
+        },
+        {
+          text: 'Does your organization have a long-term AI security roadmap addressing emerging threats (2026-2035)?',
+          info: `<p><strong>Why this matters:</strong> AI capabilities are advancing rapidly. Google's proactive AGI preparedness research (April 2025) operates under the assumption that highly capable AI could be developed by 2030. Organizations need to plan for neuromorphic computing security, synthetic media proliferation, AI swarm intelligence, and regulatory evolution.</p>
+<p><a href="https://www.anthropic.com/responsible-scaling-policy" target="_blank" rel="noopener">Anthropic's RSP</a> uses graduated AI Safety Levels (ASL-1 through ASL-4+) with increasingly stringent safeguards. This model of capability-proportionate security is becoming an industry standard approach.</p>
+<p><span class="ref-tag">Anthropic RSP</span> <span class="ref-tag">Google AGI Preparedness</span> <span class="ref-tag">NIST AI RMF</span></p>`,
+          options: [
+            { text: 'No long-term AI security planning', score: 1 },
+            { text: 'Reacting to AI security challenges as they arise', score: 2 },
+            { text: 'Annual AI security strategy review with emerging threat assessment', score: 3 },
+            { text: 'Multi-year AI security roadmap with capability-proportionate security controls and scenario planning', score: 4 },
+            { text: 'Comprehensive future-ready program: continuous horizon scanning, graduated security levels, R&D investment in AI safety, and participation in standards development', score: 5 }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'responsible-ai',
+      title: 'Responsible AI & Ethics',
+      icon: 'heart-handshake',
+      questions: [
+        {
+          text: 'Does your organization have documented responsible AI principles that are enforced in practice?',
+          info: `<p><strong>Why this matters:</strong> Responsible AI principles guide ethical deployment. <a href="https://www.microsoft.com/en-us/ai/principles-and-approach" target="_blank" rel="noopener">Microsoft's Responsible AI Standard</a> is built on six principles: accountability, transparency, fairness, reliability/safety, privacy/security, and inclusiveness. Google, Anthropic, and other major providers have published similar commitments.</p>
+<p>The gap between stated principles and enforcement is a major risk. The Microsoft standard requires impact assessments, restricted use reviews, and fit-for-purpose validation for all AI systems.</p>
+<p><span class="ref-tag">Microsoft RAI Standard</span> <span class="ref-tag">Google AI Principles</span> <span class="ref-tag">Anthropic RSP</span></p>`,
+          options: [
+            { text: 'No documented responsible AI principles', score: 1 },
+            { text: 'General ethics statements exist but are not enforced', score: 2 },
+            { text: 'Documented principles with review processes for new AI deployments', score: 3 },
+            { text: 'Enforced principles: impact assessments, ethics review board, restricted use policies, and accountability structures', score: 4 },
+            { text: 'Mature responsible AI program: enforced principles, independent oversight, public transparency reporting, and continuous ethical evaluation', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you conduct AI impact assessments before deploying new AI systems?',
+          info: `<p><strong>Why this matters:</strong> AI impact assessments evaluate potential harms before deployment. The EU AI Act requires conformity assessments for high-risk systems. Microsoft's RAI Standard mandates impact assessments early in development covering the problem definition, stakeholder analysis, and risk evaluation.</p>
+<p>Canada's Algorithmic Impact Assessment tool is a public-sector example. Impact assessments should cover direct and indirect effects on individuals, communities, and society.</p>
+<p><span class="ref-tag">EU AI Act Art. 9</span> <span class="ref-tag">Microsoft RAI</span> <span class="ref-tag">Canada AIA</span></p>`,
+          options: [
+            { text: 'No AI impact assessments conducted', score: 1 },
+            { text: 'Informal consideration of AI impacts during development', score: 2 },
+            { text: 'Structured impact assessments for high-risk AI deployments', score: 3 },
+            { text: 'Comprehensive impact assessment program: standardized templates, stakeholder engagement, and documented risk-benefit analysis', score: 4 },
+            { text: 'Advanced impact assessment: automated screening for risk triggers, comprehensive stakeholder analysis, ongoing post-deployment monitoring, and public impact reporting', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you manage environmental sustainability of your AI operations?',
+          info: `<p><strong>Why this matters:</strong> AI training and inference consume significant energy. By 2030, 25% of new domestic energy demand is projected to come from data centers. Sustainable AI practices are becoming part of governance frameworks and regulatory expectations.</p>
+<p>Canada's Voluntary Code of Conduct includes commitments to environmental sustainability. ISO 42001 covers environmental considerations in AI system management.</p>
+<p><span class="ref-tag">ISO 42001</span> <span class="ref-tag">Canada Voluntary Code</span> <span class="ref-tag">EU Green Deal</span></p>`,
+          options: [
+            { text: 'No consideration of AI environmental impact', score: 1 },
+            { text: 'Basic awareness of AI energy consumption', score: 2 },
+            { text: 'Tracking AI compute costs and carbon footprint', score: 3 },
+            { text: 'Active sustainability program: model efficiency optimization, green compute selection, and carbon offset', score: 4 },
+            { text: 'Comprehensive sustainability: efficiency-first model selection, carbon budgets, renewable energy commitments, and public sustainability reporting', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you ensure accessibility and inclusiveness in AI system design and outputs?',
+          info: `<p><strong>Why this matters:</strong> AI systems can perpetuate or amplify exclusion if not designed with accessibility and inclusiveness. This includes language coverage, disability accommodation, cultural sensitivity, and equitable access. The EU AI Act and Colorado AI Act both mandate protections against algorithmic discrimination.</p>
+<p><span class="ref-tag">EU AI Act</span> <span class="ref-tag">Colorado AI Act</span> <span class="ref-tag">Microsoft RAI</span></p>`,
+          options: [
+            { text: 'No accessibility or inclusiveness considerations for AI', score: 1 },
+            { text: 'Basic awareness but no systematic approach', score: 2 },
+            { text: 'Accessibility testing and inclusive design practices for major AI deployments', score: 3 },
+            { text: 'Comprehensive inclusiveness: diverse testing populations, accessibility standards compliance, multilingual support, and cultural sensitivity review', score: 4 },
+            { text: 'Advanced inclusiveness program: co-design with diverse communities, continuous accessibility monitoring, intersectional analysis, and public feedback mechanisms', score: 5 }
+          ]
+        },
+        {
+          text: 'How do you participate in the broader AI safety ecosystem (standards bodies, information sharing, research)?',
+          info: `<p><strong>Why this matters:</strong> AI security is a collective challenge. The <a href="https://www.coalitionforsecureai.org/" target="_blank" rel="noopener">Coalition for Secure AI (CoSAI)</a> has grown to 45+ organizations collaborating on AI security standards. Participation in standards development (NIST, ISO, OWASP), threat intelligence sharing, and safety research strengthens both the organization and the ecosystem.</p>
+<p><span class="ref-tag">CoSAI</span> <span class="ref-tag">OWASP GenAI</span> <span class="ref-tag">NIST CAISI</span> <span class="ref-tag">UK AISI</span></p>`,
+          options: [
+            { text: 'No participation in AI safety ecosystem', score: 1 },
+            { text: 'Consuming published guidance and standards', score: 2 },
+            { text: 'Active engagement with industry groups and frameworks', score: 3 },
+            { text: 'Contributing to standards development, sharing threat intelligence, and participating in CoSAI or equivalent', score: 4 },
+            { text: 'Leadership role: contributing to standards bodies, publishing research, hosting AI safety events, and cross-industry collaboration programs', score: 5 }
+          ]
+        }
+      ]
+    }
+  ];
+
+  // =============================================================================
+  // STATE
+  // =============================================================================
+  let answers = {};       // { 'governance-0': 3, 'governance-1': 2, ... }
+  let activeDomain = 0;   // index into DOMAINS
+  let activeQuestion = 0; // index within current domain
+
+  // =============================================================================
+  // RENDERING
+  // =============================================================================
+  function totalQuestions() { return DOMAINS.reduce((s, d) => s + d.questions.length, 0); }
+  function answeredCount() { return Object.keys(answers).length; }
+
+  function renderDomainNav() {
+    const el = document.getElementById('domain-nav');
+    el.innerHTML = DOMAINS.map((d, i) => {
+      const answered = d.questions.filter((_, qi) => answers[`${d.id}-${qi}`] !== undefined).length;
+      const total = d.questions.length;
+      const isComplete = answered === total;
+      const isActive = i === activeDomain;
+      return `<div class="domain-card${isActive ? ' active' : ''}${isComplete ? ' completed' : ''}" data-domain="${i}">
+        <div class="domain-card-icon"><i data-lucide="${d.icon}" style="width:20px;height:20px;"></i></div>
+        <div class="domain-card-title">${d.title}</div>
+        <div class="domain-card-count">${answered}/${total} complete</div>
+      </div>`;
+    }).join('');
+    el.querySelectorAll('.domain-card').forEach(card => {
+      card.addEventListener('click', () => {
+        activeDomain = parseInt(card.dataset.domain);
+        activeQuestion = 0;
+        renderAll();
+      });
+    });
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  function renderProgress() {
+    const total = totalQuestions();
+    const answered = answeredCount();
+    const pct = (answered / total * 100).toFixed(0);
+    document.getElementById('progress-stats').textContent = `${answered} / ${total} questions`;
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
+
+  function renderQuestion() {
+    const panel = document.getElementById('question-panel');
+    const domain = DOMAINS[activeDomain];
+    const q = domain.questions[activeQuestion];
+    const key = `${domain.id}-${activeQuestion}`;
+    const selected = answers[key];
+    const isFirst = activeDomain === 0 && activeQuestion === 0;
+    const isLast = activeDomain === DOMAINS.length - 1 && activeQuestion === domain.questions.length - 1;
+    const allAnswered = answeredCount() === totalQuestions();
+
+    panel.innerHTML = `<div class="question-panel">
+      <div class="question-domain-label">${domain.title}</div>
+      <div class="question-counter">Question ${activeQuestion + 1} of ${domain.questions.length}</div>
+      <h3 class="question-text">${q.text}</h3>
+      <details class="question-info">
+        <summary>Why this matters &amp; Learn more</summary>
+        <div class="info-body">${q.info}</div>
+      </details>
+      <div class="options-grid">
+        ${q.options.map((opt, i) => `<button class="option-btn${selected === opt.score ? ' selected' : ''}" data-score="${opt.score}" data-index="${i}">
+          <span class="option-level">L${opt.score}</span>
+          <span>${opt.text}</span>
+        </button>`).join('')}
+      </div>
+      <div class="question-nav">
+        <button class="btn btn-secondary" id="btn-prev" ${isFirst ? 'disabled' : ''}>Previous</button>
+        <div>
+          ${allAnswered ? '<button class="btn btn-primary" id="btn-results">View Results</button>' : ''}
+          <button class="btn btn-primary" id="btn-next" ${isLast && !allAnswered ? '' : isLast ? 'style="display:none"' : ''}>Next</button>
+        </div>
+      </div>
+    </div>`;
+
+    // Bind option clicks
+    panel.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        answers[key] = parseInt(btn.dataset.score);
+        renderAll();
+        // Auto-advance after short delay
+        setTimeout(() => {
+          if (activeQuestion < domain.questions.length - 1) {
+            activeQuestion++;
+          } else if (activeDomain < DOMAINS.length - 1) {
+            activeDomain++;
+            activeQuestion = 0;
+          }
+          renderAll();
+        }, 300);
+      });
+    });
+
+    // Bind nav buttons
+    const prevBtn = document.getElementById('btn-prev');
+    const nextBtn = document.getElementById('btn-next');
+    const resultsBtn = document.getElementById('btn-results');
+
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+      if (activeQuestion > 0) { activeQuestion--; }
+      else if (activeDomain > 0) { activeDomain--; activeQuestion = DOMAINS[activeDomain].questions.length - 1; }
+      renderAll();
+    });
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+      if (activeQuestion < domain.questions.length - 1) { activeQuestion++; }
+      else if (activeDomain < DOMAINS.length - 1) { activeDomain++; activeQuestion = 0; }
+      renderAll();
+    });
+    if (resultsBtn) resultsBtn.addEventListener('click', showResults);
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  function renderAll() {
+    renderDomainNav();
+    renderProgress();
+    renderQuestion();
+  }
+
+  // =============================================================================
+  // RESULTS ENGINE
+  // =============================================================================
+  function getColor(pct) {
+    if (pct < 30) return 'var(--accent-red)';
+    if (pct < 50) return 'var(--accent-orange)';
+    if (pct < 70) return 'var(--accent-yellow)';
+    if (pct < 85) return '#4ADE80';
+    return 'var(--accent-green)';
+  }
+
+  function getLevel(pct) {
+    if (pct < 25) return { name: 'Level 1 — Initial', desc: 'AI security is ad-hoc with no formal processes. Critical risks are unmanaged.' };
+    if (pct < 45) return { name: 'Level 2 — Developing', desc: 'Basic AI security awareness exists but practices are inconsistent and reactive.' };
+    if (pct < 65) return { name: 'Level 3 — Defined', desc: 'AI security processes are documented and applied, but not yet comprehensive.' };
+    if (pct < 82) return { name: 'Level 4 — Managed', desc: 'AI security is systematically managed with proactive measures across most domains.' };
+    return { name: 'Level 5 — Optimizing', desc: 'AI security is continuously improved with advanced capabilities and industry leadership.' };
+  }
+
+  function getDomainFindings(domain, domainScore, maxDomainScore) {
+    const pct = (domainScore / maxDomainScore) * 100;
+    const findings = [];
+    // Generate context-specific findings based on answers
+    domain.questions.forEach((q, qi) => {
+      const key = `${domain.id}-${qi}`;
+      const score = answers[key] || 1;
+      if (score <= 2) {
+        // Extract first meaningful sentence from question as finding context
+        findings.push(`Address: "${q.text.substring(0, 80)}..." (currently at Level ${score})`);
+      }
+    });
+    if (findings.length === 0 && pct < 80) {
+      findings.push('Continue maturing practices — move from documented to continuously monitored.');
+    }
+    if (findings.length === 0) {
+      findings.push('Strong performance. Consider contributing to industry standards and sharing best practices.');
+    }
+    return findings;
+  }
+
+  function generateRecommendations() {
+    const recs = [];
+    // Analyze weakest areas and generate prioritized recommendations
+    const domainScores = DOMAINS.map(d => {
+      const dScore = d.questions.reduce((sum, _, qi) => sum + (answers[`${d.id}-${qi}`] || 1), 0);
+      const dMax = d.questions.length * 5;
+      return { domain: d, score: dScore, max: dMax, pct: (dScore / dMax) * 100 };
+    }).sort((a, b) => a.pct - b.pct);
+
+    // Top 3 weakest domains get critical/high recs
+    domainScores.slice(0, 3).forEach((ds, idx) => {
+      const priority = ds.pct < 40 ? 'critical' : 'high';
+      const weakest = ds.domain.questions
+        .map((q, qi) => ({ q, score: answers[`${ds.domain.id}-${qi}`] || 1 }))
+        .sort((a, b) => a.score - b.score)[0];
+
+      recs.push({
+        priority,
+        title: `Strengthen ${ds.domain.title}`,
+        desc: `Your score of ${Math.round(ds.pct)}% in ${ds.domain.title} indicates significant gaps. Priority action: ${weakest.q.text.substring(0, 120)}...`,
+        refs: getRefsForDomain(ds.domain.id)
+      });
+    });
+
+    // Specific cross-cutting recommendations
+    const overallPct = (Object.values(answers).reduce((s, v) => s + v, 0) / (totalQuestions() * 5)) * 100;
+
+    if (overallPct < 50) {
+      recs.push({
+        priority: 'critical',
+        title: 'Establish foundational AI governance immediately',
+        desc: 'Your overall score indicates critical gaps. Begin with an AI system inventory, appoint an AI security owner, and develop initial AI security policies aligned with NIST AI RMF.',
+        refs: [{ text: 'NIST AI RMF', url: 'https://www.nist.gov/itl/ai-risk-management-framework' }, { text: 'ISO 42001', url: 'https://www.iso.org/standard/42001' }]
+      });
+    }
+
+    if ((answers['compliance-0'] || 1) <= 2) {
+      recs.push({
+        priority: 'high',
+        title: 'Begin EU AI Act compliance preparation (August 2026 deadline)',
+        desc: 'High-risk AI system requirements take effect August 2026. Conduct an EU AI Act gap assessment, classify your AI systems by risk tier, and begin conformity assessment preparation.',
+        refs: [{ text: 'EU AI Act', url: 'https://artificialintelligenceact.eu/' }, { text: 'Timeline', url: 'https://www.euaiact.com/implementation-timeline' }]
+      });
+    }
+
+    if ((answers['agentic-1'] || 1) <= 2) {
+      recs.push({
+        priority: 'high',
+        title: 'Implement MCP security controls',
+        desc: 'With 43% of MCP servers containing command injection vulnerabilities and 5% already seeded with tool poisoning, MCP security is urgent. Implement sandboxing, input validation, and the CoSAI MCP security taxonomy.',
+        refs: [{ text: 'CoSAI MCP Security', url: 'https://www.coalitionforsecureai.org/coalition-for-secure-ai-releases-extensive-taxonomy-for-model-context-protocol-security/' }, { text: 'MCP Best Practices', url: 'https://modelcontextprotocol.io/specification/draft/basic/security_best_practices' }]
+      });
+    }
+
+    recs.push({
+      priority: 'medium',
+      title: 'Develop an AI red teaming cadence',
+      desc: 'Regular adversarial testing is becoming a regulatory expectation. Start with automated tools (PyRIT, DeepTeam) and progress to expert-led engagements.',
+      refs: [{ text: 'Microsoft PyRIT', url: 'https://github.com/Azure/PyRIT' }, { text: 'MITRE ATLAS', url: 'https://atlas.mitre.org/' }]
+    });
+
+    recs.push({
+      priority: 'low',
+      title: 'Engage with the AI security community',
+      desc: 'Join CoSAI, participate in OWASP GenAI working groups, and monitor NIST AI RMF updates to stay ahead of evolving standards.',
+      refs: [{ text: 'CoSAI', url: 'https://www.coalitionforsecureai.org/' }, { text: 'OWASP GenAI', url: 'https://genai.owasp.org/' }]
+    });
+
+    return recs;
+  }
+
+  function getRefsForDomain(domainId) {
+    const refMap = {
+      'governance': [{ text: 'NIST AI RMF', url: 'https://www.nist.gov/itl/ai-risk-management-framework' }, { text: 'ISO 42001', url: 'https://www.iso.org/standard/42001' }],
+      'model-security': [{ text: 'MITRE ATLAS', url: 'https://atlas.mitre.org/' }, { text: 'OWASP LLM Top 10', url: 'https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/' }],
+      'prompt-security': [{ text: 'OWASP LLM01:2025', url: 'https://genai.owasp.org/llmrisk/llm01-prompt-injection/' }, { text: 'NIST AI 600-1', url: 'https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf' }],
+      'agentic': [{ text: 'OWASP Agentic Top 10', url: 'https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/' }, { text: 'MAESTRO', url: 'https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro' }],
+      'data-privacy': [{ text: 'CISA AI Data Security', url: 'https://media.defense.gov/2025/May/22/2003720601/-1/-1/0/CSI_AI_DATA_SECURITY.PDF' }, { text: 'NIST Privacy', url: 'https://www.nist.gov/privacy-framework' }],
+      'compliance': [{ text: 'EU AI Act', url: 'https://artificialintelligenceact.eu/' }, { text: 'Colorado AI Act', url: 'https://leg.colorado.gov/bills/sb24-205' }],
+      'runtime': [{ text: 'Google SAIF', url: 'https://saif.google/' }, { text: 'Microsoft AGT', url: 'https://opensource.microsoft.com/blog/2026/04/02/introducing-the-agent-governance-toolkit-open-source-runtime-security-for-ai-agents/' }],
+      'supply-chain': [{ text: 'CycloneDX ML-BOM', url: 'https://cyclonedx.org/capabilities/mlbom/' }, { text: 'CoSAI', url: 'https://www.coalitionforsecureai.org/' }],
+      'red-team': [{ text: 'Microsoft PyRIT', url: 'https://github.com/Azure/PyRIT' }, { text: 'MITRE ATLAS', url: 'https://atlas.mitre.org/' }],
+      'future': [{ text: 'NIST PQC', url: 'https://www.nist.gov/pqcrypto' }, { text: 'Anthropic RSP', url: 'https://www.anthropic.com/responsible-scaling-policy' }],
+      'responsible-ai': [{ text: 'Microsoft RAI', url: 'https://www.microsoft.com/en-us/ai/principles-and-approach' }, { text: 'CoSAI', url: 'https://www.coalitionforsecureai.org/' }]
+    };
+    return refMap[domainId] || [];
+  }
+
+  function showResults() {
+    document.getElementById('question-panel').classList.add('hidden');
+    document.getElementById('domain-nav').classList.add('hidden');
+    document.getElementById('progress-section').classList.add('hidden');
+    document.getElementById('hero').classList.add('hidden');
+
+    const container = document.getElementById('results-container');
+    container.classList.remove('hidden');
+
+    const totalScore = Object.values(answers).reduce((s, v) => s + v, 0);
+    const maxScore = totalQuestions() * 5;
+    const overallPct = (totalScore / maxScore) * 100;
+    const level = getLevel(overallPct);
+    const color = getColor(overallPct);
+    const circumference = 2 * Math.PI * 76;
+    const offset = circumference - (overallPct / 100) * circumference;
+
+    // Domain results
+    const domainResults = DOMAINS.map(d => {
+      const dScore = d.questions.reduce((sum, _, qi) => sum + (answers[`${d.id}-${qi}`] || 1), 0);
+      const dMax = d.questions.length * 5;
+      const dPct = (dScore / dMax) * 100;
+      return { domain: d, score: dScore, max: dMax, pct: dPct };
+    });
+
+    const recs = generateRecommendations();
+
+    container.innerHTML = `
+      <div class="results-header">
+        <h2>AI Security Assessment Results</h2>
+        <p style="color:var(--text-secondary);font-size:15px;">Based on your responses across ${DOMAINS.length} domains and ${totalQuestions()} questions</p>
+        <div class="overall-score-ring">
+          <svg viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="76" fill="none" stroke="var(--bg-secondary)" stroke-width="8"/>
+            <circle cx="80" cy="80" r="76" fill="none" stroke="${color}" stroke-width="8"
+              stroke-dasharray="${circumference}" stroke-dashoffset="${circumference}" stroke-linecap="round"
+              style="transition: stroke-dashoffset 1.5s var(--ease-out);" id="score-ring"/>
+          </svg>
+          <div class="score-text">
+            <span class="score-number" style="color:${color};">${Math.round(overallPct)}</span>
+            <span class="score-label">out of 100</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="maturity-level">
+        <div class="maturity-badge" style="background:${color}22;color:${color};border:1px solid ${color}44;">${level.name}</div>
+        <p class="maturity-desc">${level.desc}</p>
+      </div>
+
+      <h3 style="font-size:20px;font-weight:700;margin-bottom:16px;">Domain Breakdown</h3>
+      <div class="domain-results-grid">
+        ${domainResults.map(dr => {
+          const dColor = getColor(dr.pct);
+          const dLevel = getLevel(dr.pct);
+          const findings = getDomainFindings(dr.domain, dr.score, dr.max);
+          return `<div class="domain-result-card">
+            <div class="domain-result-header">
+              <span class="domain-result-name">${dr.domain.title}</span>
+              <span class="domain-result-score" style="color:${dColor};">${Math.round(dr.pct)}%</span>
+            </div>
+            <div class="domain-result-bar"><div class="domain-result-fill" style="width:0%;background:${dColor};" data-width="${dr.pct}%"></div></div>
+            <div class="domain-result-level" style="color:${dColor};">${dLevel.name}</div>
+            <ul class="domain-result-findings">
+              ${findings.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+          </div>`;
+        }).join('')}
+      </div>
+
+      <div class="recommendations">
+        <h3>Prioritized Recommendations</h3>
+        ${recs.map(r => `<div class="rec-item">
+          <div class="rec-priority ${r.priority}">${r.priority === 'critical' ? 'C' : r.priority === 'high' ? 'H' : r.priority === 'medium' ? 'M' : 'L'}</div>
+          <div class="rec-content">
+            <div class="rec-title">${r.title}</div>
+            <div class="rec-desc">${r.desc}</div>
+            ${r.refs ? `<div class="rec-refs">${r.refs.map(ref => `<a href="${ref.url}" target="_blank" rel="noopener">${ref.text}</a>`).join('')}</div>` : ''}
+          </div>
+        </div>`).join('')}
+      </div>
+
+      <div class="results-cta">
+        <h3>Need Expert Help With AI Security?</h3>
+        <p>Our AI security consultants can conduct a deep-dive assessment and build a remediation roadmap tailored to your organization.</p>
+        <a href="/#contact" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">Talk to Our AI Security Experts</a>
+        <br><br>
+        <button class="btn btn-secondary" onclick="resetAssessment()">Retake Assessment</button>
+      </div>
+    `;
+
+    // Animate score ring
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const ring = document.getElementById('score-ring');
+        if (ring) ring.style.strokeDashoffset = offset;
+        // Animate domain bars
+        container.querySelectorAll('.domain-result-fill').forEach(fill => {
+          fill.style.width = fill.dataset.width;
+        });
+      }, 100);
+    });
+  }
+
+  window.resetAssessment = function() {
+    answers = {};
+    activeDomain = 0;
+    activeQuestion = 0;
+    document.getElementById('results-container').classList.add('hidden');
+    document.getElementById('question-panel').classList.remove('hidden');
+    document.getElementById('domain-nav').classList.remove('hidden');
+    document.getElementById('progress-section').classList.remove('hidden');
+    document.getElementById('hero').classList.remove('hidden');
+    renderAll();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // =============================================================================
+  // INIT
+  // =============================================================================
+  document.addEventListener('DOMContentLoaded', () => {
+    renderAll();
+  });
+  </script>
+</body>
+</html>

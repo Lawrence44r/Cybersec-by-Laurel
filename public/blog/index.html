@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersecurity Blog — Expert Insights & Research | Laurel Shield</title>
+  <meta name="description" content="Expert cybersecurity insights, penetration testing research, compliance guides (SOC 2, HIPAA, CMMC), and AI security thought leadership from Laurel Shield's consulting team.">
+  <meta name="keywords" content="cybersecurity blog, penetration testing blog, compliance guides, SOC 2 guide, HIPAA guide, CMMC guide, AI security blog, cybersecurity insights, security research">
+  <meta name="author" content="Laurel Shield Cybersecurity">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://security.laurelshield.com/blog/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cybersecurity Blog — Expert Insights & Research | Laurel Shield">
+  <meta property="og:description" content="Expert cybersecurity insights, penetration testing research, compliance guides, and AI security thought leadership.">
+  <meta property="og:url" content="https://security.laurelshield.com/blog/">
+  <meta property="og:site_name" content="Laurel Shield">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cybersecurity Blog — Laurel Shield">
+  <meta name="twitter:description" content="Expert cybersecurity insights, penetration testing research, and compliance guides.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Laurel Shield Cybersecurity Blog",
+    "description": "Expert cybersecurity insights, penetration testing research, compliance guides, and AI security thought leadership.",
+    "url": "https://security.laurelshield.com/blog/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Laurel Shield",
+      "url": "https://security.laurelshield.com"
+    },
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "headline": "Top 10 Penetration Testing Findings in Healthcare 2026",
+        "url": "https://security.laurelshield.com/blog/top-10-penetration-testing-findings-healthcare-2026.html",
+        "datePublished": "2026-03-28",
+        "description": "Our analysis of 200+ healthcare penetration tests reveals the most common vulnerabilities threatening patient data."
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Navigating CMMC 2.0: A Practical Guide for Defense Contractors",
+        "url": "https://security.laurelshield.com/blog/navigating-cmmc-2-guide-defense-contractors.html",
+        "datePublished": "2026-03-15",
+        "description": "CMMC 2.0 is here. We break down the three levels, assessment requirements, and the fastest path to compliance."
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "AI Security Risks Your Organization Is Probably Ignoring",
+        "url": "https://security.laurelshield.com/blog/ai-security-risks-your-organization-is-ignoring.html",
+        "datePublished": "2026-03-01",
+        "description": "From prompt injection to training data poisoning — the AI security threats that boards aren't talking about yet."
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "SOC 2 in 8 Weeks: How Fast-Growing SaaS Companies Get Audit-Ready",
+        "url": "https://security.laurelshield.com/blog/soc-2-in-8-weeks-saas-companies.html",
+        "datePublished": "2026-02-18",
+        "description": "A step-by-step playbook for achieving SOC 2 Type II certification on accelerated timelines."
+      }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF4500'/%3E%3Cstop offset='100%25' stop-color='%23FF3D00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 1L3 7.5v9c0 8.5 5.5 15.5 13 16.5 7.5-1 13-8 13-16.5v-9L16 1z' fill='%230A0A0A' stroke='url(%23fg)' stroke-width='2'/%3E%3Cpath d='M16 5L7 9.5v6c0 5.8 3.8 11 9 11.5 5.2-.5 9-5.7 9-11.5v-6L16 5z' fill='url(%23fg)' opacity='.12'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='11' fill='%23FF4500' letter-spacing='-0.5'%3ELS%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-primary: #000000; --bg-secondary: #0A0A0A; --accent-orange: #FF4500; --accent-purple: #A855F7;
+      --text-primary: #FFFFFF; --text-secondary: #B0B0B0; --text-muted: #707070;
+      --border-color: rgba(255, 255, 255, 0.06); --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --nav-height: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent-orange); text-decoration: none; } a:hover { color: var(--accent-purple); }
+
+    .page-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height); display: flex; align-items: center; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+    .page-nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: var(--text-primary); } .nav-brand:hover { color: var(--text-primary); } .nav-brand .accent { color: var(--accent-orange); }
+    .back-link { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+
+    .page-content { max-width: 1000px; margin: 0 auto; padding: calc(var(--nav-height) + 48px) 24px 80px; }
+
+    .blog-header { text-align: center; margin-bottom: 48px; }
+    .blog-header h1 {
+      font-size: 2.4em; font-weight: 700; margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #ccc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .blog-header p { color: var(--text-secondary); font-size: 1.1em; max-width: 600px; margin: 0 auto; }
+
+    .blog-filters { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 8px 20px; border-radius: 99px; border: 1px solid var(--border-color);
+      background: transparent; color: var(--text-secondary); font-size: 0.9em; font-weight: 500;
+      cursor: pointer; font-family: var(--font-sans); transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: rgba(255, 69, 0, 0.3); color: var(--text-primary); }
+    .filter-btn.active { background: rgba(255, 69, 0, 0.12); border-color: rgba(255, 69, 0, 0.4); color: var(--accent-orange); }
+
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+
+    .blog-card {
+      background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 16px;
+      padding: 28px; transition: border-color 0.3s, transform 0.3s;
+    }
+    .blog-card:hover { border-color: rgba(255, 69, 0, 0.3); transform: translateY(-4px); }
+    .card-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 0.78em; font-weight: 600;
+      background: rgba(255, 69, 0, 0.12); color: var(--accent-orange); border: 1px solid rgba(255, 69, 0, 0.25);
+    }
+    .card-meta span { color: var(--text-muted); font-size: 0.85em; }
+    .card-title { font-size: 1.2em; margin-bottom: 12px; line-height: 1.3; }
+    .card-title a { color: var(--text-primary); transition: color 0.2s; } .card-title a:hover { color: var(--accent-orange); }
+    .card-excerpt { color: var(--text-secondary); font-size: 0.92em; line-height: 1.6; margin-bottom: 20px; }
+    .read-link {
+      display: inline-flex; align-items: center; gap: 6px; color: var(--accent-orange); font-weight: 600;
+      font-size: 0.9em; transition: gap 0.2s;
+    }
+    .read-link:hover { gap: 10px; color: var(--accent-purple); }
+
+    .newsletter-section {
+      margin-top: 64px; padding: 40px; border-radius: 16px; text-align: center;
+      background: rgba(168, 85, 247, 0.06); border: 1px solid rgba(168, 85, 247, 0.2);
+    }
+    .newsletter-section h2 { color: var(--text-primary); margin: 0 0 8px; font-size: 1.4em; }
+    .newsletter-section p { color: var(--text-secondary); margin: 0 0 20px; font-size: 0.95em; }
+    .newsletter-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; }
+    .newsletter-form input {
+      flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05); color: #fff; font-size: 0.95em; font-family: var(--font-sans);
+    }
+    .newsletter-form input::placeholder { color: var(--text-muted); }
+    .newsletter-form button {
+      padding: 12px 24px; border-radius: 8px; border: none; background: var(--accent-purple);
+      color: #fff; font-weight: 600; font-size: 0.95em; cursor: pointer; font-family: var(--font-sans);
+      transition: background 0.2s;
+    }
+    .newsletter-form button:hover { background: #9333EA; }
+
+    .page-footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85em; }
+
+    @media (max-width: 600px) {
+      .blog-header h1 { font-size: 1.8em; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="page-nav">
+    <div class="page-nav-inner">
+      <a href="/" class="nav-brand"><span class="accent">LS</span> Laurel Shield</a>
+      <a href="/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </nav>
+
+  <main class="page-content">
+    <div class="blog-header">
+      <h1>The Hacker's Journal</h1>
+      <p>Cybersecurity insights, penetration testing research, compliance guides, and AI security thought leadership from our consulting team.</p>
+    </div>
+
+    <div class="blog-filters" id="blog-filters"></div>
+    <div class="blog-grid" id="blog-grid"></div>
+
+    <div class="newsletter-section">
+      <h2>Monthly Cybersecurity Insights</h2>
+      <p>Research, threat intelligence, and compliance updates delivered to your inbox. No spam, unsubscribe anytime.</p>
+      <form class="newsletter-form" onsubmit="return subscribeBlog(this, event)">
+        <input type="email" placeholder="you@company.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p id="newsletter-msg" style="margin-top:12px;display:none;"></p>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 Laurel Shield. All rights reserved. | <a href="/privacy-policy.html">Privacy</a> | <a href="/terms.html">Terms</a> | <a href="/responsible-disclosure.html">Security</a></p>
+  </footer>
+
+  <script>
+    const posts = [
+      {
+        title: "Top 10 Penetration Testing Findings in Healthcare 2026",
+        excerpt: "Our latest analysis of 200+ healthcare pentests reveals the most common vulnerabilities threatening patient data — and what CISOs can do about them.",
+        url: "/blog/top-10-penetration-testing-findings-healthcare-2026.html",
+        category: "Healthcare",
+        date: "2026-03-28",
+        readTime: "7 min"
+      },
+      {
+        title: "Navigating CMMC 2.0: A Practical Guide for Defense Contractors",
+        excerpt: "CMMC 2.0 is here. We break down the three levels, assessment requirements, and the fastest path to compliance for your organization.",
+        url: "/blog/navigating-cmmc-2-guide-defense-contractors.html",
+        category: "Compliance",
+        date: "2026-03-15",
+        readTime: "10 min"
+      },
+      {
+        title: "AI Security Risks Your Organization Is Probably Ignoring",
+        excerpt: "From prompt injection to training data poisoning — the AI security threats that boards aren't talking about yet, but should be.",
+        url: "/blog/ai-security-risks-your-organization-is-ignoring.html",
+        category: "AI Security",
+        date: "2026-03-01",
+        readTime: "6 min"
+      },
+      {
+        title: "SOC 2 in 8 Weeks: How Fast-Growing SaaS Companies Get Audit-Ready",
+        excerpt: "A step-by-step playbook based on our experience helping 50+ SaaS companies achieve SOC 2 Type II certification on accelerated timelines.",
+        url: "/blog/soc-2-in-8-weeks-saas-companies.html",
+        category: "Compliance",
+        date: "2026-02-18",
+        readTime: "8 min"
+      }
+    ];
+
+    const grid = document.getElementById('blog-grid');
+    const filtersEl = document.getElementById('blog-filters');
+    const cats = ['All', ...new Set(posts.map(p => p.category))];
+
+    function renderFilters() {
+      filtersEl.innerHTML = cats.map((c, i) =>
+        '<button class="filter-btn' + (i === 0 ? ' active' : '') + '" data-cat="' + c + '">' + c + '</button>'
+      ).join('');
+      filtersEl.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderCards(btn.dataset.cat);
+        });
+      });
+    }
+
+    function renderCards(filter) {
+      const list = filter === 'All' ? posts : posts.filter(p => p.category === filter);
+      grid.innerHTML = list.sort((a, b) => new Date(b.date) - new Date(a.date)).map(p => `
+        <article class="blog-card">
+          <div class="card-meta">
+            <span class="badge">${p.category}</span>
+            <span>${p.date}</span>
+            <span>${p.readTime} read</span>
+          </div>
+          <h2 class="card-title"><a href="${p.url}">${p.title}</a></h2>
+          <p class="card-excerpt">${p.excerpt}</p>
+          <a href="${p.url}" class="read-link">Read Full Article &rarr;</a>
+        </article>
+      `).join('');
+    }
+
+    renderFilters();
+    renderCards('All');
+
+    async function subscribeBlog(form, e) {
+      e.preventDefault();
+      var email = form.querySelector('input').value;
+      var msg = document.getElementById('newsletter-msg');
+      try {
+        var res = await fetch('/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email }) });
+        var data = await res.json();
+        msg.style.display = 'block';
+        if (data.success) { msg.style.color = '#22C55E'; msg.textContent = 'Subscribed! Check your email for the compliance checklist.'; form.querySelector('input').value = ''; }
+        else { msg.style.color = '#FF4D6A'; msg.textContent = data.error || 'Something went wrong.'; }
+      } catch(err) { msg.style.display = 'block'; msg.style.color = '#FF4D6A'; msg.textContent = 'Network error. Please try again.'; }
+      return false;
+    }
+  </script>
+
+</body>
+</html>

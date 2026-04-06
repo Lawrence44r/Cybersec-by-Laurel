@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 10 Penetration Testing Findings in Healthcare 2026 | Laurel Shield</title>
+  <meta name="description" content="Our analysis of 200+ healthcare penetration tests reveals the most common vulnerabilities threatening patient data in 2026 — and what CISOs can do about them.">
+  <meta name="keywords" content="healthcare penetration testing, healthcare cybersecurity, HIPAA penetration testing, medical device security, healthcare vulnerabilities 2026, hospital cybersecurity, PHI protection, healthcare pentest findings">
+  <meta name="author" content="Laurel Shield Cybersecurity">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://security.laurelshield.com/blog/top-10-penetration-testing-findings-healthcare-2026.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Top 10 Penetration Testing Findings in Healthcare 2026">
+  <meta property="og:description" content="Our analysis of 200+ healthcare penetration tests reveals the most common vulnerabilities threatening patient data — and what CISOs can do about them.">
+  <meta property="og:url" content="https://security.laurelshield.com/blog/top-10-penetration-testing-findings-healthcare-2026.html">
+  <meta property="og:site_name" content="Laurel Shield">
+  <meta property="article:published_time" content="2026-03-28">
+  <meta property="article:section" content="Healthcare">
+  <meta property="article:tag" content="penetration testing">
+  <meta property="article:tag" content="healthcare cybersecurity">
+  <meta property="article:tag" content="HIPAA">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Top 10 Penetration Testing Findings in Healthcare 2026">
+  <meta name="twitter:description" content="Our analysis of 200+ healthcare penetration tests reveals the most common vulnerabilities threatening patient data.">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Top 10 Penetration Testing Findings in Healthcare 2026",
+    "description": "Our analysis of 200+ healthcare penetration tests reveals the most common vulnerabilities threatening patient data in 2026.",
+    "datePublished": "2026-03-28",
+    "dateModified": "2026-03-28",
+    "author": {
+      "@type": "Organization",
+      "name": "Laurel Shield",
+      "url": "https://security.laurelshield.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Laurel Shield",
+      "url": "https://security.laurelshield.com"
+    },
+    "mainEntityOfPage": "https://security.laurelshield.com/blog/top-10-penetration-testing-findings-healthcare-2026.html",
+    "articleSection": "Healthcare",
+    "keywords": ["healthcare penetration testing", "HIPAA", "medical device security", "healthcare cybersecurity"]
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF4500'/%3E%3Cstop offset='100%25' stop-color='%23FF3D00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M16 1L3 7.5v9c0 8.5 5.5 15.5 13 16.5 7.5-1 13-8 13-16.5v-9L16 1z' fill='%230A0A0A' stroke='url(%23fg)' stroke-width='2'/%3E%3Cpath d='M16 5L7 9.5v6c0 5.8 3.8 11 9 11.5 5.2-.5 9-5.7 9-11.5v-6L16 5z' fill='url(%23fg)' opacity='.12'/%3E%3Ctext x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='11' fill='%23FF4500' letter-spacing='-0.5'%3ELS%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0A0A0A;
+      --accent-orange: #FF4500;
+      --accent-purple: #A855F7;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --text-muted: #707070;
+      --border-color: rgba(255, 255, 255, 0.06);
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --max-width: 800px;
+      --nav-height: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent-orange); text-decoration: none; }
+    a:hover { color: var(--accent-purple); }
+
+    .page-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height);
+      display: flex; align-items: center; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .page-nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: var(--text-primary); }
+    .nav-brand:hover { color: var(--text-primary); }
+    .nav-brand .accent { color: var(--accent-orange); }
+    .back-link { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+
+    .page-content {
+      max-width: var(--max-width); margin: 0 auto; padding: calc(var(--nav-height) + 48px) 24px 80px;
+    }
+
+    .article-meta {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 0.8em; font-weight: 600;
+      background: rgba(255, 69, 0, 0.12); color: var(--accent-orange); border: 1px solid rgba(255, 69, 0, 0.25);
+    }
+    .meta-text { color: var(--text-muted); font-size: 0.9em; }
+
+    h1 {
+      font-size: 2.2em; line-height: 1.2; margin-bottom: 20px; font-weight: 700;
+      background: linear-gradient(135deg, #fff 0%, #ccc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .article-excerpt {
+      font-size: 1.15em; color: var(--text-secondary); line-height: 1.7; margin-bottom: 36px;
+      padding-bottom: 36px; border-bottom: 1px solid var(--border-color);
+    }
+
+    .article-body h2, .article-body h3, .article-body h4 {
+      color: var(--text-primary); margin: 36px 0 16px; font-weight: 600;
+    }
+    .article-body h2 { font-size: 1.5em; }
+    .article-body h3 { font-size: 1.25em; }
+    .article-body h4 { font-size: 1.1em; color: var(--accent-orange); }
+    .article-body p { color: var(--text-secondary); margin-bottom: 18px; }
+    .article-body ol, .article-body ul { color: var(--text-secondary); margin: 0 0 18px 24px; }
+    .article-body li { margin-bottom: 10px; line-height: 1.7; }
+    .article-body strong { color: var(--text-primary); }
+
+    .cta-box {
+      margin: 48px 0; padding: 32px; border-radius: 16px;
+      background: rgba(255, 69, 0, 0.06); border: 1px solid rgba(255, 69, 0, 0.2);
+      text-align: center;
+    }
+    .cta-box h3 { color: var(--text-primary); margin: 0 0 12px; font-size: 1.3em; }
+    .cta-box p { color: var(--text-secondary); margin: 0 0 20px; }
+    .cta-btn {
+      display: inline-block; padding: 14px 32px; border-radius: 8px; font-weight: 700;
+      background: var(--accent-orange); color: #fff; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255, 69, 0, 0.3); }
+
+    .newsletter-box {
+      margin: 48px 0; padding: 32px; border-radius: 16px;
+      background: rgba(168, 85, 247, 0.06); border: 1px solid rgba(168, 85, 247, 0.2);
+      text-align: center;
+    }
+    .newsletter-box h3 { color: var(--text-primary); margin: 0 0 8px; font-size: 1.2em; }
+    .newsletter-box p { color: var(--text-secondary); margin: 0 0 16px; font-size: 0.95em; }
+    .newsletter-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; }
+    .newsletter-form input {
+      flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05); color: #fff; font-size: 0.95em; font-family: var(--font-sans);
+    }
+    .newsletter-form input::placeholder { color: var(--text-muted); }
+    .newsletter-form button {
+      padding: 12px 24px; border-radius: 8px; border: none; background: var(--accent-purple);
+      color: #fff; font-weight: 600; font-size: 0.95em; cursor: pointer; font-family: var(--font-sans);
+      transition: background 0.2s;
+    }
+    .newsletter-form button:hover { background: #9333EA; }
+
+    .related-posts { margin: 48px 0; }
+    .related-posts h3 { color: var(--text-primary); margin: 0 0 20px; font-size: 1.2em; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .related-card {
+      padding: 20px; border-radius: 12px; background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color); transition: border-color 0.3s;
+    }
+    .related-card:hover { border-color: rgba(255, 69, 0, 0.3); }
+    .related-card h4 { font-size: 0.95em; margin: 0 0 8px; }
+    .related-card h4 a { color: var(--text-primary); }
+    .related-card h4 a:hover { color: var(--accent-orange); }
+    .related-card p { color: var(--text-muted); font-size: 0.85em; margin: 0; }
+
+    .page-footer {
+      text-align: center; padding: 32px 24px; border-top: 1px solid var(--border-color);
+      color: var(--text-muted); font-size: 0.85em;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.6em; }
+      .newsletter-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="page-nav">
+    <div class="page-nav-inner">
+      <a href="/" class="nav-brand"><span class="accent">LS</span> Laurel Shield</a>
+      <a href="/blog/" class="back-link">&larr; All Articles</a>
+    </div>
+  </nav>
+
+  <main class="page-content">
+    <div class="article-meta">
+      <span class="badge">Healthcare</span>
+      <span class="meta-text">March 28, 2026</span>
+      <span class="meta-text">7 min read</span>
+    </div>
+
+    <h1>Top 10 Penetration Testing Findings in Healthcare 2026</h1>
+
+    <p class="article-excerpt">Our latest analysis of 200+ healthcare penetration tests reveals the most common vulnerabilities threatening patient data — and what CISOs can do about them.</p>
+
+    <div class="article-body">
+      <p>After analyzing over 200 healthcare penetration tests conducted in the past 18 months, our team has identified consistent patterns in the vulnerabilities that put patient data and clinical operations at risk.</p>
+
+      <h4>The Top 10 Findings</h4>
+      <ol>
+        <li><strong>Unpatched legacy medical devices</strong> — Many hospitals still run devices on Windows 7 or embedded systems with known CVEs. Network segmentation is often the only viable mitigation.</li>
+        <li><strong>Weak Active Directory configurations</strong> — Kerberoasting, AS-REP roasting, and excessive delegation permissions were exploitable in 78% of engagements.</li>
+        <li><strong>Default credentials on network appliances</strong> — Printers, VoIP phones, and IoT medical devices frequently ship with admin/admin credentials that are never changed.</li>
+        <li><strong>Excessive PHI access</strong> — Role-based access controls in EHR systems were misconfigured in 65% of organizations, granting clinical staff access to records outside their care scope.</li>
+        <li><strong>Missing MFA on VPN and remote access</strong> — Especially critical post-COVID as telehealth and remote work expanded the attack surface.</li>
+        <li><strong>Insecure HL7/FHIR API endpoints</strong> — Health data exchange interfaces often lacked proper authentication and input validation.</li>
+        <li><strong>Flat network architectures</strong> — Lateral movement from a compromised workstation to critical clinical systems was trivially easy in 40% of tests.</li>
+        <li><strong>Weak email security</strong> — Missing DMARC enforcement, SPF misconfigurations, and susceptibility to business email compromise.</li>
+        <li><strong>Unencrypted internal traffic</strong> — PHI transmitted in cleartext between internal systems, particularly between legacy applications.</li>
+        <li><strong>Inadequate logging and monitoring</strong> — 55% of organizations could not detect our simulated attack activities within 72 hours.</li>
+      </ol>
+
+      <h4>What CISOs Should Do Now</h4>
+      <p>Prioritize network segmentation for medical devices, enforce MFA everywhere, and implement continuous monitoring. A risk-based approach aligned with NIST CSF helps focus limited budgets on the highest-impact controls.</p>
+
+      <div class="cta-box">
+        <h3>Protect Your Healthcare Organization</h3>
+        <p>Schedule a targeted penetration test designed specifically for healthcare environments. We understand HIPAA, HL7, and the unique challenges of clinical networks.</p>
+        <a href="/#contact" class="cta-btn">Talk to Our Healthcare Security Team</a>
+      </div>
+
+      <div class="newsletter-box">
+        <h3>Monthly Cybersecurity Insights</h3>
+        <p>Research, threat intelligence, and compliance updates. No spam, unsubscribe anytime.</p>
+        <form class="newsletter-form" onsubmit="return subscribeBlog(this, event)">
+          <input type="email" placeholder="you@company.com" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p id="newsletter-msg" style="margin-top:12px;display:none;"></p>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <div class="related-grid">
+        <div class="related-card">
+          <h4><a href="/blog/soc-2-in-8-weeks-saas-companies.html">SOC 2 in 8 Weeks: How Fast-Growing SaaS Companies Get Audit-Ready</a></h4>
+          <p>Compliance &middot; 8 min read</p>
+        </div>
+        <div class="related-card">
+          <h4><a href="/blog/navigating-cmmc-2-guide-defense-contractors.html">Navigating CMMC 2.0: A Practical Guide for Defense Contractors</a></h4>
+          <p>Compliance &middot; 10 min read</p>
+        </div>
+        <div class="related-card">
+          <h4><a href="/blog/ai-security-risks-your-organization-is-ignoring.html">AI Security Risks Your Organization Is Probably Ignoring</a></h4>
+          <p>AI Security &middot; 6 min read</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 Laurel Shield. All rights reserved. | <a href="/privacy-policy.html">Privacy</a> | <a href="/terms.html">Terms</a> | <a href="/responsible-disclosure.html">Security</a></p>
+  </footer>
+
+  <script>
+    async function subscribeBlog(form, e) {
+      e.preventDefault();
+      const email = form.querySelector('input').value;
+      const msg = document.getElementById('newsletter-msg');
+      try {
+        const res = await fetch('/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        msg.style.display = 'block';
+        if (data.success) {
+          msg.style.color = '#22C55E';
+          msg.textContent = 'Subscribed! Check your email for the compliance checklist.';
+          form.querySelector('input').value = '';
+        } else {
+          msg.style.color = '#FF4D6A';
+          msg.textContent = data.error || 'Something went wrong.';
+        }
+      } catch {
+        msg.style.display = 'block';
+        msg.style.color = '#FF4D6A';
+        msg.textContent = 'Network error. Please try again.';
+      }
+      return false;
+    }
+  </script>
+
+</body>
+</html>

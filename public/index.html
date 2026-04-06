@@ -1827,6 +1827,9 @@
         <div class="blog-grid" id="blog-grid">
           <!-- Rendered by JavaScript -->
         </div>
+        <div class="reveal" style="text-align:center;margin-top:36px;">
+          <a href="/blog/" style="display:inline-flex;align-items:center;gap:8px;color:#FF4500;font-weight:600;font-size:1em;text-decoration:none;padding:12px 28px;border:1px solid rgba(255,69,0,0.3);border-radius:8px;transition:background 0.2s,border-color 0.2s;" onmouseenter="this.style.background='rgba(255,69,0,0.08)';this.style.borderColor='rgba(255,69,0,0.5)'" onmouseleave="this.style.background='transparent';this.style.borderColor='rgba(255,69,0,0.3)'">View All Articles <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        </div>
       </div>
     </section>
 
@@ -2493,13 +2496,13 @@
     renderQuiz();
 
     // ===== Blog Posts =====
-    /* === BLOG POSTS - EDIT HERE TO UPDATE === */
+    /* === BLOG POSTS === */
     const blogPosts = [
       {
         id: 1,
         title: "Top 10 Penetration Testing Findings in Healthcare 2026",
         excerpt: "Our latest analysis of 200+ healthcare pentests reveals the most common vulnerabilities threatening patient data — and what CISOs can do about them.",
-        body: "<p>After analyzing over 200 healthcare penetration tests conducted in the past 18 months, our team has identified consistent patterns in the vulnerabilities that put patient data and clinical operations at risk.</p><h4>The Top 10 Findings</h4><ol><li><strong>Unpatched legacy medical devices</strong> — Many hospitals still run devices on Windows 7 or embedded systems with known CVEs. Network segmentation is often the only viable mitigation.</li><li><strong>Weak Active Directory configurations</strong> — Kerberoasting, AS-REP roasting, and excessive delegation permissions were exploitable in 78% of engagements.</li><li><strong>Default credentials on network appliances</strong> — Printers, VoIP phones, and IoT medical devices frequently ship with admin/admin credentials that are never changed.</li><li><strong>Excessive PHI access</strong> — Role-based access controls in EHR systems were misconfigured in 65% of organizations, granting clinical staff access to records outside their care scope.</li><li><strong>Missing MFA on VPN and remote access</strong> — Especially critical post-COVID as telehealth and remote work expanded the attack surface.</li><li><strong>Insecure HL7/FHIR API endpoints</strong> — Health data exchange interfaces often lacked proper authentication and input validation.</li><li><strong>Flat network architectures</strong> — Lateral movement from a compromised workstation to critical clinical systems was trivially easy in 40% of tests.</li><li><strong>Weak email security</strong> — Missing DMARC enforcement, SPF misconfigurations, and susceptibility to business email compromise.</li><li><strong>Unencrypted internal traffic</strong> — PHI transmitted in cleartext between internal systems, particularly between legacy applications.</li><li><strong>Inadequate logging and monitoring</strong> — 55% of organizations could not detect our simulated attack activities within 72 hours.</li></ol><h4>What CISOs Should Do Now</h4><p>Prioritize network segmentation for medical devices, enforce MFA everywhere, and implement continuous monitoring. A risk-based approach aligned with NIST CSF helps focus limited budgets on the highest-impact controls.</p><p><a href='#contact'>Talk to our healthcare security team</a> to schedule a targeted assessment for your organization.</p>",
+        url: "/blog/top-10-penetration-testing-findings-healthcare-2026.html",
         category: "Healthcare",
         date: "2026-03-28",
         readTime: "7 min"
@@ -2508,7 +2511,7 @@
         id: 2,
         title: "Navigating CMMC 2.0: A Practical Guide for Defense Contractors",
         excerpt: "CMMC 2.0 is here. We break down the three levels, assessment requirements, and the fastest path to compliance for your organization.",
-        body: "<p>The Cybersecurity Maturity Model Certification (CMMC) 2.0 is now in effect, and defense contractors at every tier of the supply chain need to understand what it means for their business.</p><h4>The Three Levels</h4><ul><li><strong>Level 1 — Foundational:</strong> 15 basic cyber hygiene practices based on FAR 52.204-21. Self-assessment is sufficient. Required for contracts handling Federal Contract Information (FCI).</li><li><strong>Level 2 — Advanced:</strong> 110 practices aligned with NIST SP 800-171. Requires third-party assessment (C3PAO) for contracts involving Controlled Unclassified Information (CUI). This is where most contractors need to be.</li><li><strong>Level 3 — Expert:</strong> 130+ practices based on NIST SP 800-172. Government-led assessments. Required for the most sensitive defense programs.</li></ul><h4>The Fastest Path to Level 2</h4><ol><li><strong>Scope your CUI environment</strong> — Minimize the boundary. The fewer systems in scope, the fewer controls to implement.</li><li><strong>Complete a gap assessment</strong> — Map your current state against all 110 NIST 800-171 controls. Identify POA&M items.</li><li><strong>Prioritize high-impact controls</strong> — Focus on access control, audit logging, incident response, and configuration management first.</li><li><strong>Implement an SSP</strong> — Your System Security Plan is the single most important document. It must be detailed and accurate.</li><li><strong>Engage a C3PAO early</strong> — Assessment organizations are booking out months in advance. Schedule your assessment while you remediate.</li></ol><h4>Common Pitfalls</h4><p>Underscoping CUI boundaries, treating CMMC as a checkbox exercise, and failing to maintain evidence of continuous compliance are the top reasons contractors fail assessments.</p><p><a href='#contact'>Contact our CMMC team</a> for a readiness assessment and remediation roadmap.</p>",
+        url: "/blog/navigating-cmmc-2-guide-defense-contractors.html",
         category: "Compliance",
         date: "2026-03-15",
         readTime: "10 min"
@@ -2517,7 +2520,7 @@
         id: 3,
         title: "AI Security Risks Your Organization Is Probably Ignoring",
         excerpt: "From prompt injection to training data poisoning — the AI security threats that boards aren't talking about yet, but should be.",
-        body: "<p>AI adoption is accelerating across every industry, but security teams are struggling to keep pace with the novel attack surfaces that AI systems introduce. Here are the risks that most organizations are overlooking.</p><h4>1. Prompt Injection</h4><p>The most immediate threat to LLM-powered applications. Attackers craft inputs that override system instructions, extract sensitive data, or manipulate outputs. Direct and indirect prompt injection can bypass safety guardrails and turn your AI assistant into a data exfiltration tool.</p><h4>2. Training Data Poisoning</h4><p>If attackers can influence your training data — through compromised data sources, supply chain attacks, or insider threats — they can embed backdoors or biases that persist through deployment and are extremely difficult to detect.</p><h4>3. Model Theft and Extraction</h4><p>Fine-tuned models represent significant intellectual property. API-based model extraction attacks can reconstruct your model's behavior through systematic querying, stealing months of training investment.</p><h4>4. Sensitive Data Leakage</h4><p>LLMs can memorize and reproduce training data, including PII, credentials, and proprietary information. RAG systems compound this risk by connecting models to live data stores.</p><h4>5. Supply Chain Risks</h4><p>Pre-trained models, open-source libraries, and third-party APIs introduce dependencies that are rarely audited for security. A compromised model weight file or a malicious package can compromise your entire AI pipeline.</p><h4>What Boards Should Be Asking</h4><ul><li>What AI systems are we deploying, and what data do they access?</li><li>Have we assessed these systems for adversarial robustness?</li><li>Do we have an AI governance framework aligned with NIST AI RMF?</li><li>What is our incident response plan for AI-specific attacks?</li></ul><p><a href='#contact'>Talk to our AI security experts</a> about an assessment tailored to your AI stack.</p>",
+        url: "/blog/ai-security-risks-your-organization-is-ignoring.html",
         category: "AI Security",
         date: "2026-03-01",
         readTime: "6 min"
@@ -2526,7 +2529,7 @@
         id: 4,
         title: "SOC 2 in 8 Weeks: How Fast-Growing SaaS Companies Get Audit-Ready",
         excerpt: "A step-by-step playbook based on our experience helping 50+ SaaS companies achieve SOC 2 Type II certification on accelerated timelines.",
-        body: "<p>For fast-growing SaaS companies, SOC 2 compliance is often the gateway to enterprise sales. Prospects won't sign without it, and every month without certification is lost revenue. Here's how we've helped over 50 companies get audit-ready in 8 weeks.</p><h4>Week 1-2: Scoping and Gap Assessment</h4><p>Define your trust services criteria (most SaaS companies start with Security + Availability). Map your current controls against SOC 2 requirements. Identify the gaps — they're usually in formal documentation, not in actual security practices.</p><h4>Week 3-4: Policy and Procedure Development</h4><p>Create the foundational documents: Information Security Policy, Access Control Policy, Incident Response Plan, Change Management Procedure, Risk Assessment, and Vendor Management Policy. We provide battle-tested templates that you customize, not write from scratch.</p><h4>Week 5-6: Control Implementation</h4><p>Close the technical gaps: enable audit logging, implement MDM, configure automated alerting, set up vulnerability scanning, formalize your code review process, and document your infrastructure. Most modern SaaS companies already have 70% of controls in place — it's the documentation and evidence collection that's missing.</p><h4>Week 7-8: Evidence Collection and Audit Prep</h4><p>Collect evidence for every control. Set up continuous monitoring where possible. Conduct an internal readiness review. Brief your team on auditor expectations. Select your auditor and schedule the observation window.</p><h4>Key Success Factors</h4><ul><li><strong>Executive sponsorship</strong> — Someone with authority needs to drive cross-team coordination.</li><li><strong>Don't over-scope</strong> — Start with Security. Add criteria in future audits.</li><li><strong>Automate evidence collection</strong> — Tools like Vanta or Drata save hundreds of hours.</li><li><strong>Use your existing stack</strong> — Map controls to tools you already use (GitHub, AWS, Slack, etc.).</li></ul><p><a href='#contact'>Get started with our SOC 2 accelerator program</a> — we'll get you audit-ready on your timeline.</p>",
+        url: "/blog/soc-2-in-8-weeks-saas-companies.html",
         category: "Compliance",
         date: "2026-02-18",
         readTime: "8 min"
@@ -2554,35 +2557,18 @@
     function renderBlogCards(filter) {
       const filtered = filter === 'All' ? blogPosts : blogPosts.filter(p => p.category === filter);
       blogGrid.innerHTML = filtered.sort((a, b) => new Date(b.date) - new Date(a.date)).map(post => `
-        <article class="card blog-card" id="blog-${post.id}">
+        <article class="card blog-card">
           <div class="card-meta">
             <span class="badge badge-orange">${post.category}</span>
             <span>${post.date}</span>
             <span>${post.readTime} read</span>
           </div>
-          <h3 class="card-title"><a href="#blog-${post.id}" onclick="toggleBlog(${post.id},event)">${post.title}</a></h3>
+          <h3 class="card-title"><a href="${post.url}">${post.title}</a></h3>
           <p class="card-text">${post.excerpt}</p>
-          <div class="blog-body" id="blog-body-${post.id}" style="display:none;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);margin-top:16px;color:#B0B0B0;font-size:15px;line-height:1.8;">${post.body}</div>
-          <button class="read-more" onclick="toggleBlog(${post.id},event)" data-id="${post.id}">Read More &rarr;</button>
+          <a href="${post.url}" class="read-more">Read Full Article &rarr;</a>
         </article>
       `).join('');
     }
-
-    window.toggleBlog = function(id, e) {
-      if (e) e.preventDefault();
-      const body = document.getElementById('blog-body-' + id);
-      const card = document.getElementById('blog-' + id);
-      const btn = card.querySelector('.read-more');
-      if (body.style.display === 'none') {
-        body.style.display = 'block';
-        btn.innerHTML = '&larr; Show Less';
-        card.style.gridColumn = '1 / -1';
-      } else {
-        body.style.display = 'none';
-        btn.innerHTML = 'Read More &rarr;';
-        card.style.gridColumn = '';
-      }
-    };
 
     renderBlogFilters();
     renderBlogCards('All');
