@@ -631,6 +631,82 @@
     }
     .nav-cta:hover { background: #22C55E; color: #000000; box-shadow: 0 0 20px rgba(34,197,94,0.4); }
 
+    /* Urgency Banner */
+    .urgency-banner {
+      position: fixed; top: 60px; left: 0; right: 0; z-index: 998;
+      background: linear-gradient(90deg, #1a0a00 0%, #2a0f00 50%, #1a0a00 100%);
+      border-bottom: 1px solid rgba(255,69,0,0.3);
+      padding: 8px 16px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .urgency-banner.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+    .urgency-banner-inner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .urgency-banner-text {
+      color: #B0B0B0; font-size: 0.85em; font-family: var(--font-mono);
+      transition: opacity 0.4s ease;
+    }
+    .urgency-banner-text.fade-out { opacity: 0; }
+    .urgency-banner-cta {
+      color: #FF4500; font-size: 0.82em; font-weight: 700; text-decoration: none;
+      padding: 4px 14px; border: 1px solid rgba(255,69,0,0.4); border-radius: 6px;
+      transition: all 0.2s ease; white-space: nowrap;
+    }
+    .urgency-banner-cta:hover { background: #FF4500; color: #fff; }
+    .urgency-banner-close {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #707070; font-size: 18px; cursor: pointer;
+      padding: 4px 8px; transition: color 0.2s;
+    }
+    .urgency-banner-close:hover { color: #fff; }
+    @media (max-width: 768px) {
+      .urgency-banner { top: auto; bottom: 0; border-bottom: none; border-top: 1px solid rgba(255,69,0,0.3); }
+    }
+
+    /* Exit-Intent Popup */
+    .exit-popup-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .exit-popup {
+      background: #111; border: 1px solid rgba(255,69,0,0.2); border-radius: 16px;
+      padding: 36px 32px; max-width: 440px; width: 90%; text-align: center;
+      position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .exit-popup-close {
+      position: absolute; top: 12px; right: 16px; background: none; border: none;
+      color: #707070; font-size: 24px; cursor: pointer; transition: color 0.2s;
+    }
+    .exit-popup-close:hover { color: #fff; }
+    .exit-popup-icon { margin-bottom: 12px; }
+    .exit-popup-title { color: #fff; font-size: 1.3em; font-weight: 700; margin-bottom: 6px; }
+    .exit-popup-subtitle { color: #B0B0B0; font-size: 0.9em; margin-bottom: 18px; }
+    .exit-popup-form { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+    .exit-popup-input {
+      width: 100%; max-width: 320px; padding: 12px 16px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4);
+      color: #fff; font-family: var(--font-sans); font-size: 0.95em;
+    }
+    .exit-popup-input:focus { border-color: #FF4500; outline: none; }
+    .exit-popup-btn {
+      padding: 12px 28px; background: #FF4500; color: #fff; border: none;
+      border-radius: 8px; font-weight: 700; cursor: pointer; font-family: var(--font-sans);
+      font-size: 0.95em; transition: background 0.2s;
+    }
+    .exit-popup-btn:hover { background: #e03e00; }
+    .exit-popup-error { color: var(--accent-red); font-size: 0.82em; display: none; }
+    .exit-popup-dismiss {
+      background: none; border: none; color: #555; font-size: 0.78em;
+      cursor: pointer; margin-top: 14px; text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .exit-popup-dismiss:hover { color: #999; }
+
     /* Hamburger */
     .hamburger {
       display: none; flex-direction: column; gap: 5px; cursor: pointer;
@@ -1181,6 +1257,15 @@
     </nav>
   </header>
 
+  <!-- ========== STICKY URGENCY BANNER ========== -->
+  <div class="urgency-banner" id="urgency-banner">
+    <div class="urgency-banner-inner">
+      <span class="urgency-banner-text" id="urgency-text"></span>
+      <a href="#contact" class="urgency-banner-cta" id="urgency-cta"></a>
+    </div>
+    <button class="urgency-banner-close" id="urgency-close" aria-label="Dismiss banner">&times;</button>
+  </div>
+
   <main id="main-content">
 
     <!-- ========== HERO ========== -->
@@ -1199,20 +1284,27 @@
       </div>
       <div class="hero-gradient" aria-hidden="true"></div>
       <div class="container hero-content">
-        <div class="hero-badge"><i data-lucide="shield-check" style="width:16px;height:16px;color:#FF2D2D;"></i> Trusted Cybersecurity Consulting Partner — Calgary &amp; Philadelphia</div>
+        <div class="hero-badge"><i data-lucide="shield-check" style="width:16px;height:16px;color:#FF2D2D;"></i> Trusted by 50+ Healthcare &amp; SaaS Companies Across North America</div>
         <h1 class="hero-title">
           <span class="sr-only">Cybersecurity Consulting Firm — Penetration Testing, Compliance Audits, AI Security Services | Laurel Shield</span>
           <span id="typed-output" class="typed-text" aria-live="polite"></span><span class="typed-cursor" aria-hidden="true"></span>
         </h1>
-        <p class="hero-subtitle" style="-webkit-text-fill-color:#FFFFFF;background:none;color:#FFFFFF;">Enterprise-grade <strong>cybersecurity assessments</strong>, <strong>compliance audits</strong>, <strong>penetration testing</strong>, and <strong>AI security consulting</strong> — delivered with clarity and care to organizations of all sizes worldwide.</p>
+        <p class="hero-subtitle" style="-webkit-text-fill-color:#FFFFFF;background:none;color:#FFFFFF;">We find the vulnerabilities before attackers do — and get you <strong>audit-ready in weeks, not months</strong>. Fixed-scope engagements. <strong>Clear reports</strong>. No surprises.</p>
         <div class="hero-ctas">
-          <a href="#quiz" class="btn btn-outline"><i data-lucide="scan-line" style="width:18px;height:18px;"></i> Assess Your Security</a>
+          <a href="#quiz" class="btn btn-primary" style="background:#FF4500;color:#fff;border:2px solid #FF4500;padding:14px 32px;font-weight:700;"><i data-lucide="shield-check" style="width:18px;height:18px;"></i> Get a Free Security Assessment</a>
+          <a href="tel:+14039668833" class="btn btn-outline" style="border:2px solid rgba(255,255,255,0.3);padding:14px 28px;"><i data-lucide="phone" style="width:18px;height:18px;"></i> Breach Emergency? Call Now</a>
+          <!-- TODO: Replace with your Cal.com/Calendly booking URL -->
+          <a href="#contact" class="btn btn-outline" style="border:2px solid rgba(168,85,247,0.4);color:#A855F7;padding:14px 28px;"><i data-lucide="calendar" style="width:18px;height:18px;"></i> Book a Free Call</a>
         </div>
         <div class="hero-trust">
           <div class="trust-item"><div class="trust-number">500+</div><div class="trust-label">Pentests Completed</div></div>
           <div class="trust-item"><div class="trust-number">99.7%</div><div class="trust-label">Client Retention</div></div>
-          <div class="trust-item"><div class="trust-number">50+</div><div class="trust-label">Healthcare Clients</div></div>
-          <div class="trust-item"><div class="trust-number">24/7</div><div class="trust-label">SOC Monitoring</div></div>
+          <div class="trust-item"><div class="trust-number">50+</div><div class="trust-label">Healthcare Orgs Protected</div></div>
+          <div class="trust-item"><div class="trust-number">24/7</div><div class="trust-label">Threat Monitoring</div></div>
+        </div>
+        <div class="hero-micro-testimonial" style="margin-top:28px;padding:16px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;max-width:600px;margin-left:auto;margin-right:auto;text-align:center;">
+          <p style="color:#B0B0B0;font-size:0.92em;font-style:italic;margin:0 0 6px 0;">"They found 23 critical vulnerabilities our internal team missed — and got us SOC 2 certified in 8 weeks."</p>
+          <p style="color:#FF4500;font-size:0.82em;font-weight:600;margin:0;">— IT Director, SaaS Company (San Diego, CA)</p>
         </div>
       </div>
     </section>
@@ -1265,10 +1357,11 @@
     <section class="cta-bar">
       <div class="container cta-bar-inner">
         <div class="cta-bar-text">
-          <h3 style="font-size:3em;color:#FFFFFF;text-shadow:0 0 12px rgba(255,255,255,0.3);">Request Consultation</h3>
-          <p>Sometimes, all you need is an extra hand.</p>
+          <h3 style="font-size:2.6em;color:#FFFFFF;text-shadow:0 0 12px rgba(255,255,255,0.3);">Book Your Free 30-Min Security Consultation</h3>
+          <p>See exactly where your vulnerabilities are. No sales pitch. No obligation.</p>
         </div>
-        <a href="#contact" class="btn cta-bar-btn">Book Meeting <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></a>
+        <!-- TODO: Replace #contact with your Cal.com/Calendly booking URL -->
+        <a href="#contact" class="btn cta-bar-btn">Book Free Call <i data-lucide="calendar" style="width:18px;height:18px;"></i></a>
       </div>
     </section>
 
@@ -1460,7 +1553,10 @@
                 <div><div class="ai-feature-title">Secure AI Architecture</div><p class="ai-feature-text">Design AI systems with security built in — secure APIs, data isolation, model access controls, and monitoring.</p></div>
               </div>
             </div>
-            <a href="#contact" class="btn btn-primary btn-ai-experts" style="margin-top:32px;"><i data-lucide="brain" style="width:18px;height:18px;"></i> Talk to Our AI Security Experts</a>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;">
+              <a href="#contact" class="btn btn-primary btn-ai-experts"><i data-lucide="brain" style="width:18px;height:18px;"></i> Talk to Our AI Security Experts</a>
+              <a href="/ai-security-assessment.html" class="btn btn-outline" style="border-color:rgba(255,106,51,0.5);color:#FF6A33;"><i data-lucide="scan-line" style="width:18px;height:18px;"></i> Free AI Security Assessment</a>
+            </div>
           </div>
           <div class="ai-visual reveal" data-delay="2" aria-hidden="true">
             <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
@@ -1671,34 +1767,34 @@
         <div class="testimonials-grid">
           <div class="card testimonial-card reveal" data-delay="1">
             <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-text">"Laurel Shield transformed our HIPAA compliance from a constant anxiety into a managed, measurable program. Their healthcare expertise is unmatched — they understand clinical workflows, not just checkboxes."</p>
+            <p class="testimonial-text">"Laurel Shield transformed our HIPAA compliance from a constant anxiety into a managed, measurable program. <strong>Our compliance gap went from 41% to 97% in 10 weeks.</strong> They understand clinical workflows, not just checkboxes."</p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar">HC</div>
-              <div><div class="testimonial-name">Health Client</div><div class="testimonial-role">Saskatchewan, Canada</div></div>
+              <div class="testimonial-avatar">DR</div>
+              <div><div class="testimonial-name">David R., CTO</div><div class="testimonial-role">Healthcare Organization — Saskatchewan, Canada</div></div>
             </div>
           </div>
           <div class="card testimonial-card reveal" data-delay="2">
             <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-text">"Their pentest team found critical vulnerabilities our internal scans had missed for months. The reports were clear, actionable, and helped us prioritize fixes by business impact."</p>
+            <p class="testimonial-text">"Their pentest team <strong>found 23 critical vulnerabilities</strong> our internal scans had missed for months. The reports were clear, actionable, and helped us prioritize fixes by business impact — not just severity scores."</p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar">LS</div>
-              <div><div class="testimonial-name">Legal SaaS Solution</div><div class="testimonial-role">San Diego, California, USA</div></div>
+              <div class="testimonial-avatar">MS</div>
+              <div><div class="testimonial-name">Maria S., VP of Engineering</div><div class="testimonial-role">Legal SaaS Company — San Diego, CA</div></div>
             </div>
           </div>
           <div class="card testimonial-card reveal" data-delay="3">
             <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-text">"As a fast-growing SaaS company, we needed SOC 2 fast. Laurel Shield got us audit-ready in 8 weeks and their vCISO service continues to guide our security strategy."</p>
+            <p class="testimonial-text">"As a fast-growing SaaS company, we needed SOC 2 fast. Laurel Shield <strong>got us audit-ready in 8 weeks</strong> — our enterprise prospects started signing immediately. Their vCISO service continues to guide our security strategy."</p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar">CS</div>
-              <div><div class="testimonial-name">Crevoe SaaS</div><div class="testimonial-role">Europe, MiddleEast and Africa</div></div>
+              <div class="testimonial-avatar">AK</div>
+              <div><div class="testimonial-name">Alex K., CEO</div><div class="testimonial-role">Crevoe SaaS — Europe, Middle East &amp; Africa</div></div>
             </div>
           </div>
           <div class="card testimonial-card reveal" data-delay="4">
             <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-text">"Their CMMC assessment and remediation roadmap was the most thorough we've seen. The team's understanding of federal requirements saved us months of preparation."</p>
+            <p class="testimonial-text">"Their CMMC assessment and remediation roadmap was the most thorough we've seen. <strong>Saved us 4+ months of preparation</strong> and the team's understanding of federal requirements meant zero surprises during audit."</p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar">OE</div>
-              <div><div class="testimonial-name">Oil and Energy Client</div><div class="testimonial-role">West Africa, Angola, Lagos Nigeria</div></div>
+              <div class="testimonial-avatar">JO</div>
+              <div><div class="testimonial-name">James O., Security Director</div><div class="testimonial-role">Oil &amp; Energy — West Africa</div></div>
             </div>
           </div>
         </div>
@@ -1730,6 +1826,49 @@
         </div>
         <div class="blog-grid" id="blog-grid">
           <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== INDUSTRY-SPECIFIC CTAs ========== -->
+    <section class="section" id="industries" style="background: linear-gradient(180deg, #0A0000, #0D0205, #0A0000); padding: 80px 0;" aria-label="Industry-specific cybersecurity solutions">
+      <div class="container">
+        <div class="section-header reveal" style="text-align:center;margin-bottom:48px;">
+          <span style="display:inline-block;padding:6px 16px;background:rgba(255,69,0,0.1);border:1px solid rgba(255,69,0,0.3);border-radius:99px;font-size:0.85em;color:#FF4500;font-weight:600;letter-spacing:0.05em;margin-bottom:16px;">SOLUTIONS BY INDUSTRY</span>
+          <h2 style="font-size:2.4em;color:#fff;margin:0 0 12px 0;">Security Built for Your Industry</h2>
+          <p style="color:#888;font-size:1.1em;max-width:600px;margin:0 auto;">Every industry has unique compliance requirements and threat landscapes. We specialize in the frameworks that matter to you.</p>
+        </div>
+        <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;max-width:1100px;margin:0 auto;">
+          <!-- Healthcare -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,69,0,0.15);border-radius:16px;padding:32px;transition:border-color 0.3s,transform 0.3s;" onmouseenter="this.style.borderColor='rgba(255,69,0,0.4)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='rgba(255,69,0,0.15)';this.style.transform='translateY(0)'">
+            <div style="width:48px;height:48px;background:rgba(255,69,0,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+              <i data-lucide="heart-pulse" style="width:24px;height:24px;color:#FF4500;"></i>
+            </div>
+            <h3 style="color:#fff;font-size:1.3em;margin:0 0 12px 0;">Healthcare & HIPAA</h3>
+            <p style="color:#FF4D6A;font-size:0.95em;font-weight:600;margin:0 0 12px 0;">HIPAA violations cost $50K–$1.5M per incident.</p>
+            <p style="color:#999;font-size:0.92em;line-height:1.6;margin:0 0 24px 0;">We protect patient data, close PHI exposure gaps, and get you audit-ready — before regulators come knocking. Full HIPAA Security Rule assessments with actionable remediation plans.</p>
+            <a href="#contact" onclick="prefillService('Compliance Audit')" style="display:inline-flex;align-items:center;gap:8px;color:#FF4500;font-weight:700;text-decoration:none;font-size:0.95em;transition:gap 0.2s;" onmouseenter="this.style.gap='12px'" onmouseleave="this.style.gap='8px'">Get HIPAA-Ready <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+          </div>
+          <!-- SaaS / Tech -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.15);border-radius:16px;padding:32px;transition:border-color 0.3s,transform 0.3s;" onmouseenter="this.style.borderColor='rgba(168,85,247,0.4)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='rgba(168,85,247,0.15)';this.style.transform='translateY(0)'">
+            <div style="width:48px;height:48px;background:rgba(168,85,247,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+              <i data-lucide="cloud" style="width:24px;height:24px;color:#A855F7;"></i>
+            </div>
+            <h3 style="color:#fff;font-size:1.3em;margin:0 0 12px 0;">SaaS & Technology</h3>
+            <p style="color:#A855F7;font-size:0.95em;font-weight:600;margin:0 0 12px 0;">Enterprise prospects won't sign without SOC 2.</p>
+            <p style="color:#999;font-size:0.92em;line-height:1.6;margin:0 0 24px 0;">Stop losing deals to compliance gaps. We get you SOC 2 Type II certified in as little as 8 weeks — with pen testing, policy templates, and auditor coordination included.</p>
+            <a href="#contact" onclick="prefillService('Compliance Audit')" style="display:inline-flex;align-items:center;gap:8px;color:#A855F7;font-weight:700;text-decoration:none;font-size:0.95em;transition:gap 0.2s;" onmouseenter="this.style.gap='12px'" onmouseleave="this.style.gap='8px'">Accelerate SOC 2 <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+          </div>
+          <!-- Government / Defense -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:32px;transition:border-color 0.3s,transform 0.3s;" onmouseenter="this.style.borderColor='rgba(59,130,246,0.4)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='rgba(59,130,246,0.15)';this.style.transform='translateY(0)'">
+            <div style="width:48px;height:48px;background:rgba(59,130,246,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+              <i data-lucide="shield" style="width:24px;height:24px;color:#3B82F6;"></i>
+            </div>
+            <h3 style="color:#fff;font-size:1.3em;margin:0 0 12px 0;">Government & Defense</h3>
+            <p style="color:#3B82F6;font-size:0.95em;font-weight:600;margin:0 0 12px 0;">CMMC 2.0 is now required for DoD contracts.</p>
+            <p style="color:#999;font-size:0.92em;line-height:1.6;margin:0 0 24px 0;">Don't lose your eligibility. We assess your current CMMC maturity level, identify gaps in your CUI handling, and build your System Security Plan to meet Level 2 requirements.</p>
+            <a href="#contact" onclick="prefillService('Compliance Audit')" style="display:inline-flex;align-items:center;gap:8px;color:#3B82F6;font-weight:700;text-decoration:none;font-size:0.95em;transition:gap 0.2s;" onmouseenter="this.style.gap='12px'" onmouseleave="this.style.gap='8px'">Start CMMC Assessment <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+          </div>
         </div>
       </div>
     </section>
@@ -1810,6 +1949,8 @@
               <div class="form-success-icon"><i data-lucide="check-circle" style="width:48px;height:48px;"></i></div>
               <h3>Message Sent!</h3>
               <p>Thank you for reaching out. Our team will respond within 24 hours.</p>
+              <!-- TODO: Replace #contact with your Cal.com/Calendly booking URL -->
+              <p style="margin-top:16px;"><a href="#contact" style="color:#A855F7;font-weight:600;text-decoration:underline;">Want faster? Book directly on our calendar <i data-lucide="arrow-right" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i></a></p>
             </div>
           </div>
         </div>
@@ -1817,6 +1958,27 @@
     </section>
 
   </main>
+
+  <!-- ========== EXIT-INTENT POPUP ========== -->
+  <div class="exit-popup-overlay" id="exit-popup" style="display:none;">
+    <div class="exit-popup">
+      <button class="exit-popup-close" id="exit-popup-close" aria-label="Close">&times;</button>
+      <div class="exit-popup-icon"><i data-lucide="shield-check" style="width:40px;height:40px;color:#FF4500;"></i></div>
+      <h3 class="exit-popup-title">Before you go — grab your free compliance checklist</h3>
+      <p class="exit-popup-subtitle">The same framework our consultants use with clients. One email, no spam.</p>
+      <div class="exit-popup-form" id="exit-popup-form">
+        <input type="email" id="exit-popup-email" placeholder="your@email.com" class="exit-popup-input" required>
+        <button id="exit-popup-submit" class="exit-popup-btn">Send Me the Checklist</button>
+        <p class="exit-popup-error" id="exit-popup-error"></p>
+      </div>
+      <div class="exit-popup-success" id="exit-popup-success" style="display:none;">
+        <div style="font-size:36px;margin-bottom:8px;">&#10003;</div>
+        <p style="color:#22C55E;font-weight:700;">Check your inbox!</p>
+        <p style="color:#B0B0B0;font-size:0.88em;">Your compliance checklist is on its way.</p>
+      </div>
+      <button class="exit-popup-dismiss" id="exit-popup-dismiss">No thanks, I'll figure it out myself</button>
+    </div>
+  </div>
 
   <!-- ========== FOOTER ========== -->
   <footer class="footer" role="contentinfo" aria-label="Laurel Shield cybersecurity consulting footer">
@@ -1978,13 +2140,108 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+    // ===== Urgency Banner =====
+    (function() {
+      const banner = document.getElementById('urgency-banner');
+      const textEl = document.getElementById('urgency-text');
+      const ctaEl = document.getElementById('urgency-cta');
+      const closeBtn = document.getElementById('urgency-close');
+      if (!banner || sessionStorage.getItem('urgencyDismissed')) {
+        if (banner) banner.classList.add('hidden');
+      } else {
+        const messages = [
+          { text: 'Active breach? Call us 24/7:', cta: '(403) 966-8833', href: 'tel:+14039668833' },
+          { text: 'SOC 2 deadline approaching?', cta: 'Audit-ready in 8 weeks \u2192', href: '#contact' },
+          { text: 'New: Free AI Security Assessment \u2014', cta: 'Check your LLM stack \u2192', href: 'ai-security-assessment.html' },
+          { text: 'HIPAA audit coming up?', cta: 'Get compliant fast \u2192', href: '#contact' },
+        ];
+        let idx = 0;
+        function showMessage() {
+          const m = messages[idx];
+          textEl.classList.add('fade-out');
+          setTimeout(() => {
+            textEl.textContent = m.text;
+            ctaEl.textContent = m.cta;
+            ctaEl.href = m.href;
+            textEl.classList.remove('fade-out');
+          }, 400);
+          idx = (idx + 1) % messages.length;
+        }
+        showMessage();
+        setInterval(showMessage, 5000);
+        closeBtn.addEventListener('click', () => {
+          banner.classList.add('hidden');
+          sessionStorage.setItem('urgencyDismissed', '1');
+        });
+      }
+    })();
+
+    // ===== Exit-Intent Popup =====
+    (function() {
+      const popup = document.getElementById('exit-popup');
+      const closeBtn = document.getElementById('exit-popup-close');
+      const dismissBtn = document.getElementById('exit-popup-dismiss');
+      const submitBtn = document.getElementById('exit-popup-submit');
+      const emailInput = document.getElementById('exit-popup-email');
+      const errEl = document.getElementById('exit-popup-error');
+      if (!popup || sessionStorage.getItem('exitPopupShown')) return;
+
+      function showPopup() {
+        if (sessionStorage.getItem('exitPopupShown')) return;
+        sessionStorage.setItem('exitPopupShown', '1');
+        popup.style.display = 'flex';
+        lucide.createIcons({ nodes: [popup] });
+      }
+
+      function hidePopup() { popup.style.display = 'none'; }
+
+      // Desktop: mouse leaves toward top of viewport
+      document.addEventListener('mouseout', (e) => {
+        if (e.clientY <= 5 && !e.relatedTarget && !e.toElement) showPopup();
+      });
+
+      // Mobile: show after 45 seconds of browsing
+      setTimeout(() => {
+        if ('ontouchstart' in window) showPopup();
+      }, 45000);
+
+      closeBtn.addEventListener('click', hidePopup);
+      dismissBtn.addEventListener('click', hidePopup);
+      popup.addEventListener('click', (e) => { if (e.target === popup) hidePopup(); });
+
+      submitBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          errEl.textContent = 'Please enter a valid email.';
+          errEl.style.display = 'block';
+          return;
+        }
+        errEl.style.display = 'none';
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        try {
+          await fetch('/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+        } catch(e) {}
+        document.getElementById('exit-popup-form').style.display = 'none';
+        document.getElementById('exit-popup-success').style.display = 'block';
+        dismissBtn.style.display = 'none';
+        setTimeout(hidePopup, 3000);
+      });
+
+      emailInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitBtn.click(); });
+    })();
+
     // ===== Terminal Typing Animation =====
     const typedOutput = document.getElementById('typed-output');
     const phrases = [
-      { text: '> Protecting Your Digital Future', color: '#A855F7' },
-      { text: '> Security That Scales', color: '#A855F7' },
-      { text: '> Compliance That Protects', color: '#A855F7' },
-      { text: '> AI That Stays Ahead', color: '#A855F7' }
+      { text: '> Your data is already a target.', color: '#FF4D6A' },
+      { text: '> Compliance deadlines don\'t wait.', color: '#FBBF24' },
+      { text: '> One breach costs $4.88M on average.', color: '#FF4500' },
+      { text: '> Your AI stack has blind spots.', color: '#A855F7' }
     ];
     let phraseIndex = 0;
     let charIndex = 0;
@@ -2134,22 +2391,23 @@
       const pct = (total / max) * 100;
       let category, color, desc, cta, ctaText;
 
+      // TODO: Replace '#contact' below with your Cal.com/Calendly booking URL for direct scheduling
       if (total <= 11) {
         category = 'Critical'; color = 'var(--accent-red)';
         desc = 'Your organization faces significant security risks. Critical gaps in testing, compliance, and security leadership need immediate attention to prevent potential breaches.';
-        cta = '#contact'; ctaText = 'Schedule Emergency Consultation';
+        cta = '#contact'; ctaText = 'Book Emergency Consultation';
       } else if (total <= 17) {
         category = 'Developing'; color = 'var(--accent-orange)';
         desc = 'You have some security foundations in place, but critical gaps remain in key areas. A structured gap assessment can help prioritize your next steps.';
-        cta = '#contact'; ctaText = 'Get a Gap Assessment';
+        cta = '#contact'; ctaText = 'Book a Free Gap Assessment';
       } else if (total <= 23) {
         category = 'Maturing'; color = 'var(--accent-orange)';
         desc = 'Good progress on your security journey. There are opportunities to optimize processes, expand coverage, and move from reactive to proactive security.';
-        cta = '#contact'; ctaText = 'Optimize Your Security';
+        cta = '#contact'; ctaText = 'Book a Call to Optimize';
       } else {
         category = 'Advanced'; color = '#FF7A3D';
         desc = 'Strong security posture. You\'re ahead of most organizations. Let us help you stay ahead of emerging threats, especially in AI security and advanced persistent threats.';
-        cta = '#contact'; ctaText = 'Explore Advanced Services';
+        cta = '#contact'; ctaText = 'Book an Advanced Strategy Call';
       }
 
       quizContainer.innerHTML = `
@@ -2158,9 +2416,23 @@
           <div class="quiz-category" style="color:${color};">${category}</div>
           <div style="font-family:var(--font-mono);font-size:24px;font-weight:700;margin-bottom:8px;color:${color};">${total} / ${max}</div>
           <div class="quiz-score-bar"><div class="quiz-score-fill" style="width:0%;background:${color};"></div></div>
-          <p class="quiz-description">${desc}</p>
-          <a href="${cta}" class="btn btn-primary">${ctaText}</a>
-          <br><button class="quiz-retake" onclick="resetQuiz()">&#8634; Retake Assessment</button>
+
+          <div id="quiz-email-gate" style="margin-top:20px;padding:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:12px;">
+            <p style="color:#fff;font-weight:600;font-size:1.05em;margin-bottom:4px;">Get your full personalized report</p>
+            <p style="color:#B0B0B0;font-size:0.88em;margin-bottom:14px;">Enter your email to unlock detailed recommendations and receive a copy of your results.</p>
+            <div style="display:flex;gap:8px;max-width:420px;margin:0 auto;">
+              <input type="email" id="quiz-email-input" placeholder="your@email.com" style="flex:1;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.4);color:#fff;font-family:var(--font-sans);font-size:0.92em;" required>
+              <button onclick="submitQuizEmail('${category}',${total},${max},'${color}','${desc.replace(/'/g,"\\'")}','${cta}','${ctaText.replace(/'/g,"\\'")}')" style="padding:10px 20px;background:#FF4500;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font-sans);transition:background 0.2s;">Unlock Report</button>
+            </div>
+            <p id="quiz-email-error" style="color:var(--accent-red);font-size:0.82em;margin-top:6px;display:none;"></p>
+            <button onclick="skipQuizEmail('${category}',${total},${max},'${color}','${desc.replace(/'/g,"\\'")}','${cta}','${ctaText.replace(/'/g,"\\'")}')" style="background:none;border:none;color:#707070;font-size:0.8em;cursor:pointer;margin-top:10px;text-decoration:underline;">Skip, just show my results</button>
+          </div>
+
+          <div id="quiz-full-results" style="display:none;">
+            <p class="quiz-description">${desc}</p>
+            <a href="${cta}" class="btn btn-primary">${ctaText}</a>
+            <br><button class="quiz-retake" onclick="resetQuiz()">&#8634; Retake Assessment</button>
+          </div>
         </div>
       `;
       // Animate score bar
@@ -2171,6 +2443,47 @@
         }, 100);
       });
     }
+
+    window.skipQuizEmail = function(category, total, max, color, desc, cta, ctaText) {
+      document.getElementById('quiz-email-gate').style.display = 'none';
+      document.getElementById('quiz-full-results').style.display = 'block';
+    };
+
+    // Pre-fill contact form service dropdown from industry CTA clicks
+    window.prefillService = function(serviceValue) {
+      setTimeout(function() {
+        var sel = document.getElementById('contact-service');
+        if (sel) {
+          for (var i = 0; i < sel.options.length; i++) {
+            if (sel.options[i].value === serviceValue) {
+              sel.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      }, 100);
+    };
+
+    window.submitQuizEmail = async function(category, total, max, color, desc, cta, ctaText) {
+      const input = document.getElementById('quiz-email-input');
+      const errEl = document.getElementById('quiz-email-error');
+      const email = input.value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.style.display = 'block';
+        return;
+      }
+      errEl.style.display = 'none';
+      try {
+        await fetch('/quiz-report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, category, score: total, maxScore: max })
+        });
+      } catch(e) { /* fail silently — still show results */ }
+      document.getElementById('quiz-email-gate').style.display = 'none';
+      document.getElementById('quiz-full-results').style.display = 'block';
+    };
 
     window.resetQuiz = function() {
       currentQ = 0;

@@ -141,6 +141,131 @@ async function sendContactEmail(clean) {
   }
 }
 
+// Quiz report email endpoint
+const quizLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: { error: 'Too many requests' } });
+
+app.post('/quiz-report', quizLimiter, async (req, res) => {
+  try {
+    const { email, category, score, maxScore } = req.body;
+    if (!email || !validator.isEmail(email)) {
+      return res.status(400).json({ error: 'Valid email is required' });
+    }
+    const safeEmail = sanitize(email);
+    const safeCat = sanitize(category || 'Unknown');
+    const safeScore = parseInt(score) || 0;
+    const safeMax = parseInt(maxScore) || 28;
+    const pct = Math.round((safeScore / safeMax) * 100);
+
+    // Send report to the lead's email
+    if (resend) {
+      await resend.emails.send({
+        from: 'Laurel Shield <onboarding@resend.dev>',
+        to: safeEmail,
+        subject: `Your Cybersecurity Maturity Score: ${safeCat} (${pct}%)`,
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#fff;padding:32px;border-radius:12px;">
+            <h1 style="color:#FF4500;margin-bottom:4px;">Laurel Shield</h1>
+            <p style="color:#707070;margin-bottom:24px;">Cybersecurity Maturity Assessment Results</p>
+            <div style="background:#111;padding:20px;border-radius:8px;margin-bottom:20px;">
+              <h2 style="color:#FF4500;margin:0 0 8px 0;">Your Score: ${safeCat}</h2>
+              <p style="font-size:28px;font-weight:700;color:#fff;margin:0 0 8px 0;">${safeScore} / ${safeMax} (${pct}%)</p>
+              <div style="background:#222;border-radius:4px;height:8px;overflow:hidden;">
+                <div style="background:#FF4500;height:100%;width:${pct}%;"></div>
+              </div>
+            </div>
+            <h3 style="color:#fff;">Recommended Next Steps:</h3>
+            <ul style="color:#B0B0B0;line-height:1.8;">
+              ${safeScore <= 11 ? '<li>Schedule an emergency security consultation immediately</li><li>Conduct a vulnerability assessment across all systems</li><li>Establish an incident response plan</li>' :
+                safeScore <= 17 ? '<li>Perform a structured gap assessment to identify weak areas</li><li>Implement a vulnerability management program</li><li>Consider a vCISO engagement for strategic guidance</li>' :
+                safeScore <= 23 ? '<li>Optimize existing security processes with automation</li><li>Expand penetration testing coverage</li><li>Pursue SOC 2 or ISO 27001 certification</li>' :
+                '<li>Explore advanced threat hunting and red team exercises</li><li>Evaluate AI security posture for emerging threats</li><li>Consider continuous penetration testing (PTaaS)</li>'}
+            </ul>
+            <div style="text-align:center;margin-top:24px;">
+              <a href="https://cybersec-by-laurel.onrender.com/#contact" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free Consultation</a>
+            </div>
+            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA | cybersec-by-laurel.onrender.com</p>
+          </div>
+        `
+      });
+    }
+
+    // Notify the consultant about the new lead
+    if (resend) {
+      await resend.emails.send({
+        from: 'Laurel Shield <onboarding@resend.dev>',
+        to: EMAIL_TO,
+        subject: `[Quiz Lead] ${safeEmail} scored ${safeCat} (${pct}%)`,
+        html: `<p><strong>New quiz lead:</strong></p><ul><li>Email: ${safeEmail}</li><li>Score: ${safeScore}/${safeMax} (${pct}%)</li><li>Category: ${safeCat}</li><li>Time: ${new Date().toISOString()}</li></ul>`
+      });
+    }
+
+    console.log(`[${new Date().toISOString()}] Quiz lead: ${safeEmail} - ${safeCat} (${pct}%)`);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(`[${new Date().toISOString()}] Quiz report error:`, err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Subscribe / lead magnet endpoint
+const subscribeLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 5, message: { error: 'Too many requests' } });
+
+app.post('/subscribe', subscribeLimiter, async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email || !validator.isEmail(email)) {
+      return res.status(400).json({ error: 'Valid email is required' });
+    }
+    const safeEmail = sanitize(email);
+
+    // Send lead magnet email
+    if (resend) {
+      await resend.emails.send({
+        from: 'Laurel Shield <onboarding@resend.dev>',
+        to: safeEmail,
+        subject: 'Your Free 2026 Cybersecurity Compliance Checklist',
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#fff;padding:32px;border-radius:12px;">
+            <h1 style="color:#FF4500;margin-bottom:4px;">Laurel Shield</h1>
+            <p style="color:#707070;margin-bottom:24px;">Your compliance checklist is ready.</p>
+            <div style="background:#111;padding:20px;border-radius:8px;margin-bottom:20px;">
+              <h2 style="color:#fff;margin:0 0 12px 0;">2026 Cybersecurity Compliance Quick-Check</h2>
+              <p style="color:#B0B0B0;">Here's a quick overview of the key requirements across major frameworks:</p>
+              <table style="width:100%;border-collapse:collapse;margin-top:12px;">
+                <tr style="border-bottom:1px solid #222;"><td style="padding:8px;color:#FF4500;font-weight:700;">SOC 2</td><td style="padding:8px;color:#B0B0B0;">Access controls, encryption, monitoring, incident response, vendor management</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:8px;color:#FF4500;font-weight:700;">HIPAA</td><td style="padding:8px;color:#B0B0B0;">PHI encryption, access audit trails, BAAs, workforce training, breach notification</td></tr>
+                <tr style="border-bottom:1px solid #222;"><td style="padding:8px;color:#FF4500;font-weight:700;">ISO 27001</td><td style="padding:8px;color:#B0B0B0;">Risk assessment, asset management, access control, cryptography, operations security</td></tr>
+                <tr><td style="padding:8px;color:#FF4500;font-weight:700;">PCI DSS</td><td style="padding:8px;color:#B0B0B0;">Network segmentation, cardholder data protection, vulnerability management, monitoring</td></tr>
+              </table>
+            </div>
+            <p style="color:#B0B0B0;">Need help getting compliant? We get organizations audit-ready in weeks, not months.</p>
+            <div style="text-align:center;margin-top:20px;">
+              <a href="https://cybersec-by-laurel.onrender.com/#contact" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free Compliance Consultation</a>
+            </div>
+            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA</p>
+          </div>
+        `
+      });
+    }
+
+    // Notify consultant
+    if (resend) {
+      await resend.emails.send({
+        from: 'Laurel Shield <onboarding@resend.dev>',
+        to: EMAIL_TO,
+        subject: `[New Subscriber] ${safeEmail}`,
+        html: `<p>New email subscriber from exit-intent popup:</p><ul><li>Email: ${safeEmail}</li><li>Time: ${new Date().toISOString()}</li><li>Lead magnet: Compliance Checklist</li></ul>`
+      });
+    }
+
+    console.log(`[${new Date().toISOString()}] New subscriber: ${safeEmail}`);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(`[${new Date().toISOString()}] Subscribe error:`, err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
