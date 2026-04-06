@@ -181,7 +181,7 @@ app.post('/quiz-report', quizLimiter, async (req, res) => {
                 '<li>Explore advanced threat hunting and red team exercises</li><li>Evaluate AI security posture for emerging threats</li><li>Consider continuous penetration testing (PTaaS)</li>'}
             </ul>
             <div style="text-align:center;margin-top:24px;">
-              <a href="https://cybersec-by-laurel.onrender.com/#contact" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free Consultation</a>
+              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free HIPAA Gap Check</a>
             </div>
             <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA | cybersec-by-laurel.onrender.com</p>
           </div>
@@ -240,7 +240,7 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
             </div>
             <p style="color:#B0B0B0;">Need help getting compliant? We get organizations audit-ready in weeks, not months.</p>
             <div style="text-align:center;margin-top:20px;">
-              <a href="https://cybersec-by-laurel.onrender.com/#contact" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free Compliance Consultation</a>
+              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free HIPAA Gap Check</a>
             </div>
             <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA</p>
           </div>

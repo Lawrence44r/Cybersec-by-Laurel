@@ -1,7 +1,7 @@
 # Laurel Shield — Design & Operations Guide
 
-> **Version:** 2.0  
-> **Last Updated:** April 5, 2026  
+> **Version:** 3.0  
+> **Last Updated:** April 6, 2026  
 > **Author:** Lawrence Okonkwo  
 > **Project:** Cybersec-by-Laurel (Laurel Shield Website)
 
@@ -35,11 +35,19 @@
 
 ## 1. Project Overview
 
-**Laurel Shield** is a premium cybersecurity consulting website for a firm with offices in **Calgary, Alberta, Canada** and **Philadelphia, Pennsylvania, USA**. The site serves as the primary marketing and lead-generation tool.
+**Laurel Shield** is a healthcare-focused cybersecurity consulting website with offices in **Calgary, Alberta, Canada** and **Philadelphia, Pennsylvania, USA**. The site serves as the primary inbound lead-generation tool, targeting healthcare organizations that need HIPAA compliance and cybersecurity services.
 
-**Services offered:**
-- Penetration Testing (web, mobile, API, network, cloud)
-- Compliance Auditing (SOC 2, HIPAA, ISO 27001, PCI DSS, CMMC 2.0, NIST CSF, GDPR)
+**Primary niche:** Healthcare / HIPAA compliance
+
+**Core services (healthcare-focused):**
+- HIPAA Security Risk Assessments
+- Healthcare Penetration Testing (web, mobile, API, network, cloud)
+- HIPAA Compliance Gap Analysis & Audit Readiness
+- Breach Response Planning & Incident Response
+- Ongoing Security Monitoring for Healthcare Organizations
+
+**Additional services:**
+- Compliance Auditing (SOC 2, ISO 27001, PCI DSS, CMMC 2.0, NIST CSF, GDPR)
 - AI Security Consulting (LLM security, prompt injection defense, AI governance)
 - Managed SOC (24/7 threat detection and incident response)
 - Virtual CISO (vCISO) services
@@ -49,6 +57,7 @@
 - Phone: +1 (403) 966-8833, +1 (267) 882-2044
 - Email: contact@laurelshield.com
 - Form submissions sent to: lawrence44r@gmail.com
+- Booking link: https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check
 
 ---
 
@@ -71,6 +80,8 @@
 │  │  ├── Helmet (security headers + CSP)      │   │
 │  │  ├── express.static → /public/            │   │
 │  │  ├── POST /contact (rate-limited)         │   │
+│  │  ├── POST /quiz-report (rate-limited)     │   │
+│  │  ├── POST /subscribe (rate-limited)       │   │
 │  │  ├── GET /health                          │   │
 │  │  └── 404 catch-all → 404.html             │   │
 │  └──────────────────┬───────────────────────┘   │
@@ -105,14 +116,21 @@ Cybersec-by-Laurel/
 │   └── NYC-Night-featured-2.jpg # Original NYC photo
 ├── node_modules/                # npm dependencies (not in git)
 └── public/                      # Static files served by Express
-    ├── index.html               # Main website (~137KB, single-page)
+    ├── index.html               # Main website (~140KB, single-page)
     ├── nyc-night.jpg            # NYC skyline photo for hero animation (~190KB)
+    ├── ai-security-assessment.html # AI security assessment landing page
     ├── 404.html                 # Custom 404 error page
     ├── privacy-policy.html      # Privacy policy page
     ├── terms.html               # Terms of service page
     ├── responsible-disclosure.html # Security vulnerability disclosure policy
     ├── robots.txt               # Search engine crawling rules
-    └── sitemap.xml              # XML sitemap for SEO
+    ├── sitemap.xml              # XML sitemap for SEO
+    └── blog/                    # SEO blog posts
+        ├── index.html           # Blog listing page
+        ├── top-10-penetration-testing-findings-healthcare-2026.html
+        ├── navigating-cmmc-2-guide-defense-contractors.html
+        ├── ai-security-risks-your-organization-is-ignoring.html
+        └── soc-2-in-8-weeks-saas-companies.html
 ```
 
 ---
@@ -186,14 +204,16 @@ Press `Ctrl+C` in the terminal, or kill the Node.js process.
 
 ## 6. Server Configuration (server.js)
 
-The entire backend is a single ~145-line Express.js application (includes SEO caching and preload middleware).
+The entire backend is a single ~284-line Express.js application (includes SEO caching, preload middleware, quiz report, and subscribe endpoints).
 
 ### Routes
 
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/*` (static) | Serves files from `public/` directory |
-| POST | `/contact` | Contact form submission (rate-limited) |
+| POST | `/contact` | Contact form submission (rate-limited: 5/15min) |
+| POST | `/quiz-report` | Quiz result email — sends report to lead + notifies consultant (rate-limited: 10/15min) |
+| POST | `/subscribe` | Exit-intent email capture — sends compliance checklist + notifies consultant (rate-limited: 5/15min) |
 | GET | `/health` | Health check endpoint (returns `{ status: 'ok', uptime: N }`) |
 | GET | `*` (404) | Catch-all serves `public/404.html` |
 
@@ -221,16 +241,18 @@ The entire backend is a single ~145-line Express.js application (includes SEO ca
 | 9 | PORT configuration |
 | 12-13 | Email configuration (recipient, Resend client) |
 | 16-27 | Helmet security headers and CSP |
-| 30-36 | Rate limiter configuration |
+| 30-36 | Contact form rate limiter (5/15min) |
 | 39-56 | Body parsers, static file serving with SEO cache headers |
-| 58-66 | SEO: HTTP Link header preload middleware |
-| 68-71 | `sanitize()` function |
-| 74-80 | `validateContact()` function |
-| 83-105 | `POST /contact` route handler |
-| 107-139 | `sendContactEmail()` async function |
-| 142-144 | `/health` endpoint |
-| 147-149 | 404 catch-all |
-| 151-155 | Server startup |
+| 58-68 | SEO: HTTP Link header preload middleware |
+| 71-74 | `sanitize()` function |
+| 77-83 | `validateContact()` function |
+| 86-108 | `POST /contact` route handler |
+| 110-142 | `sendContactEmail()` async function |
+| 144-208 | `POST /quiz-report` — quiz score email to lead + consultant notification |
+| 211-267 | `POST /subscribe` — exit-intent lead magnet email + consultant notification |
+| 270-272 | `/health` endpoint |
+| 275-277 | 404 catch-all |
+| 279-283 | Server startup |
 
 ---
 
@@ -319,7 +341,7 @@ The entire website is a single HTML file (~137KB) with all CSS and JavaScript in
 | Skip Link | `.skip-link` | Accessibility: skip to main content |
 | Navigation | `<nav>` | Fixed top bar with logo, links, and CTA buttons |
 | Trust Bar | `.trust-bar` | Scrolling certification badges (CISSP, SOC 2, MAESTRO AI, etc.) |
-| Hero | `#hero` | Full-viewport hero with canvas animation background |
+| Hero | `#hero` | Full-viewport hero with canvas animation — HIPAA/healthcare focused messaging, Calendly booking CTA |
 | Services | `#services` | Service cards with Three.js WebGL particle background |
 | Industries | `#industries` | Industry vertical cards |
 | Solutions | `#solutions` | Pricing tiers (Essentials, Growth, Comprehensive, HIPAA Shield) |
@@ -560,25 +582,24 @@ Use `<i data-lucide="icon-name"></i>` in HTML to place icons.
 
 ## 14. SEO & Structured Data
 
-The website implements an aggressive, enterprise-grade SEO strategy designed to maximize global search visibility for "cybersecurity" and all related service keywords.
+The website implements a healthcare/HIPAA-focused SEO strategy designed to attract inbound leads from healthcare organizations searching for HIPAA compliance help and cybersecurity services.
 
 ### Title Tag Strategy
 
 ```
-Cybersecurity Consulting Firm | Laurel Shield — #1 Penetration Testing, Compliance Audits, AI Security Services
+HIPAA Compliance & Healthcare Cybersecurity Consulting | Laurel Shield — Risk Assessments, Penetration Testing, Audit Readiness
 ```
 
-**Why keyword-first:** Google gives more weight to words at the beginning of the title. "Cybersecurity Consulting Firm" leads, followed by the brand name and key services.
+**Why HIPAA-first:** The primary niche is healthcare organizations needing HIPAA compliance. Leading with "HIPAA Compliance & Healthcare Cybersecurity" targets the exact search terms these buyers use.
 
 ### Meta Description
 
-400+ character comprehensive description covering:
-- All core services (penetration testing, compliance audits, AI security, managed SOC, vCISO, cloud security)
-- All compliance frameworks (SOC 2, HIPAA, ISO 27001, PCI DSS, CMMC 2.0)
+Focused description covering:
+- HIPAA security risk assessments, penetration testing, compliance gap analysis
+- Target audience: clinics, hospitals, health-tech companies, telehealth providers
 - Office locations (Calgary, Philadelphia)
-- Target industries (healthcare, fintech, SaaS, government, energy)
-- Geographic reach (worldwide)
-- Call to action ("Schedule your free cybersecurity consultation today")
+- Value proposition ("Get audit-ready in weeks, not months")
+- Call to action ("Book a free HIPAA gap check today")
 
 ### Meta Keywords
 
@@ -647,7 +668,7 @@ Cybersecurity Consulting Firm | Laurel Shield — #1 Penetration Testing, Compli
 
 | Technique | Implementation |
 |-----------|----------------|
-| **H1 keyword optimization** | Screen-reader H1: "Cybersecurity Consulting Firm — Penetration Testing, Compliance Audits, AI Security Services" |
+| **H1 keyword optimization** | Screen-reader H1: "HIPAA Compliance & Healthcare Cybersecurity Consulting" |
 | **Semantic `<strong>` tags** | Key phrases in hero subtitle, contact section wrapped in `<strong>` for semantic weight |
 | **Section aria-labels** | Every `<section>` has keyword-rich `aria-label` (crawlable by Google) |
 | **Section heading keywords** | Every H2 includes "cybersecurity" and relevant service terms |
@@ -1003,6 +1024,7 @@ kill -9 <pid>
 | Blog posts | `public/index.html` `#resources` | Search for "BLOG POSTS - EDIT HERE" |
 | Contact info | `server.js` (EMAIL_TO), `index.html` (JSON-LD, footer) | Update in all locations |
 | Phone numbers | `public/index.html` footer and JSON-LD | `+1 (403) 966-8833`, `+1 (267) 882-2044` |
+| Calendly link | `public/index.html` (hero CTA, CTA bar, quiz results, contact section), `server.js` (quiz + subscribe email CTAs) | Search for `calendly.com` — currently 6 locations |
 
 ### Updating Dependencies
 
@@ -1120,6 +1142,7 @@ netstat -ano | findstr :3000
 | Resource | URL |
 |----------|-----|
 | Production site | `https://security.laurelshield.com` |
+| Calendly booking | `https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check` |
 | Render dashboard | `https://dashboard.render.com` |
 | Resend dashboard | `https://resend.com/emails` |
 | Resend API keys | `https://resend.com/api-keys` |
