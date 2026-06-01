@@ -877,9 +877,7 @@
     /* ========== TRUST BAR ========== */
     .trust-bar { background: #080000; padding: 40px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); overflow: hidden; }
     .trust-bar-label { text-align: center; font-size: 14px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px; }
-    .trust-scroll { display: flex; gap: 48px; animation: scrollLogos 25s linear infinite; width: max-content; }
-    .trust-scroll:hover { animation-play-state: paused; }
-    @keyframes scrollLogos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .trust-scroll { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px 48px; }
     .trust-logo {
       display: flex; align-items: center; gap: 8px; white-space: nowrap;
       font-size: 14px; font-weight: 600; color: var(--text-muted); opacity: 0.6;
@@ -1252,6 +1250,7 @@
         <li><a href="#why-us">Why Us</a></li>
         <li><a href="#quiz">Assessment</a></li>
         <li><a href="#resources">Resources</a></li>
+        <li><a href="/products/" style="color:#FF4500;font-weight:600;">Products</a></li>
       </ul>
       <a href="#contact" class="nav-cta">Get Protected</a>
     </nav>
@@ -1311,44 +1310,15 @@
     <!-- ========== TRUST BAR ========== -->
     <section class="trust-bar" aria-label="Certifications and trust indicators">
       <div class="trust-bar-label" style="-webkit-text-fill-color:#FFFFFF;background:none;color:#FFFFFF;">Certified &amp; Trusted Across Frameworks</div>
-      <div class="trust-scroll" aria-hidden="true">
-        <div class="trust-logo"><i data-lucide="shield" style="width:18px;height:18px;"></i> NIST CSF</div>
-        <div class="trust-logo"><i data-lucide="badge-check" style="width:18px;height:18px;"></i> ISO 27001</div>
-        <div class="trust-logo"><i data-lucide="lock" style="width:18px;height:18px;"></i> SOC 2 Type II</div>
+      <div class="trust-scroll">
         <div class="trust-logo"><i data-lucide="heart-pulse" style="width:18px;height:18px;"></i> HIPAA</div>
-        <div class="trust-logo"><i data-lucide="credit-card" style="width:18px;height:18px;"></i> PCI DSS</div>
-        <div class="trust-logo"><i data-lucide="shield-check" style="width:18px;height:18px;"></i> CMMC 2.0</div>
+        <div class="trust-logo"><i data-lucide="zap" style="width:18px;height:18px;"></i> NERC CIP</div>
+        <div class="trust-logo"><i data-lucide="lock" style="width:18px;height:18px;"></i> SOC 2</div>
+        <div class="trust-logo"><i data-lucide="shield-check" style="width:18px;height:18px;"></i> CMMC</div>
         <div class="trust-logo"><i data-lucide="globe" style="width:18px;height:18px;"></i> GDPR</div>
-        <div class="trust-logo"><i data-lucide="award" style="width:18px;height:18px;"></i> CREST</div>
-        <div class="trust-logo"><i data-lucide="user-check" style="width:18px;height:18px;"></i> OSCP</div>
-        <div class="trust-logo"><i data-lucide="shield-alert" style="width:18px;height:18px;"></i> CISSP</div>
         <div class="trust-logo"><i data-lucide="bot" style="width:18px;height:18px;"></i> MAESTRO AI</div>
-        <div class="trust-logo"><i data-lucide="plug" style="width:18px;height:18px;"></i> MCP Security</div>
-        <div class="trust-logo"><i data-lucide="cpu" style="width:18px;height:18px;"></i> Agentic AI Security</div>
-        <div class="trust-logo"><i data-lucide="brain" style="width:18px;height:18px;"></i> AAISM</div>
-        <div class="trust-logo"><i data-lucide="scan" style="width:18px;height:18px;"></i> AAIA</div>
-        <div class="trust-logo"><i data-lucide="key" style="width:18px;height:18px;"></i> CISM</div>
-        <div class="trust-logo"><i data-lucide="swords" style="width:18px;height:18px;"></i> Offensive Security</div>
-        <div class="trust-logo"><i data-lucide="webhook" style="width:18px;height:18px;"></i> API Security</div>
-        <!-- Duplicated for seamless scroll -->
         <div class="trust-logo"><i data-lucide="shield" style="width:18px;height:18px;"></i> NIST CSF</div>
-        <div class="trust-logo"><i data-lucide="badge-check" style="width:18px;height:18px;"></i> ISO 27001</div>
-        <div class="trust-logo"><i data-lucide="lock" style="width:18px;height:18px;"></i> SOC 2 Type II</div>
-        <div class="trust-logo"><i data-lucide="heart-pulse" style="width:18px;height:18px;"></i> HIPAA</div>
         <div class="trust-logo"><i data-lucide="credit-card" style="width:18px;height:18px;"></i> PCI DSS</div>
-        <div class="trust-logo"><i data-lucide="shield-check" style="width:18px;height:18px;"></i> CMMC 2.0</div>
-        <div class="trust-logo"><i data-lucide="globe" style="width:18px;height:18px;"></i> GDPR</div>
-        <div class="trust-logo"><i data-lucide="award" style="width:18px;height:18px;"></i> CREST</div>
-        <div class="trust-logo"><i data-lucide="user-check" style="width:18px;height:18px;"></i> OSCP</div>
-        <div class="trust-logo"><i data-lucide="shield-alert" style="width:18px;height:18px;"></i> CISSP</div>
-        <div class="trust-logo"><i data-lucide="bot" style="width:18px;height:18px;"></i> MAESTRO AI</div>
-        <div class="trust-logo"><i data-lucide="plug" style="width:18px;height:18px;"></i> MCP Security</div>
-        <div class="trust-logo"><i data-lucide="cpu" style="width:18px;height:18px;"></i> Agentic AI Security</div>
-        <div class="trust-logo"><i data-lucide="brain" style="width:18px;height:18px;"></i> AAISM</div>
-        <div class="trust-logo"><i data-lucide="scan" style="width:18px;height:18px;"></i> AAIA</div>
-        <div class="trust-logo"><i data-lucide="key" style="width:18px;height:18px;"></i> CISM</div>
-        <div class="trust-logo"><i data-lucide="swords" style="width:18px;height:18px;"></i> Offensive Security</div>
-        <div class="trust-logo"><i data-lucide="webhook" style="width:18px;height:18px;"></i> API Security</div>
       </div>
     </section>
 
@@ -1392,7 +1362,8 @@
         </div>
         <!-- Compliance -->
         <div class="tab-panel" id="tab-compliance">
-          <div class="card"><div class="card-icon"><i data-lucide="heart-pulse"></i></div><h3 class="card-title">HIPAA Compliance</h3><p class="card-text">End-to-end HIPAA security assessments, risk analysis, policy development, and breach preparedness for healthcare organizations.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="heart-pulse"></i></div><h3 class="card-title">HIPAA Assessment</h3><p class="card-text">Comprehensive HIPAA security risk assessments covering administrative, physical, and technical safeguards. Gap analysis, policy development, PHI exposure remediation, and breach preparedness for healthcare organizations.</p></div>
+          <div class="card"><div class="card-icon"><i data-lucide="zap"></i></div><h3 class="card-title">NERC CIP Assessment</h3><p class="card-text">Full NERC CIP compliance assessments for electric utilities and bulk electric system operators. Covering CIP-002 through CIP-014 — asset categorization, access management, incident response, and supply chain risk management.</p></div>
           <div class="card"><div class="card-icon"><i data-lucide="file-check"></i></div><h3 class="card-title">SOC 2 &amp; ISO 27001</h3><p class="card-text">Readiness assessments, gap analysis, control implementation, and audit support to achieve and maintain certifications.</p></div>
           <div class="card"><div class="card-icon"><i data-lucide="credit-card"></i></div><h3 class="card-title">PCI DSS Compliance</h3><p class="card-text">Scoping, SAQ assistance, ASV scanning, and ROC preparation for organizations handling payment card data.</p></div>
           <div class="card"><div class="card-icon"><i data-lucide="shield-check"></i></div><h3 class="card-title">NIST &amp; CMMC</h3><p class="card-text">NIST CSF, SP 800-53/171, and CMMC 2.0 assessments. Framework implementation and maturity scoring.</p></div>
@@ -1403,6 +1374,51 @@
           <div class="card"><div class="card-icon"><i data-lucide="graduation-cap"></i></div><h3 class="card-title">Security Training</h3><p class="card-text">Security awareness programs, phishing simulations, tabletop exercises, and role-based training for developers and executives.</p></div>
           <div class="card"><div class="card-icon"><i data-lucide="brain"></i></div><h3 class="card-title">AI Security Consulting</h3><p class="card-text">Secure AI adoption, LLM vulnerability assessments, prompt injection defense, and AI governance frameworks.</p></div>
           <div class="card"><div class="card-icon"><i data-lucide="clipboard-check"></i></div><h3 class="card-title">Security Gap Analysis</h3><p class="card-text">Comprehensive assessment of your current security posture against industry frameworks with prioritized remediation roadmaps.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ASSESSMENT FOCUS AREAS ========== -->
+    <section class="section" id="assessments" style="background: linear-gradient(180deg, #060000, #0E0202, #060000);" aria-label="Cybersecurity assessment specializations">
+      <div class="container">
+        <div class="section-header reveal">
+          <span style="display:inline-block;padding:6px 16px;background:rgba(255,69,0,0.1);border:1px solid rgba(255,69,0,0.3);border-radius:99px;font-size:0.85em;color:#FF4500;font-weight:600;letter-spacing:0.05em;margin-bottom:16px;">ASSESSMENT SPECIALIZATIONS</span>
+          <h2 class="section-title" style="-webkit-text-fill-color:#FFFFFF;background:none;color:#FFFFFF;">Deep-Expertise Cybersecurity Assessments</h2>
+          <p class="section-subtitle" style="color:#FF4500;">Specialized assessments for the most complex regulatory environments — built on real operational experience, not just checklists.</p>
+        </div>
+        <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px;max-width:900px;margin:0 auto;">
+          <!-- HIPAA Assessment -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,69,0,0.2);border-radius:16px;padding:40px;transition:border-color 0.3s,transform 0.3s;" onmouseenter="this.style.borderColor='rgba(255,69,0,0.5)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='rgba(255,69,0,0.2)';this.style.transform='translateY(0)'">
+            <div style="width:56px;height:56px;background:rgba(255,69,0,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+              <i data-lucide="heart-pulse" style="width:28px;height:28px;color:#FF4500;"></i>
+            </div>
+            <h3 style="color:#fff;font-size:1.4em;margin:0 0 12px 0;">HIPAA Assessment</h3>
+            <p style="color:#FF4D6A;font-size:0.95em;font-weight:600;margin:0 0 14px 0;">HIPAA violations average $1.2M per OCR settlement.</p>
+            <p style="color:#999;font-size:0.93em;line-height:1.7;margin:0 0 20px 0;">A complete HIPAA Security Rule assessment covering all 18 administrative, physical, and technical safeguard standards. We identify PHI exposure gaps, evaluate your risk management program, review BAAs, and deliver a prioritized remediation roadmap — so you can pass an OCR audit with confidence.</p>
+            <ul style="list-style:none;padding:0;margin:0 0 28px 0;display:flex;flex-direction:column;gap:8px;">
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#FF4500;flex-shrink:0;"></i> Security Risk Analysis (SRA)</li>
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#FF4500;flex-shrink:0;"></i> PHI access control &amp; audit log review</li>
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#FF4500;flex-shrink:0;"></i> Business Associate Agreement (BAA) review</li>
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#FF4500;flex-shrink:0;"></i> Breach notification readiness</li>
+            </ul>
+            <a href="#contact" onclick="prefillService('HIPAA Assessment')" style="display:inline-flex;align-items:center;gap:8px;color:#FF4500;font-weight:700;text-decoration:none;font-size:0.95em;transition:gap 0.2s;" onmouseenter="this.style.gap='12px'" onmouseleave="this.style.gap='8px'">Schedule HIPAA Assessment <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+          </div>
+          <!-- NERC CIP Assessment -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(59,130,246,0.2);border-radius:16px;padding:40px;transition:border-color 0.3s,transform 0.3s;" onmouseenter="this.style.borderColor='rgba(59,130,246,0.5)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='rgba(59,130,246,0.2)';this.style.transform='translateY(0)'">
+            <div style="width:56px;height:56px;background:rgba(59,130,246,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+              <i data-lucide="zap" style="width:28px;height:28px;color:#3B82F6;"></i>
+            </div>
+            <h3 style="color:#fff;font-size:1.4em;margin:0 0 12px 0;">NERC CIP Assessment</h3>
+            <p style="color:#3B82F6;font-size:0.95em;font-weight:600;margin:0 0 14px 0;">Non-compliance penalties reach $1M per violation per day.</p>
+            <p style="color:#999;font-size:0.93em;line-height:1.7;margin:0 0 20px 0;">End-to-end NERC CIP compliance assessments for electric utilities, grid operators, and bulk electric system (BES) asset owners. We map your environment against CIP-002 through CIP-014 standards, assess cyber asset categorization, access management, and supply chain security — and deliver findings your compliance team can act on immediately.</p>
+            <ul style="list-style:none;padding:0;margin:0 0 28px 0;display:flex;flex-direction:column;gap:8px;">
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#3B82F6;flex-shrink:0;"></i> BES Cyber Asset categorization (CIP-002)</li>
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#3B82F6;flex-shrink:0;"></i> Electronic Security Perimeter review</li>
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#3B82F6;flex-shrink:0;"></i> Personnel &amp; training compliance (CIP-004)</li>
+              <li style="color:#ccc;font-size:0.9em;display:flex;align-items:center;gap:8px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:#3B82F6;flex-shrink:0;"></i> Supply chain risk management (CIP-013)</li>
+            </ul>
+            <a href="#contact" onclick="prefillService('NERC CIP Assessment')" style="display:inline-flex;align-items:center;gap:8px;color:#3B82F6;font-weight:700;text-decoration:none;font-size:0.95em;transition:gap 0.2s;" onmouseenter="this.style.gap='12px'" onmouseleave="this.style.gap='8px'">Schedule NERC CIP Assessment <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+          </div>
         </div>
       </div>
     </section>
@@ -1769,14 +1785,6 @@
             <div class="testimonial-author">
               <div class="testimonial-avatar">DR</div>
               <div><div class="testimonial-name">David R., CTO</div><div class="testimonial-role">Healthcare Organization — Saskatchewan, Canada</div></div>
-            </div>
-          </div>
-          <div class="card testimonial-card reveal" data-delay="2">
-            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-text">"Their pentest team <strong>found 23 critical vulnerabilities</strong> our internal scans had missed for months. The reports were clear, actionable, and helped us prioritize fixes by business impact — not just severity scores."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">MS</div>
-              <div><div class="testimonial-name">Maria S., VP of Engineering</div><div class="testimonial-role">Legal SaaS Company — San Diego, CA</div></div>
             </div>
           </div>
           <div class="card testimonial-card reveal" data-delay="3">
