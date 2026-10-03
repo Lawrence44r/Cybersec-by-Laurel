@@ -1326,6 +1326,18 @@
       </div>
     </section>
 
+    <!-- ========== CONCIERGE INTAKE ========== -->
+    <section class="section" id="concierge" style="background: linear-gradient(180deg, var(--bg-primary), var(--bg-tertiary), var(--bg-primary));" aria-label="Find your next step">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">Not Sure Which One You Need? Answer Two Questions.</h2>
+          <p class="section-subtitle">No form to fill out blind — a couple of quick questions, then we point you at the right next step.</p>
+        </div>
+        <div id="concierge-root" class="reveal"></div>
+      </div>
+    </section>
+    <script src="/js/concierge.js" defer></script>
+
     <!-- ========== PRICING ========== -->
     <section class="section" id="pricing" style="background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary), var(--bg-primary));" aria-label="Cyber insurance readiness pricing">
       <div class="container">
@@ -1380,6 +1392,34 @@
             <a href="#contact" onclick="prefillService('Continuous Assurance Retainer')" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Get Started</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ========== SELF-SERVE SUBSCRIBE ========== -->
+    <section class="section" id="subscribe-cta" style="background: linear-gradient(180deg, var(--bg-primary), var(--bg-tertiary), var(--bg-primary));" aria-label="Start your Continuous Assurance subscription online">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 class="section-title">Already Know You Want Continuous Assurance? Start It Online.</h2>
+          <p class="section-subtitle">Subscribe directly -- no call required. Your first passport is still reviewed by a human before it ever reaches a broker or carrier.</p>
+        </div>
+        <div class="solutions-grid reveal">
+          <div class="card solution-card">
+            <h3 class="card-title">Standard</h3>
+            <div class="solution-price">$299/mo</div>
+            <button type="button" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;" onclick="startCheckout('standard', this)">Subscribe</button>
+          </div>
+          <div class="card solution-card highlighted">
+            <h3 class="card-title">Growth</h3>
+            <div class="solution-price">$599/mo</div>
+            <button type="button" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;" onclick="startCheckout('growth', this)">Subscribe</button>
+          </div>
+          <div class="card solution-card">
+            <h3 class="card-title">Enterprise</h3>
+            <div class="solution-price">$999/mo</div>
+            <button type="button" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;" onclick="startCheckout('enterprise', this)">Subscribe</button>
+          </div>
+        </div>
+        <p class="reveal" style="max-width:600px;margin:24px auto 0;text-align:center;color:var(--text-secondary);font-size:0.9em;">Prefer to talk first? <a href="#contact" onclick="prefillService('Continuous Assurance Retainer')" style="color:#00B7C3;text-decoration:underline;">Use the form below instead</a>.</p>
       </div>
     </section>
 
@@ -2014,6 +2054,38 @@
           }
         }
       }, 100);
+    };
+
+    // Continuous Assurance self-serve subscribe button -- Agentic Automation
+    // Architecture, Part V. The only pricing tier offered self-serve; Pilot
+    // Snapshot and Core Readiness Assessment stay human-delivered via the
+    // contact form above. Degrades to a clean message if Stripe isn't
+    // configured yet, rather than a broken or confusing failure.
+    window.startCheckout = async function(tier, buttonEl) {
+      var originalText = buttonEl.textContent;
+      buttonEl.textContent = 'Redirecting...';
+      buttonEl.disabled = true;
+      try {
+        const res = await fetch('/billing/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tier: tier }),
+        });
+        const data = await res.json();
+        if (res.ok && data.url) {
+          window.location.href = data.url;
+          return;
+        }
+        if (data.error === 'billing_not_configured') {
+          buttonEl.textContent = 'Not live yet -- use the form below';
+        } else {
+          buttonEl.textContent = 'Something went wrong -- try the form below';
+        }
+      } catch (e) {
+        buttonEl.textContent = 'Something went wrong -- try the form below';
+      }
+      buttonEl.disabled = false;
+      setTimeout(function () { buttonEl.textContent = originalText; }, 4000);
     };
 
     window.submitQuizEmail = async function(category, total, max, color, desc, cta, ctaText) {
