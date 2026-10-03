@@ -158,32 +158,37 @@ app.post('/quiz-report', quizLimiter, async (req, res) => {
 
     // Send report to the lead's email
     if (resend) {
+      const nextSteps = safeScore <= 11
+        ? { lead: 'Your evidence probably wouldn\'t survive underwriting scrutiny today.', items: '<li>Book an urgent Pilot Snapshot ($295) to find the most critical gaps this week</li><li>Prioritize MFA and backup evidence first -- these are what carriers check hardest</li><li>Get a dated incident-response plan in place before your next renewal</li>' }
+        : safeScore <= 17
+        ? { lead: 'You have some controls in place, but the evidence to prove them is incomplete.', items: '<li>Book a Pilot Snapshot ($295) for a same-day pass through your highest-impact controls</li><li>A Core Readiness Assessment can score all 40 controls and tell you exactly what to prioritize</li><li>Start assembling proof artifacts now, before your renewal is due</li>' }
+        : safeScore <= 23
+        ? { lead: 'Good foundation. The gaps left are specific evidence gaps, not missing controls.', items: '<li>A Core Readiness Assessment will score your Evidence Confidence Level across all 40 controls</li><li>An Evidence Package can get your proof artifacts broker-submission-ready</li><li>Move from "we probably have that" to a documented package</li>' }
+        : { lead: 'Strong control posture. The remaining work is mostly keeping evidence current.', items: '<li>A Continuous Assurance Retainer keeps your evidence current between renewals</li><li>Avoid rebuilding your case from zero every year</li><li>Talk to us about what ongoing drift monitoring would look like for your business</li>' };
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Laurelshield <onboarding@resend.dev>',
         to: safeEmail,
-        subject: `Your Cybersecurity Maturity Score: ${safeCat} (${pct}%)`,
+        subject: `Your Insurability Snapshot: ${safeCat} (${pct}%)`,
         html: `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#fff;padding:32px;border-radius:12px;">
-            <h1 style="color:#FF4500;margin-bottom:4px;">Laurel Shield</h1>
-            <p style="color:#707070;margin-bottom:24px;">Cybersecurity Maturity Assessment Results</p>
-            <div style="background:#111;padding:20px;border-radius:8px;margin-bottom:20px;">
-              <h2 style="color:#FF4500;margin:0 0 8px 0;">Your Score: ${safeCat}</h2>
-              <p style="font-size:28px;font-weight:700;color:#fff;margin:0 0 8px 0;">${safeScore} / ${safeMax} (${pct}%)</p>
-              <div style="background:#222;border-radius:4px;height:8px;overflow:hidden;">
-                <div style="background:#FF4500;height:100%;width:${pct}%;"></div>
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:600px;margin:0 auto;background:#000000;color:#FFFFFF;padding:32px;border-radius:0;">
+            <h1 style="color:#0078D4;margin-bottom:4px;">Laurelshield</h1>
+            <p style="color:#A3A3A3;margin-bottom:24px;">Cyber Insurance Readiness -- Insurability Snapshot Results</p>
+            <div style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.18);padding:20px;border-radius:0;margin-bottom:20px;">
+              <h2 style="color:#0078D4;margin:0 0 8px 0;">Your Score: ${safeCat}</h2>
+              <p style="font-size:28px;font-weight:700;color:#FFFFFF;margin:0 0 8px 0;">${safeScore} / ${safeMax} (${pct}%)</p>
+              <div style="background:#232323;border-radius:0;height:8px;overflow:hidden;">
+                <div style="background:#0078D4;height:100%;width:${pct}%;"></div>
               </div>
             </div>
-            <h3 style="color:#fff;">Recommended Next Steps:</h3>
-            <ul style="color:#B0B0B0;line-height:1.8;">
-              ${safeScore <= 11 ? '<li>Schedule an emergency security consultation immediately</li><li>Conduct a vulnerability assessment across all systems</li><li>Establish an incident response plan</li>' :
-                safeScore <= 17 ? '<li>Perform a structured gap assessment to identify weak areas</li><li>Implement a vulnerability management program</li><li>Consider a vCISO engagement for strategic guidance</li>' :
-                safeScore <= 23 ? '<li>Optimize existing security processes with automation</li><li>Expand penetration testing coverage</li><li>Pursue SOC 2 or ISO 27001 certification</li>' :
-                '<li>Explore advanced threat hunting and red team exercises</li><li>Evaluate AI security posture for emerging threats</li><li>Consider continuous penetration testing (PTaaS)</li>'}
+            <p style="color:#D6D6D6;">${nextSteps.lead}</p>
+            <h3 style="color:#FFFFFF;">Recommended Next Steps:</h3>
+            <ul style="color:#D6D6D6;line-height:1.8;">
+              ${nextSteps.items}
             </ul>
             <div style="text-align:center;margin-top:24px;">
-              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free HIPAA Gap Check</a>
+              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#0078D4;color:#FFFFFF;padding:14px 32px;text-decoration:none;border-radius:0;font-weight:700;">Book a 15-Minute Call</a>
             </div>
-            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA | cybersec-by-laurel.onrender.com</p>
+            <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Laurelshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
           </div>
         `
       });
@@ -192,7 +197,7 @@ app.post('/quiz-report', quizLimiter, async (req, res) => {
     // Notify the consultant about the new lead
     if (resend) {
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Laurelshield <onboarding@resend.dev>',
         to: EMAIL_TO,
         subject: `[Quiz Lead] ${safeEmail} scored ${safeCat} (${pct}%)`,
         html: `<p><strong>New quiz lead:</strong></p><ul><li>Email: ${safeEmail}</li><li>Score: ${safeScore}/${safeMax} (${pct}%)</li><li>Category: ${safeCat}</li><li>Time: ${new Date().toISOString()}</li></ul>`
@@ -221,33 +226,32 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
     // Send lead magnet email
     if (resend) {
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Laurelshield <onboarding@resend.dev>',
         to: safeEmail,
-        subject: 'Your Free HIPAA Compliance Checklist — Laurel Shield',
+        subject: 'Your Baseline Controls Checklist -- Laurelshield',
         html: `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#fff;padding:32px;border-radius:12px;">
-            <h1 style="color:#FF4500;margin-bottom:4px;">Laurel Shield</h1>
-            <p style="color:#707070;margin-bottom:24px;">Your HIPAA compliance checklist is ready.</p>
-            <div style="background:#111;padding:20px;border-radius:8px;margin-bottom:20px;">
-              <h2 style="color:#fff;margin:0 0 12px 0;">HIPAA Compliance Quick-Check 2026</h2>
-              <p style="color:#B0B0B0;">Use this checklist to assess your organization's HIPAA readiness. These are the items OCR investigators check first:</p>
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:600px;margin:0 auto;background:#000000;color:#FFFFFF;padding:32px;border-radius:0;">
+            <h1 style="color:#0078D4;margin-bottom:4px;">Laurelshield</h1>
+            <p style="color:#A3A3A3;margin-bottom:24px;">Your baseline controls checklist is ready.</p>
+            <div style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.18);padding:20px;border-radius:0;margin-bottom:20px;">
+              <h2 style="color:#FFFFFF;margin:0 0 12px 0;">The 8 Controls Insurers Check First</h2>
+              <p style="color:#D6D6D6;">Cyber-insurance underwriting has shifted from self-attestation to evidence-based validation. These are the baseline controls insurers now treat as effectively non-negotiable -- and expect proof of, not just a checkbox:</p>
               <table style="width:100%;border-collapse:collapse;margin-top:12px;">
-                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;width:40%;">Security Risk Assessment</td><td style="padding:10px 8px;color:#B0B0B0;">Documented SRA covering all ePHI systems, threat analysis, vulnerability assessment, and risk determination. Updated annually or when environment changes.</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Policies & Procedures</td><td style="padding:10px 8px;color:#B0B0B0;">Written policies for access controls, encryption, incident response, workstation security, sanctions, and all 54 Security Rule implementation specifications.</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Workforce Training</td><td style="padding:10px 8px;color:#B0B0B0;">HIPAA security awareness training at hire and annually. Documented sign-off sheets, phishing simulations, and social engineering tests.</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Business Associate Agreements</td><td style="padding:10px 8px;color:#B0B0B0;">Signed, current BAAs with every vendor who accesses PHI — cloud providers, billing, IT support, shredding, answering services.</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Access Controls & Audit Logs</td><td style="padding:10px 8px;color:#B0B0B0;">Unique user IDs, role-based access, MFA on remote access, auto-logoff. System access logs enabled and reviewed quarterly.</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Encryption</td><td style="padding:10px 8px;color:#B0B0B0;">ePHI encrypted at rest and in transit (TLS/SSL). If not feasible, documented alternative safeguards and risk acceptance.</td></tr>
-                <tr style="border-bottom:1px solid #222;"><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Incident Response Plan</td><td style="padding:10px 8px;color:#B0B0B0;">Documented breach response plan with notification procedures, four-factor risk assessment template, and annual tabletop exercise.</td></tr>
-                <tr><td style="padding:10px 8px;color:#FF4500;font-weight:700;">Physical Safeguards</td><td style="padding:10px 8px;color:#B0B0B0;">Locked server rooms, workstation positioning, visitor logs, device disposal procedures, clean desk policy.</td></tr>
+                <tr style="border-bottom:1px solid #232323;"><td style="padding:10px 8px;color:#0078D4;font-weight:700;width:40%;">MFA Everywhere</td><td style="padding:10px 8px;color:#D6D6D6;">Phishing-resistant MFA preferred over SMS OTP, enforced on every account with remote or privileged access.</td></tr>
+                <tr style="border-bottom:1px solid #232323;"><td style="padding:10px 8px;color:#0078D4;font-weight:700;">EDR on Every Endpoint</td><td style="padding:10px 8px;color:#D6D6D6;">Deployed and actively monitored, not just installed -- insurers increasingly ask for coverage reports, not a checkbox.</td></tr>
+                <tr style="border-bottom:1px solid #232323;"><td style="padding:10px 8px;color:#0078D4;font-weight:700;">Tested Immutable Backups</td><td style="padding:10px 8px;color:#D6D6D6;">A documented restore test inside the last ~90 days, not just "we have backups."</td></tr>
+                <tr style="border-bottom:1px solid #232323;"><td style="padding:10px 8px;color:#0078D4;font-weight:700;">Incident Response Plan</td><td style="padding:10px 8px;color:#D6D6D6;">Dated and exercised, with a documented tabletop -- not a template that's never been used.</td></tr>
+                <tr style="border-bottom:1px solid #232323;"><td style="padding:10px 8px;color:#0078D4;font-weight:700;">Patch Management</td><td style="padding:10px 8px;color:#D6D6D6;">No end-of-life systems exposed to the internet, with a documented patch cadence.</td></tr>
+                <tr style="border-bottom:1px solid #232323;"><td style="padding:10px 8px;color:#0078D4;font-weight:700;">Privileged Access Management</td><td style="padding:10px 8px;color:#D6D6D6;">Admin and privileged accounts controlled, logged, and reviewed -- not shared credentials.</td></tr>
+                <tr style="border-bottom:1px solid #232323;"><td style="padding:10px 8px;color:#0078D4;font-weight:700;">Email Authentication</td><td style="padding:10px 8px;color:#D6D6D6;">SPF/DKIM/DMARC configured, paired with phishing-simulation training for staff.</td></tr>
+                <tr><td style="padding:10px 8px;color:#0078D4;font-weight:700;">Network Segmentation</td><td style="padding:10px 8px;color:#D6D6D6;">Critical systems isolated from the general network, limiting how far an incident can spread.</td></tr>
               </table>
             </div>
-            <p style="color:#B0B0B0;">Missing items on this list? Don't panic — most organizations have gaps. The important thing is to identify and fix them before OCR does.</p>
-            <p style="color:#B0B0B0;margin-top:12px;">Read our full guide: <a href="https://security.laurelshield.com/blog/hipaa-risk-assessment-checklist-2026.html" style="color:#FF4500;">HIPAA Risk Assessment Checklist 2026</a></p>
+            <p style="color:#D6D6D6;">Missing items on this list? Most businesses have gaps -- that's normal. The real problem isn't usually that you don't have the control. It's that you can't produce evidence of it on request.</p>
             <div style="text-align:center;margin-top:20px;">
-              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free 15-Min HIPAA Gap Check</a>
+              <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#0078D4;color:#FFFFFF;padding:14px 32px;text-decoration:none;border-radius:0;font-weight:700;">Book a 15-Minute Call</a>
             </div>
-            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | Calgary, AB & Philadelphia, PA | security.laurelshield.com</p>
+            <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Laurelshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
           </div>
         `
       });
@@ -256,10 +260,10 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
     // Notify consultant
     if (resend) {
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Laurelshield <onboarding@resend.dev>',
         to: EMAIL_TO,
         subject: `[New Subscriber] ${safeEmail}`,
-        html: `<p>New email subscriber from exit-intent popup:</p><ul><li>Email: ${safeEmail}</li><li>Time: ${new Date().toISOString()}</li><li>Lead magnet: HIPAA Compliance Checklist</li></ul>`
+        html: `<p>New email subscriber from exit-intent popup:</p><ul><li>Email: ${safeEmail}</li><li>Time: ${new Date().toISOString()}</li><li>Lead magnet: Baseline Controls Checklist</li></ul>`
       });
     }
 
