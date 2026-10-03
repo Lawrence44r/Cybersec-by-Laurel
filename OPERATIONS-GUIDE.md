@@ -1,9 +1,9 @@
-# Laurel Shield — Design & Operations Guide
+# Congruent Shield — Design & Operations Guide
 
 > **Version:** 3.0  
 > **Last Updated:** April 6, 2026  
 > **Author:** Lawrence Okonkwo  
-> **Project:** Cybersec-by-Laurel (Laurel Shield Website)
+> **Project:** Cybersec-by-Laurel (Congruent Shield Website)
 
 ---
 
@@ -35,7 +35,7 @@
 
 ## 1. Project Overview
 
-**Laurel Shield** is a healthcare-focused cybersecurity consulting website with offices in **Calgary, Alberta, Canada** and **Philadelphia, Pennsylvania, USA**. The site serves as the primary inbound lead-generation tool, targeting healthcare organizations that need HIPAA compliance and cybersecurity services.
+**Congruent Shield** is a healthcare-focused cybersecurity consulting website with offices in **Calgary, Alberta, Canada** and **Philadelphia, Pennsylvania, USA**. The site serves as the primary inbound lead-generation tool, targeting healthcare organizations that need HIPAA compliance and cybersecurity services.
 
 **Primary niche:** Healthcare / HIPAA compliance
 
@@ -90,7 +90,7 @@
 ┌─────────────────────▼───────────────────────────┐
 │              Resend (email service)               │
 │  Sends HTML email to lawrence44r@gmail.com        │
-│  From: Laurel Shield <onboarding@resend.dev>      │
+│  From: Congruent Shield <onboarding@resend.dev>      │
 └──────────────────────────────────────────────────┘
 ```
 
@@ -185,7 +185,7 @@ This runs `node server.js` and starts the server on **http://localhost:3000**.
 
 Console output on successful start:
 ```
-=== Laurel Shield Website ===
+=== Congruent Shield Website ===
 Server running at http://localhost:3000
 Started: 2026-04-05T00:37:51.946Z
 ```
@@ -325,7 +325,7 @@ contentSecurityPolicy: {
 ### Email Template
 
 The email is sent as HTML with a formatted table containing all form fields. It's sent:
-- **From:** `Laurel Shield <onboarding@resend.dev>`
+- **From:** `Congruent Shield <onboarding@resend.dev>`
 - **To:** `lawrence44r@gmail.com`
 - **Subject:** `New Inquiry: {name} — {service or 'General'}`
 
@@ -590,7 +590,7 @@ The website implements a healthcare/HIPAA-focused SEO strategy designed to attra
 ### Title Tag Strategy
 
 ```
-HIPAA Compliance & Healthcare Cybersecurity Consulting | Laurel Shield — Risk Assessments, Penetration Testing, Audit Readiness
+HIPAA Compliance & Healthcare Cybersecurity Consulting | Congruent Shield — Risk Assessments, Penetration Testing, Audit Readiness
 ```
 
 **Why HIPAA-first:** The primary niche is healthcare organizations needing HIPAA compliance. Leading with "HIPAA Compliance & Healthcare Cybersecurity" targets the exact search terms these buyers use.
@@ -634,13 +634,13 @@ Focused description covering:
 - Title, description with keyword-rich content
 - Image dimensions specified (1200x630) with alt text
 - Multiple locale alternates: en_US, en_CA, en_GB
-- Site name: "Laurel Shield Cybersecurity"
+- Site name: "Congruent Shield Cybersecurity"
 
 ### Twitter Card
 
 - Type: `summary_large_image`
 - Image with alt text
-- `@LaurelShield` site and creator handles
+- `@CongruentShield` site and creator handles
 - Keyword-rich title and description
 
 ### JSON-LD Structured Data (7 schemas)
@@ -656,16 +656,16 @@ Focused description covering:
 | **LocalBusiness (Philadelphia)** | Philadelphia office with coordinates, hours, phone | Local pack / Google Maps |
 
 **FAQPage covers these topics (10 entries):**
-1. What cybersecurity services does Laurel Shield offer?
-2. Where is Laurel Shield located?
+1. What cybersecurity services does Congruent Shield offer?
+2. Where is Congruent Shield located?
 3. How much does a cybersecurity assessment cost?
 4. How do I get a cybersecurity assessment?
-5. Does Laurel Shield help with HIPAA compliance?
+5. Does Congruent Shield help with HIPAA compliance?
 6. What is the difference between vulnerability assessment and penetration testing?
 7. How long does a SOC 2 audit take?
 8. What is a virtual CISO (vCISO)?
-9. Does Laurel Shield offer AI security assessments?
-10. What industries does Laurel Shield serve?
+9. Does Congruent Shield offer AI security assessments?
+10. What industries does Congruent Shield serve?
 
 ### On-Page SEO Techniques
 
@@ -752,7 +752,7 @@ After deploying to production with a live domain:
 - [ ] **Bing Webmaster Tools:** Submit sitemap at `https://www.bing.com/webmasters`
 - [ ] **Yandex Webmaster:** Submit at `https://webmaster.yandex.com` (for Russian/CIS traffic)
 - [ ] **Request indexing:** In Google Search Console → URL Inspection → paste homepage URL → "Request Indexing"
-- [ ] **Social profiles:** Create @LaurelShield on Twitter/X, LinkedIn, GitHub and add URLs to `sameAs` in JSON-LD
+- [ ] **Social profiles:** Create @CongruentShield on Twitter/X, LinkedIn, GitHub and add URLs to `sameAs` in JSON-LD
 - [ ] **OG Image:** Create and upload `og-image.png` (1200x630px) to the `public/` folder
 - [ ] **Backlink strategy:** Submit to cybersecurity directories, CREST member listing, industry publications
 - [ ] **Google Ads (optional):** Run branded + service keyword campaigns to drive initial traffic signals
@@ -829,7 +829,7 @@ In Render Dashboard → Service → click **Manual Deploy** → **Deploy latest 
 1. **Create account** at [resend.com](https://resend.com)
 2. **Get API Key:**
    - Dashboard → API Keys → Create API Key
-   - Name it (e.g., "Laurel Shield Production")
+   - Name it (e.g., "Congruent Shield Production")
    - Copy the key (starts with `re_`)
    - **Store securely — you cannot view it again**
 3. **Add to environment:**
@@ -856,7 +856,7 @@ RESEND_API_KEY=re_123456789abcdef
 4. Verify domain
 5. Update `server.js` line 106 — change `from` address:
    ```javascript
-   from: 'Laurel Shield <noreply@laurelshield.com>',
+   from: 'Congruent Shield <noreply@laurelshield.com>',
    ```
 
 ### Testing Email Locally
@@ -920,7 +920,7 @@ Update these files:
 ### 404.html
 
 Custom error page with:
-- Laurel Shield branding (gradient 404 text, shield icon)
+- Congruent Shield branding (gradient 404 text, shield icon)
 - "Back to Home" and "Contact Us" buttons
 - Served automatically by the Express catch-all route for any unmatched URL
 

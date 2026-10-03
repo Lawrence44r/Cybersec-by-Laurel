@@ -132,7 +132,7 @@ app.post('/contact', contactLimiter, async (req, res) => {
 
 async function sendContactEmail(clean) {
   const html = `
-    <h2 style="color:#0A1428;">New Website Inquiry — Laurel Shield</h2>
+    <h2 style="color:#0A1428;">New Website Inquiry — Congruent Shield</h2>
     <p>Received on <strong>${new Date().toLocaleString('en-CA')}</strong></p>
     <table style="border-collapse:collapse;width:100%;max-width:600px;">
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;width:140px;">Name</td><td style="padding:8px;border:1px solid #ddd;">${clean.name}</td></tr>
@@ -144,7 +144,7 @@ async function sendContactEmail(clean) {
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Message</td><td style="padding:8px;border:1px solid #ddd;">${clean.message}</td></tr>
     </table>
     <hr style="margin:20px 0;border:none;border-top:1px solid #ddd;">
-    <p style="color:#999;font-size:12px;">Laurel Shield website contact form</p>
+    <p style="color:#999;font-size:12px;">Congruent Shield website contact form</p>
   `;
 
   if (!resend) {
@@ -153,7 +153,7 @@ async function sendContactEmail(clean) {
   }
   try {
     await resend.emails.send({
-      from: 'Laurel Shield <onboarding@resend.dev>',
+      from: 'Congruent Shield <onboarding@resend.dev>',
       to: EMAIL_TO,
       subject: `New Inquiry: ${clean.name} — ${clean.service || 'General'}`,
       html,
@@ -189,12 +189,12 @@ app.post('/quiz-report', quizLimiter, async (req, res) => {
         ? { lead: 'Good foundation. The gaps left are specific evidence gaps, not missing controls.', items: '<li>A Core Readiness Assessment will score your Evidence Confidence Level across all 40 controls</li><li>An Evidence Package can get your proof artifacts broker-submission-ready</li><li>Move from "we probably have that" to a documented package</li>' }
         : { lead: 'Strong control posture. The remaining work is mostly keeping evidence current.', items: '<li>A Continuous Assurance Retainer keeps your evidence current between renewals</li><li>Avoid rebuilding your case from zero every year</li><li>Talk to us about what ongoing drift monitoring would look like for your business</li>' };
       await resend.emails.send({
-        from: 'Laurelshield <onboarding@resend.dev>',
+        from: 'Congruentshield <onboarding@resend.dev>',
         to: safeEmail,
         subject: `Your Insurability Snapshot: ${safeCat} (${pct}%)`,
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:600px;margin:0 auto;background:#000000;color:#FFFFFF;padding:32px;border-radius:0;">
-            <h1 style="color:#0078D4;margin-bottom:4px;">Laurelshield</h1>
+            <h1 style="color:#0078D4;margin-bottom:4px;">Congruentshield</h1>
             <p style="color:#A3A3A3;margin-bottom:24px;">Cyber Insurance Readiness -- Insurability Snapshot Results</p>
             <div style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.18);padding:20px;border-radius:0;margin-bottom:20px;">
               <h2 style="color:#0078D4;margin:0 0 8px 0;">Your Score: ${safeCat}</h2>
@@ -211,7 +211,7 @@ app.post('/quiz-report', quizLimiter, async (req, res) => {
             <div style="text-align:center;margin-top:24px;">
               <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#0078D4;color:#FFFFFF;padding:14px 32px;text-decoration:none;border-radius:0;font-weight:700;">Book a 15-Minute Call</a>
             </div>
-            <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Laurelshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
+            <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Congruentshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
           </div>
         `
       });
@@ -220,7 +220,7 @@ app.post('/quiz-report', quizLimiter, async (req, res) => {
     // Notify the consultant about the new lead
     if (resend) {
       await resend.emails.send({
-        from: 'Laurelshield <onboarding@resend.dev>',
+        from: 'Congruentshield <onboarding@resend.dev>',
         to: EMAIL_TO,
         subject: `[Quiz Lead] ${safeEmail} scored ${safeCat} (${pct}%)`,
         html: `<p><strong>New quiz lead:</strong></p><ul><li>Email: ${safeEmail}</li><li>Score: ${safeScore}/${safeMax} (${pct}%)</li><li>Category: ${safeCat}</li><li>Time: ${new Date().toISOString()}</li></ul>`
@@ -249,12 +249,12 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
     // Send lead magnet email
     if (resend) {
       await resend.emails.send({
-        from: 'Laurelshield <onboarding@resend.dev>',
+        from: 'Congruentshield <onboarding@resend.dev>',
         to: safeEmail,
-        subject: 'Your Baseline Controls Checklist -- Laurelshield',
+        subject: 'Your Baseline Controls Checklist -- Congruentshield',
         html: `
           <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:600px;margin:0 auto;background:#000000;color:#FFFFFF;padding:32px;border-radius:0;">
-            <h1 style="color:#0078D4;margin-bottom:4px;">Laurelshield</h1>
+            <h1 style="color:#0078D4;margin-bottom:4px;">Congruentshield</h1>
             <p style="color:#A3A3A3;margin-bottom:24px;">Your baseline controls checklist is ready.</p>
             <div style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.18);padding:20px;border-radius:0;margin-bottom:20px;">
               <h2 style="color:#FFFFFF;margin:0 0 12px 0;">The 8 Controls Insurers Check First</h2>
@@ -274,7 +274,7 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
             <div style="text-align:center;margin-top:20px;">
               <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#0078D4;color:#FFFFFF;padding:14px 32px;text-decoration:none;border-radius:0;font-weight:700;">Book a 15-Minute Call</a>
             </div>
-            <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Laurelshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
+            <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Congruentshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
           </div>
         `
       });
@@ -283,7 +283,7 @@ app.post('/subscribe', subscribeLimiter, async (req, res) => {
     // Notify consultant
     if (resend) {
       await resend.emails.send({
-        from: 'Laurelshield <onboarding@resend.dev>',
+        from: 'Congruentshield <onboarding@resend.dev>',
         to: EMAIL_TO,
         subject: `[New Subscriber] ${safeEmail}`,
         html: `<p>New email subscriber from exit-intent popup:</p><ul><li>Email: ${safeEmail}</li><li>Time: ${new Date().toISOString()}</li><li>Lead magnet: Baseline Controls Checklist</li></ul>`
@@ -344,7 +344,7 @@ async function sendConciergeEmail(safe, safeAnswers) {
     `<tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;vertical-align:top;">${a.question}</td><td style="padding:8px;border:1px solid #ddd;">${a.answer}</td></tr>`
   ).join('');
   const html = `
-    <h2 style="color:#0078D4;">New Concierge Lead -- Laurelshield</h2>
+    <h2 style="color:#0078D4;">New Concierge Lead -- Congruentshield</h2>
     <p>Received on <strong>${new Date().toLocaleString('en-CA')}</strong>. Outcome: <strong>${safe.outcome}</strong>.</p>
     <table style="border-collapse:collapse;width:100%;max-width:600px;">
       <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;width:140px;">Name</td><td style="padding:8px;border:1px solid #ddd;">${safe.name}</td></tr>
@@ -364,7 +364,7 @@ async function sendConciergeEmail(safe, safeAnswers) {
   }
   try {
     await resend.emails.send({
-      from: 'Laurelshield <onboarding@resend.dev>',
+      from: 'Congruentshield <onboarding@resend.dev>',
       to: EMAIL_TO,
       subject: `[Concierge Lead] ${safe.name} -- ${safe.outcome}`,
       html,
@@ -489,19 +489,19 @@ async function sendWelcomeEmail({ email, companyName, tempPassword }) {
   }
   try {
     await resend.emails.send({
-      from: 'Laurelshield <onboarding@resend.dev>',
+      from: 'Congruentshield <onboarding@resend.dev>',
       to: email,
-      subject: 'Your Laurelshield Passport Platform account is ready',
+      subject: 'Your Congruentshield Passport Platform account is ready',
       html: `
         <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:600px;margin:0 auto;background:#000000;color:#FFFFFF;padding:32px;">
-          <h1 style="color:#0078D4;margin-bottom:4px;">Laurelshield</h1>
+          <h1 style="color:#0078D4;margin-bottom:4px;">Congruentshield</h1>
           <p style="color:#A3A3A3;margin-bottom:24px;">Your Continuous Assurance subscription for ${companyName} is active.</p>
           <div style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.18);padding:20px;margin-bottom:20px;">
             <p style="color:#D6D6D6;">A temporary password has been set so you can log in right away. Please change it after your first login.</p>
             <p style="color:#FFFFFF;font-family:monospace;font-size:1.1em;">${tempPassword}</p>
           </div>
-          <p style="color:#D6D6D6;">Your first issued passport will be reviewed by a Laurelshield assessor before it's shared with any broker or carrier -- this applies to every new account, regardless of how you signed up.</p>
-          <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Laurelshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
+          <p style="color:#D6D6D6;">Your first issued passport will be reviewed by a Congruentshield assessor before it's shared with any broker or carrier -- this applies to every new account, regardless of how you signed up.</p>
+          <p style="color:#A3A3A3;font-size:12px;margin-top:24px;text-align:center;">Congruentshield | Calgary, Alberta, Canada | security.laurelshield.com</p>
         </div>
       `,
     });
@@ -515,10 +515,10 @@ async function sendAlreadyRegisteredEmail(email) {
   if (!resend) return;
   try {
     await resend.emails.send({
-      from: 'Laurelshield <onboarding@resend.dev>',
+      from: 'Congruentshield <onboarding@resend.dev>',
       to: email,
-      subject: 'Your Laurelshield subscription is active',
-      html: `<p>Thanks for subscribing -- your payment was received. It looks like you already have a Laurelshield account under this email, so log in as usual rather than using a new password.</p>`,
+      subject: 'Your Congruentshield subscription is active',
+      html: `<p>Thanks for subscribing -- your payment was received. It looks like you already have a Congruentshield account under this email, so log in as usual rather than using a new password.</p>`,
     });
   } catch (err) {
     console.error(`[${new Date().toISOString()}] Failed to send already-registered email:`, err.message);
@@ -529,7 +529,7 @@ async function sendNewSubscriberNotification({ email, companyName, tier, orgId }
   if (!resend) return;
   try {
     await resend.emails.send({
-      from: 'Laurelshield <onboarding@resend.dev>',
+      from: 'Congruentshield <onboarding@resend.dev>',
       to: EMAIL_TO,
       subject: `[New Subscriber] ${companyName} -- ${tier} retainer`,
       html: `<p>New Continuous Assurance subscriber, provisioned automatically:</p><ul><li>Company: ${companyName}</li><li>Email: ${email}</li><li>Tier: ${tier}</li><li>Org ID: ${orgId}</li><li>Time: ${new Date().toISOString()}</li></ul><p>Their first passport is flagged pending human verification -- review it within 48 hours.</p>`,
@@ -555,7 +555,7 @@ app.post('/product-inquiry', productInquiryLimiter, async (req, res) => {
     // Notify consultant about product interest
     if (resend) {
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Congruent Shield <onboarding@resend.dev>',
         to: EMAIL_TO,
         subject: `[Product Interest] ${safeProduct} — ${safeTier} tier`,
         html: `
@@ -571,19 +571,19 @@ app.post('/product-inquiry', productInquiryLimiter, async (req, res) => {
 
       // Send confirmation to buyer
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Congruent Shield <onboarding@resend.dev>',
         to: safeEmail,
-        subject: `Thanks for your interest in ${safeProduct} — Laurel Shield`,
+        subject: `Thanks for your interest in ${safeProduct} — Congruent Shield`,
         html: `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#fff;padding:32px;border-radius:12px;">
-            <h1 style="color:#FF4500;margin-bottom:4px;">Laurel Shield</h1>
+            <h1 style="color:#FF4500;margin-bottom:4px;">Congruent Shield</h1>
             <p style="color:#B0B0B0;margin-bottom:20px;">Thanks for your interest in <strong style="color:#fff;">${safeProduct}</strong>.</p>
             <p style="color:#B0B0B0;">We've received your inquiry for the <strong style="color:#FF4500;">${safeTier}</strong> tier. A member of our team will reach out within 24 hours with next steps and payment details.</p>
             <p style="color:#B0B0B0;margin-top:16px;">In the meantime, feel free to explore our free interactive tools on the product page, or book a call to discuss your needs:</p>
             <div style="text-align:center;margin-top:20px;">
               <a href="https://calendly.com/lawrence44r/free-15-min-hipaa-gap-check" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">Book a Free Call</a>
             </div>
-            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | security.laurelshield.com</p>
+            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Congruent Shield | security.laurelshield.com</p>
           </div>
         `
       });
@@ -612,26 +612,26 @@ app.post('/product-lead', productInquiryLimiter, async (req, res) => {
     if (resend) {
       // Send results to user
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Congruent Shield <onboarding@resend.dev>',
         to: safeEmail,
-        subject: `Your ${safeTool} Results — Laurel Shield`,
+        subject: `Your ${safeTool} Results — Congruent Shield`,
         html: `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#fff;padding:32px;border-radius:12px;">
-            <h1 style="color:#FF4500;">Laurel Shield</h1>
+            <h1 style="color:#FF4500;">Congruent Shield</h1>
             <h2 style="color:#fff;margin-bottom:16px;">${safeTool} Results</h2>
             <div style="background:#111;padding:20px;border-radius:8px;color:#B0B0B0;white-space:pre-wrap;">${safeResults}</div>
             <p style="color:#B0B0B0;margin-top:20px;">Want the full toolkit? Check out <strong style="color:#fff;">${safeProduct}</strong> for comprehensive templates, questionnaires, and implementation guides.</p>
             <div style="text-align:center;margin-top:20px;">
               <a href="https://security.laurelshield.com/products/" style="display:inline-block;background:#FF4500;color:#fff;padding:14px 32px;text-decoration:none;border-radius:8px;font-weight:700;">View All Products</a>
             </div>
-            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Laurel Shield | security.laurelshield.com</p>
+            <p style="color:#707070;font-size:12px;margin-top:24px;text-align:center;">Congruent Shield | security.laurelshield.com</p>
           </div>
         `
       });
 
       // Notify consultant
       await resend.emails.send({
-        from: 'Laurel Shield <onboarding@resend.dev>',
+        from: 'Congruent Shield <onboarding@resend.dev>',
         to: EMAIL_TO,
         subject: `[Product Lead] ${safeEmail} used ${safeTool}`,
         html: `<p><strong>New product lead:</strong></p><ul><li>Email: ${safeEmail}</li><li>Product: ${safeProduct}</li><li>Tool: ${safeTool}</li><li>Time: ${new Date().toISOString()}</li></ul>`
@@ -657,7 +657,7 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`=== Laurel Shield Website ===`);
+  console.log(`=== Congruent Shield Website ===`);
   console.log(`Server running at http://localhost:${PORT}`);
   console.log(`Started: ${new Date().toISOString()}`);
 });
