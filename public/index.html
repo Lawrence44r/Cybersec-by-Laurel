@@ -312,30 +312,13 @@
       --font-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
       --max-width: 1200px;
-      --nav-height: 72px;
+      --nav-height: 96px;
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --transition-fast: 150ms var(--ease-out);
       --transition-base: 300ms var(--ease-out);
       --transition-slow: 500ms var(--ease-out);
       --shadow-card: 0 1.6px 3.6px rgba(255, 255, 255, 0.18), 0 0.3px 0.9px rgba(0, 0, 0, 0.06);
       --shadow-glow: 0 2px 10px rgba(176, 38, 255, 0.15);
-    }
-
-    /* Black/white/purple brand palette -- deliberately identical to :root
-       above, so the light/dark toggle no longer changes anything visible.
-       The toggle UI itself is left in place (out of scope for this change)
-       but both states now render the same three-color scheme. */
-    :root[data-theme="dark"] {
-      --bg-primary: #000000;
-      --bg-secondary: #000000;
-      --bg-card: #000000;
-      --bg-card-hover: #0D0D0D;
-      --bg-tertiary: #000000;
-      --text-primary: #FFFFFF;
-      --text-secondary: #FFFFFF;
-      --text-muted: #FFFFFF;
-      --border-color: rgba(255, 255, 255, 0.18);
-      --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.8);
     }
 
     html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
@@ -483,31 +466,31 @@
     .navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       height: var(--nav-height); display: flex; align-items: center;
-      background: #B026FF;
-      transition: background var(--transition-base), box-shadow var(--transition-base);
+      background: #000000;
+      transition: box-shadow var(--transition-base);
     }
     .navbar.scrolled {
-      background: #005A9E;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
     .navbar nav {
       display: flex; align-items: center; justify-content: space-between;
       width: 100%; max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
     }
     .nav-brand {
-      display: inline-flex; align-items: center; gap: 10px; font-size: 32px; font-weight: 800;
+      display: inline-flex; align-items: center; gap: 10px; font-weight: 800;
       font-family: var(--font-serif); letter-spacing: -0.5px; color: #FFFFFF;
     }
     .nav-brand img { height: 1em; width: auto; display: block; }
+    .navbar .nav-brand img { height: 58px; }
     .nav-links {
       display: flex; align-items: center; gap: 8px; list-style: none;
     }
     .nav-links a {
-      color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500;
+      color: #FFFFFF; font-size: 14px; font-weight: 500;
       padding: 8px 14px 5px; border-radius: 0; transition: all var(--transition-fast);
       border-bottom: 3px solid transparent;
     }
-    .nav-links a:hover, .nav-links a.active { color: #FFFFFF; background: transparent; border-bottom: 3px solid #FF6B8A; border-radius: 0; }
+    .nav-links a:hover, .nav-links a.active { color: #FFFFFF; background: transparent; border-bottom: 3px solid #B026FF; border-radius: 0; }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 10px 20px; background: #FFFFFF; color: #B026FF;
@@ -515,17 +498,6 @@
       transition: all var(--transition-base); white-space: nowrap;
     }
     .nav-cta:hover { background: #F3F2F1; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
-
-    .theme-toggle {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 38px; height: 38px; margin-left: 8px; border-radius: 0;
-      background: rgba(255,255,255,0.12); border: none; color: #FFFFFF;
-      cursor: pointer; transition: background var(--transition-fast);
-    }
-    .theme-toggle:hover { background: rgba(255,255,255,0.22); }
-    .theme-toggle-icon-dark { display: none; }
-    :root[data-theme="dark"] .theme-toggle-icon-light { display: none; }
-    :root[data-theme="dark"] .theme-toggle-icon-dark { display: inline-block; }
 
     /* Urgency Banner */
     .urgency-banner {
@@ -626,8 +598,7 @@
       }
       .nav-links.open { right: 0; }
       .nav-links a { font-size: 16px; padding: 12px 16px; color: var(--text-primary); }
-      .theme-toggle { margin-left: 0; }
-      .nav-links a:hover, .nav-links a.active { color: var(--accent-rose); border-bottom-color: var(--accent-rose); }
+      .nav-links a:hover, .nav-links a.active { color: var(--accent-purple); border-bottom-color: var(--accent-purple); }
       .nav-cta { margin-left: 0; margin-top: 8px; background: var(--accent-orange); color: #FFFFFF; }
       .nav-cta:hover { background: #005A9E; color: #FFFFFF; }
     }
@@ -814,11 +785,11 @@
       font-size: 14px; color: #FFFFFF; opacity: 0.9;
     }
     .cta-bar-btn {
-      background: #FFFFFF; color: #FFFFFF; padding: 14px 32px; border-radius: 0;
+      background: var(--accent-purple); color: #FFFFFF; border: 2px solid #FFFFFF; padding: 14px 32px; border-radius: 0;
       font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
     }
     .cta-bar-btn:hover {
-      background: var(--accent-purple); color: #FFFFFF; transform: translateY(-2px);
+      background: #D17AFF; color: #FFFFFF; transform: translateY(-2px);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     }
     @media (max-width: 640px) {
@@ -1116,24 +1087,12 @@
   </style>
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
-  <script>
-    // Set theme before first paint to avoid a flash of the wrong theme.
-    (function() {
-      try {
-        var saved = localStorage.getItem('theme');
-        var theme = saved === 'dark' || saved === 'light'
-          ? saved
-          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) {}
-    })();
-  </script>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- ========== NAVBAR ========== -->
   <header class="navbar" id="navbar" role="banner">
     <nav aria-label="Main navigation">
-      <a href="#hero" class="nav-brand" aria-label="Laurelshield Home"><img src="/images/laurelshield-logo.png" alt="" />Laurelshield</a>
+      <a href="#hero" class="nav-brand" aria-label="Laurelshield Home"><img src="/images/laurelshield-logo.png" alt="Laurelshield" /></a>
       <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -1145,10 +1104,6 @@
         <li><a href="#quiz">Free Snapshot</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Switch to dark theme" type="button">
-        <i data-lucide="moon" class="theme-toggle-icon-light" style="width:19px;height:19px;"></i>
-        <i data-lucide="sun" class="theme-toggle-icon-dark" style="width:19px;height:19px;"></i>
-      </button>
       <a href="#contact" class="nav-cta">Get Protected</a>
     </nav>
   </header>
@@ -1303,7 +1258,7 @@
     <section class="section" id="who-its-for" style="background: linear-gradient(180deg, var(--bg-secondary), var(--bg-tertiary), var(--bg-secondary));" aria-label="Who Laurelshield works with">
       <div class="container">
         <div class="section-header reveal">
-          <h2 class="section-title" style="-webkit-text-fill-color:var(--text-primary);background:none;color:var(--text-primary);">Built for Owner-Operated Canadian Businesses</h2>
+          <h2 class="section-title" style="-webkit-text-fill-color:var(--text-primary);background:none;color:var(--text-primary);">Supporting Canadian Businesses</h2>
           <p class="section-subtitle" style="color:#B026FF;">Not a global platform. A focused practice for the businesses that actually fill out their own insurance renewal every year.</p>
         </div>
         <div class="industries-grid">
@@ -1321,6 +1276,41 @@
             <div class="card-icon"><i data-lucide="briefcase"></i></div>
             <h3 class="card-title">Professional Services</h3>
             <p class="card-text">Firms where the owner signs off on the insurance renewal directly, once a year, with no dedicated compliance role.</p>
+          </div>
+          <div class="card industry-card featured reveal" data-delay="4">
+            <div class="card-icon"><i data-lucide="stethoscope"></i></div>
+            <h3 class="card-title">Healthcare &amp; Medical Clinics</h3>
+            <p class="card-text">Private practices and clinics holding patient health records, where a ransomware incident halts care delivery, not just revenue, and underwriters price accordingly.</p>
+          </div>
+          <div class="card industry-card featured reveal" data-delay="5">
+            <div class="card-icon"><i data-lucide="shopping-cart"></i></div>
+            <h3 class="card-title">Retail &amp; E-Commerce</h3>
+            <p class="card-text">Storefronts and online shops processing card payments daily, where PCI scope and point-of-sale security are the first thing an underwriter asks about.</p>
+          </div>
+          <div class="card industry-card featured reveal" data-delay="6">
+            <div class="card-icon"><i data-lucide="hard-hat"></i></div>
+            <h3 class="card-title">Construction &amp; Engineering</h3>
+            <p class="card-text">General contractors and engineering firms moving six- and seven-figure invoices by email, exactly the pattern wire-fraud and business email compromise claims target.</p>
+          </div>
+          <div class="card industry-card featured reveal" data-delay="7">
+            <div class="card-icon"><i data-lucide="calculator"></i></div>
+            <h3 class="card-title">Financial &amp; Accounting Services</h3>
+            <p class="card-text">Bookkeeping, accounting, and wealth-management firms holding client financial data and payment credentials, a profile insurers underwrite tightly on access controls alone.</p>
+          </div>
+          <div class="card industry-card featured reveal" data-delay="8">
+            <div class="card-icon"><i data-lucide="server"></i></div>
+            <h3 class="card-title">Technology &amp; Managed Service Providers</h3>
+            <p class="card-text">MSPs and IT consultancies whose own access into client networks makes them a single point of failure, now underwritten with extra scrutiny since several high-profile supply-chain incidents.</p>
+          </div>
+          <div class="card industry-card featured reveal" data-delay="9">
+            <div class="card-icon"><i data-lucide="building-2"></i></div>
+            <h3 class="card-title">Real Estate &amp; Property Management</h3>
+            <p class="card-text">Brokerages and property managers moving deposits and closing funds by email, plus tenant and resident personal information at scale.</p>
+          </div>
+          <div class="card industry-card featured reveal" data-delay="10">
+            <div class="card-icon"><i data-lucide="utensils-crossed"></i></div>
+            <h3 class="card-title">Hospitality &amp; Food Service</h3>
+            <p class="card-text">Restaurants, hotels, and venues running point-of-sale systems with high staff turnover, where access-control lapses are exactly what insurers test for.</p>
           </div>
         </div>
         <div class="reveal" style="max-width:720px;margin:40px auto 0;text-align:center;">
@@ -1654,31 +1644,6 @@
 
     // ===== Initialize Lucide Icons =====
     lucide.createIcons();
-
-    // ===== Theme Toggle =====
-    // Icon visibility is handled entirely by CSS ([data-theme="dark"] show/hide rules),
-    // so this just needs to flip the attribute, persist it, and update the label.
-    (function() {
-      const toggleBtn = document.getElementById('theme-toggle');
-      if (!toggleBtn) return;
-
-      function setLabel(theme) {
-        toggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-      }
-      setLabel(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
-
-      toggleBtn.addEventListener('click', () => {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        const next = isDark ? 'light' : 'dark';
-        if (next === 'dark') {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-          document.documentElement.removeAttribute('data-theme');
-        }
-        try { localStorage.setItem('theme', next); } catch (e) {}
-        setLabel(next);
-      });
-    })();
 
     // ===== Mobile Menu =====
     const hamburger = document.querySelector('.hamburger');
